@@ -1,0 +1,494 @@
+html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    font-family: Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit !important;
+    line-height: inherit !important;
+}
+
+body ::-webkit-scrollbar {
+    width: 6px;
+}
+
+body {
+    line-height: inherit;
+    font-family: Arial, sans-serif;
+
+    background-color: rgba(204, 204, 204, 0.07);
+}
+
+.font-sans {
+    font-family: Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.font-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.ui.top.fixed.inverted.menu {
+    background-color: #ffffff;
+}
+
+.ui.vertical.menu.sidebar-menu {
+    background-color: #1678c2 !important;
+    margin-top: 40px !important;
+    max-height: calc(100% - 40px) !important;
+    height: calc(100% - 40px) !important;
+}
+
+.ui.vertical.menu.sidebar-menu .item i.icon {
+    float: left;
+    margin: 0em 0.5em 0em 0em;
+}
+
+.main-content {
+    margin-top: 20px;
+    height: inherit;
+}
+
+#izimodal-main {
+    box-shadow: 4px 4px 4px 3px gray;
+    z-index: 9999 !important;
+}
+
+.iziModal-content {
+    background: #fcfdfd;
+}
+
+.iziToast.inline {
+    width: max-content !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: -60px !important;
+}
+
+.iziModal .iziModal-header.iziModal-noSubtitle {
+    padding: 2px 15px 6px !important;
+}
+
+@media (max-width: 768px) {
+    .sidebar-menu-toggler {
+        display: block !important;
+    }
+
+    .hriz-menu {
+        display: none !important;
+    }
+}
+
+.hriz-menu {
+    display: contents;
+}
+
+#app {
+    margin: 7px;
+}
+
+.m-0 {
+    margin: 0em !important;
+}
+
+.p-0 {
+    padding: 0em !important;
+}
+
+tbody tr.parent:hover td {
+    border-top: 1px solid #1678c2 !important;
+    border-bottom: 1px solid #1678c2;
+}
+
+tbody tr.parent:hover td:first-child {
+    border-left: 1px solid #1678c2 !important;
+}
+
+tbody tr.parent:hover td:last-child {
+    border-right: 1px solid #1678c2;
+}
+
+.datatable {
+    border: 0 !important;
+    box-shadow: rgb(212, 212, 213) 0px 3px 3px 0px,
+        rgb(212, 212, 213) 0px 0px 0px 1px !important;
+    border-radius: 0 !important;
+}
+
+.dataTables_length {
+    display: ruby;
+}
+
+.dataTables_length select {
+    padding: 3px;
+    width: 55px !important;
+    margin-bottom: 5px !important;
+}
+
+.dataTables_info {
+    margin-left: 7px;
+}
+
+.item.parent_active {
+    background-color: rgba(0, 0, 0, .03) !important;
+}
+
+.dataTable tfoot tr th {
+    background: #e9e9e9 !important;
+    color: #000 !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+    padding: 0px !important;
+    padding-left: 7px !important;
+    line-height: 1.4 !important;
+    padding-right: 7px !important;
+    border-radius: 0 !important;
+}
+
+table.datatable {
+    width: 99% !important;
+    margin: 7px !important;
+    margin-left: 1px !important;
+    border: 1px solid #6d8da8 !important;
+
+
+}
+
+table.dataTable tbody tr.odd {
+    background-color: #918c8c2b;
+}
+
+.datatable:not(.child) thead tr th {
+    box-shadow: inset 0 -10px 15px -12px rgba(0, 0, 0, .3),
+        0 0 0 #555;
+    background-color: #1678c2 !important;
+    border-bottom: 1px solid #1678c2 !important;
+    font-size: 16px;
+    border-radius: 0 !important;
+    padding-left: 4px !important;
+    color: #ffffff !important;
+    line-height: 1.1 !important;
+    font-weight: bold !important;
+}
+
+.datatable.child thead tr th {
+    box-shadow: inset 0 -10px 15px -12px rgba(0, 0, 0, .3),
+        0 0 0 #555;
+    background-color: rgba(128, 135, 140, 0.74) !important;
+    border-bottom: 1px solid rgba(128, 135, 140, 0.74) !important;
+
+}
+
+.datatable td:not(.p-0) {
+    padding: 0.2em !important;
+    padding-right: 7px !important;
+    padding-left: 7px !important;
+}
+
+.datatable td {
+    font-size: 13px;
+    word-break: break-all;
+    vertical-align: middle;
+}
+
+
+.dtfh-floatingparent.dtfh-floatingparenthead {
+    height: 36.02px !important;
+}
+
+.coverChild {
+    padding: 0px !important;
+}
+
+thead th {
+    padding-right: 17px !important;
+}
+
+.datatable tfoot tr th {
+    border-top: 0;
+}
+
+.paginate_button,
+.paginate_button:hover {
+    padding: 1px !important;
+    height: 22px;
+}
+
+.msgError {
+    color: rgb(235, 71, 71);
+    font-size: 11px;
+}
+
+.w-75 {
+    width: 820px !important;
+}
+
+.results.transition {
+    max-height: 250px !important;
+    overflow-y: auto !important;
+}
+
+.multiple.dropdown input.search {
+    position: fixed !important;
+    left: revert !important;
+}
+
+.datatable thead th.right.aligned {
+    padding-right: 17px
+}
+
+.jconfirm-box {
+    background-color: beige !important;
+    border-radius: 0 !important;
+}
+
+.jconfirm-box.jconfirm-hilight-shake.jconfirm-type-warning.jconfirm-type-animated {
+    width: 345px;
+}
+
+.jconfirm-box .dropdown .menu {
+    height: 150px !important;
+}
+
+.jconfirm-box .dropdown {
+    border-radius: 0 !important;
+    font-size: 10.4px !important;
+}
+
+.jconfirm-buttons {
+    text-align: center;
+}
+
+tr td.detail_ {
+    padding: 0px !important
+}
+
+.popup::before {
+    background: azure !important;
+}
+
+.ui.popup {
+    background: azure !important;
+    padding: 0px;
+}
+
+.appendInputField .popup:before {
+    background: red !important;
+
+}
+
+.appendInputField .popup {
+    background: red !important;
+    color: #ffffff !important;
+    width: max-content !important;
+    padding: 9px;
+
+}
+
+span.circle {
+    padding: 1px 6px 3px 5px;
+    border-radius: 50%;
+}
+
+.dataTables_filter {
+    text-align: left !important;
+    float: left !important;
+    padding: 3px !important;
+}
+
+.dataTables_filter input {
+    padding: 7px !important;
+    border-radius: 0 !important;
+}
+
+.br-0 {
+    border-radius: 0 !important;
+    /* box-shadow: 0 0 0 1px !important; */
+}
+
+.c-pointer {
+    cursor: pointer !important;
+}
+
+.new-row {
+    animation: flashNotice 3s 1;
+}
+
+@keyframes flashNotice {
+    0% {
+        background: rgb(250, 254, 0);
+    }
+
+    25% {
+        background: rgba(255, 255, 0, 0.842);
+    }
+
+    75% {
+        background: rgba(255, 255, 0, 0.39);
+    }
+
+    100% {
+        background: rgba(239, 204, 5, 0);
+    }
+}
+
+tr.tr-remove-confirm {
+    box-shadow: 0px 0px 3px #ff0000 !important;
+    -webkit-box-shadow: 0px 0px 3px #ff0000 !important;
+    -moz-box-shadow: 0px 0px 3px #ff0000 !important;
+}
+
+tr.tr-remove-confirm td {
+    border-top: 1px solid #ff0000 !important;
+    border-bottom: 1px solid #ff0000 !important;
+}
+
+tr.tr-remove-confirm td:first-child {
+    border-left: 1px solid #ff0000 !important;
+}
+
+tr.tr-remove-confirm td:last-child {
+    border-right: 1px solid #ff0000 !important;
+}
+
+tr.tr-info-confirm {
+    box-shadow: 0px 0px 3px #8ff5ec !important;
+    -webkit-box-shadow: 0px 0px 3px #8ff5ec !important;
+    -moz-box-shadow: 0px 0px 3px #8ff5ec !important;
+}
+
+tr.tr-info-confirm td {
+    border-top: 1px solid #8ff5ec !important;
+    border-bottom: 1px solid #8ff5ec !important;
+}
+
+tr.tr-info-confirm td:first-child {
+    border-left: 1px solid #8ff5ec !important;
+}
+
+tr.tr-info-confirm td:last-child {
+    border-right: 1px solid #8ff5ec !important;
+}
+
+.sq-indicator {
+    padding: 0px 10px 0px 10px !important;
+}
+
+.dataTables_processing {
+    background: transparent !important;
+    top: 7% !important;
+    z-index: 999999;
+}
+
+.i-circular {
+    padding: 12px 2px 0px 2px !important;
+    line-height: 0px !important;
+    height: 17px !important;
+    width: 25px !important;
+}
+
+.w-75 {
+    width: 75%;
+}
+
+.w-450 {
+    width: 450px !important;
+}
+
+.ui.dropdown input.search {
+    width: 100% !important;
+}
+
+button.load-model:not(.off) {
+    box-shadow: inset 0 -10px 15px -12px rgba(0, 0, 0, .3),
+        0 0 0 #555;
+    background-color: #1678c2 !important;
+}
+
+
+.tabs .item.active:not(.off) {
+    box-shadow: 2px 2px 2px 2px gray !important;
+    min-width: 100px !important;
+    justify-content: center !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    margin-right: 3px !important;
+}
+
+.tabs .item:not(.active) {
+    background-color: #fff !important;
+    border-radius: 0;
+
+}
+
+.tabs.child-tab .item.active:not(.off) {
+    background-color: #a6fb08 !important;
+    box-shadow: 2px 2px 2px 2px gray !important;
+    min-width: 100px !important;
+    justify-content: center !important;
+    border-top-left-radius: 7px !important;
+    border-top-right-radius: 7px !important;
+    border-bottom: 2px solid #a6fb08 !important;
+}
+
+.tabs.child-tab .item:not(.off) {
+    background-color: #a8a4a4b7 !important;
+    min-width: 100px !important;
+    justify-content: center !important;
+    border-top-left-radius: 7px !important;
+    border-top-right-radius: 7px !important;
+    border-bottom: 2px solid #a8a4a4b7 !important;
+    height: 3px !important;
+}
+
+.tabs .item:not(.off) {
+    background: #fff;
+    min-width: 100px !important;
+    justify-content: center !important;
+    border-top-left-radius: 7px !important;
+    border-top-right-radius: 7px !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-bottom: 3px solid #fff;
+    /* height: 3px !important; */
+}
+
+.item.active.selected:not(.off) {
+    border-radius: 0 !important;
+    border: 0px solid !important;
+    box-shadow: none !important;
+
+}
+
+.f-s-14 {
+    font-size: 14px !important;
+}
+
+td.max-h {
+    max-height: 100px;
+    display: list-item;
+    overflow: auto;
+}
+
+.accordion .search a.result {
+    padding: 1px !important;
+}
+
+.accordion .search .result .content {
+    padding: 1px !important;
+}
+
+.note-editor {
+    background-color: #ffffff;
+}
+
+.tab .ui.dropdown .menu>.item {
+    line-height: 0.8em !important;
+}
