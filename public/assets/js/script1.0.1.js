@@ -95,7 +95,7 @@ $(document).on('click', '.ax_get', function (e) {
                     $('.load_foot').change();
                     flash(res.ok, 'success', 'bottomRight');
                     if (res._row) {
-                        load_row(res._row.id, res._row);
+                        load_row(res._row.id, res._row, res.list ?? '');
                     }
                     if (res._new) {
                         $(res._new).DataTable().draw(false)

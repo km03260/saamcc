@@ -11,7 +11,7 @@ Route::prefix('commande')->group(
                         Route::get('/create', 'create')->name('commande.create');
                         Route::post('/store', 'store')->name('commande.store');
                         Route::get('/show/{commande}', 'show')->name('commande.show');
-                        Route::post('/update/{commande}', 'update')->name('commande.update');
+                        Route::match(['GET', 'POST'], '/update/{commande}', 'update')->name('commande.update');
                         Route::post('/savewhat/{commande}', 'savewhat')->name('commande.savewhat');
                         Route::get('/destroy/{commande}', 'destroy')->name('commande.destroy');
                         Route::get('/fields/{client}', 'fields')->name('commande.fields');

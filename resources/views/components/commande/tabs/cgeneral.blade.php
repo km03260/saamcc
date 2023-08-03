@@ -12,7 +12,21 @@
              <td>
                  Statut
              </td>
-             <td>{{ $commande->statut->designation }}</td>
+             <td>
+                 @if ($commande->statut_id == 1)
+                     {{ $commande->statut->designation }} &nbsp;&nbsp;
+                     @can('update', [App\Models\Commande::class, $commande])
+                         <div class="ui mini inverted button yellow ax_get"
+                             style="box-shadow: 0px 0px 0px 1px #ffdf05 !important; min-width:100px; padding: 5px 11px;    color: #000;"
+                             data-url="{{ Route('commande.update', [$commande->id]) }}?statut_id=2&methode=savewhat&commande">
+                             Valider</div>
+
+                         <div class="msgError up_statut_id_M"></div>
+                     @endcan
+                 @else
+                     {{ $commande->statut->designation }}
+                 @endif
+             </td>
          </tr>
          <tr>
              <td>

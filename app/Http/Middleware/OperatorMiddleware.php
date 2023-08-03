@@ -19,6 +19,9 @@ class OperatorMiddleware
         if (Gate::allows('is_operateur', [App\Models\User::class])) {
             return redirect('/stock/index');
         }
+        if (Gate::allows('is_client', [App\Models\User::class])) {
+            return redirect('/commande/index');
+        }
         return $next($request);
     }
 }

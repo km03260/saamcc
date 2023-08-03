@@ -157,6 +157,7 @@ class CommandeController extends Controller
         $_resp = [
             "ok" => "la commande mise à jour avec succès",
             "list" => "commandes",
+            "_clicked" => ".commandes.datatable .cgeneral.item.active"
         ];
 
         if ($request->has('statut_id') && $request->has('suivi')) {
