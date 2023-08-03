@@ -21,7 +21,7 @@ class UserPolicy
     public function access(User $user): bool
     {
         return match ($user->Profil) {
-            100, 9, 8 => true,
+            100, 9 => true,
             default => false
         };
     }
@@ -40,7 +40,7 @@ class UserPolicy
     public function create(User $user): bool
     {
         return match ($user->Profil) {
-            100, 9, 8 => true,
+            100, 9 => true,
             default => false
         };
     }
@@ -61,9 +61,17 @@ class UserPolicy
         return match ($user->Profil) {
             100 => true,
             9 => $model->Profil == 8,
-            8 => $model->Profil == 8 && $model->clients()->first()?->id && $user->clients()->contains($model->clients()->first()->id),
+                // 8 => $model->Profil == 8 && $model->clients()->first()?->id && $user->clients()->contains($model->clients()->first()->id),
             default => false
         };
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     */
+    public function is_client(User $user): bool
+    {
+        return $user->Profil == 8;
     }
 
     /**

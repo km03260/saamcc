@@ -13,10 +13,12 @@
     @endif
 
     @if (isset($D))
-        <i class="ui c-pointer large red trash alternate icon ax_get" data-url='{{ Route("$model.destroy", $key) }}'
-            data-color="rgba(239, 183, 166, 0.9)" data-classes='inline' data-transitionOut='bounceInUp'
-            data-target=".action_di-{{ $vdata }}-{{ $key }}"
-            data-message="<i class='ui large red trash alternate icon'></i> Êtes-vous sûr de vouloir supprimer ?"></i>
+        @can('delete', [$_model::class, $_model])
+            <i class="ui c-pointer large red trash alternate icon ax_get" data-url='{{ Route("$model.destroy", $key) }}'
+                data-color="rgba(239, 183, 166, 0.9)" data-classes='inline' data-transitionOut='bounceInUp'
+                data-target=".action_di-{{ $vdata }}-{{ $key }}"
+                data-message="<i class='ui large red trash alternate icon'></i> Êtes-vous sûr de vouloir supprimer ?"></i>
+        @endcan
     @endif
 
     @if (isset($V))

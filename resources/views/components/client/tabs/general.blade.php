@@ -18,9 +18,8 @@
                         <div class="ui transparent right icon big input focus">
                             <input class="up_field" type="text" data-name="raison_sociale"
                                 style="text-transform:uppercase;" value="{{ $client->raison_sociale }}"
-                                placeholder="Raison sociale ..."
-                                style="padding: 3px;border-radius: 0;
-                    ">
+                                placeholder="Raison sociale ..." style="padding: 3px;border-radius: 0;"
+                                @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif>
                             <i class="icon" style="margin: -2px;"></i>
                         </div>
                         <div class="msgError sw_raison_sociale_M"></div>
@@ -47,8 +46,8 @@
                     <td>
                         <div class="ui transparent right icon big input focus">
                             <input class="up_field" type="text" data-name="activite" value="{{ $client->activite }}"
-                                placeholder="Activité ..." style="padding: 3px;border-radius: 0;
-                    ">
+                                placeholder="Activité ..." style="padding: 3px;border-radius: 0;"
+                                @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif>
                             <i class="icon" style="margin: -2px;"></i>
                         </div>
                         <div class="msgError sw_activite_M"></div>
@@ -62,7 +61,7 @@
                     <td style="padding: 0 !important;">
                         <div class="ui right icon big input focus">
                             <textarea name="business" class="up_field" data-name="business" rows="2" style="border:0"
-                                placeholder="Ce qu'on leur fabrique">{!! $client->business !!}</textarea>
+                                @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif placeholder="Ce qu'on leur fabrique">{!! $client->business !!}</textarea>
                             <i class="icon" style="margin: -2px;"></i>
                         </div>
                         <div class="msgError sw_business_M"></div>
@@ -76,14 +75,16 @@
                     <td>
                         <div class="ui transparent right icon big input focus">
                             <input class="up_field" type="text" data-name="adresse1" value="{{ $client->adresse1 }}"
-                                placeholder="Adresse ..." style="padding: 3px;border-radius: 0;
+                                @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif placeholder="Adresse ..."
+                                style="padding: 3px;border-radius: 0;
                       ">
                             <i class="icon" style="margin: -2px;"></i>
                         </div>
                         <div class="ui divider"></div>
                         <div class="ui transparent right icon big input focus">
                             <input class="up_field" type="text" data-name="adresse2" value="{{ $client->adresse2 }}"
-                                placeholder="Adresse ..." style="padding: 3px;border-radius: 0;
+                                @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif placeholder="Adresse ..."
+                                style="padding: 3px;border-radius: 0;
                       ">
                             <i class="icon" style="margin: -2px;"></i>
                         </div>
@@ -99,7 +100,7 @@
                     <td>
                         <div class="ui transparent right icon big input focus" style="width: 200px">
                             <input class="up_field" type="text" data-name="cp" value="{{ $client->cp }}"
-                                placeholder="Code postal ..."
+                                placeholder="Code postal ..." @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif
                                 style="padding: 3px;border-radius: 0;
                     ">
                             <i class="icon" style="margin: -2px;"></i>
@@ -115,7 +116,8 @@
                     <td>
                         <div class="ui transparent right icon big input focus" style="width: 300px">
                             <input class="up_field" type="text" data-name="ville" value="{{ $client->ville }}"
-                                placeholder="Ville ..." style="padding: 3px;border-radius: 0;
+                                @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif placeholder="Ville ..."
+                                style="padding: 3px;border-radius: 0;
                     ">
                             <i class="icon" style="margin: -2px;"></i>
                         </div>
@@ -130,7 +132,8 @@
                     <td>
                         <div class="ui transparent right icon big input focus" style="width: 300px">
                             <input class="up_field" type="text" data-name="pays" value="{{ $client->pays }}"
-                                placeholder="Pays ..." style="padding: 3px;border-radius: 0;
+                                @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif placeholder="Pays ..."
+                                style="padding: 3px;border-radius: 0;
                     ">
                             <i class="icon" style="margin: -2px;"></i>
                         </div>
@@ -146,6 +149,7 @@
                         <div class="ui transparent right icon big input focus" style="width: 300px">
                             <input class="up_field" type="text" data-name="code_magisoft"
                                 value="{{ $client->code_magisoft }}" placeholder="Code Magisoft ..."
+                                @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif
                                 style="padding: 3px;border-radius: 0;
                     ">
                             <i class="icon" style="margin: -2px;"></i>
@@ -162,6 +166,7 @@
                         <div class="ui transparent right icon big input focus">
                             <input class="up_field" type="text" data-name="siteweb"
                                 value="{{ $client->siteweb }}" placeholder="site web ..."
+                                @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif
                                 style="padding: 3px;border-radius: 0;
                     ">
                             <i class="icon" style="margin: -2px;"></i>

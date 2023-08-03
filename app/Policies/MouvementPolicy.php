@@ -22,7 +22,7 @@ class MouvementPolicy
     public function access(User $user): bool
     {
         return match ($user->Profil) {
-            100, 9 => true,
+            100, 9, 8 => true,
             default => false
         };
     }

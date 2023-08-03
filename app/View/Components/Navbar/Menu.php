@@ -80,7 +80,7 @@ class Menu extends Component
                 "icon" => "users icon",
                 "icon-type" => "icon",
                 "type" => "item",
-                "can" => true,
+                "can" => Gate::allows('access', [\App\Models\User::class]),
                 "route" => "/user/index",
                 "current" => $this->current("users"),
             ],

@@ -1,4 +1,4 @@
-<div class="field fieldControl fieldControl field statut_id_F">
+{{-- <div class="field fieldControl fieldControl field statut_id_F">
     <div class="two fields">
         <div class="four wide field" style="margin-top: auto;margin-bottom: auto;">
             <label>Statut</label>
@@ -9,7 +9,7 @@
             <div class="msgError statut_id_M"></div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="two fields">
     <div class="four wide field" style="margin-top: auto;margin-bottom: auto;">
@@ -19,15 +19,15 @@
         <div class="ui calendar calendar_field">
             <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="text" class="date_field" name="date_livraison_souhaitee" style="font-size: 17px"
-                    placeholder=" Date de Livraison Souhaitée " readonly>
+                <input type="text" class="date_field" name="date_livraison_souhaitee"
+                    style="font-size: 17px;padding:4px" placeholder=" Date de Livraison Souhaitée " readonly>
             </div>
         </div>
         <div class="msgError date_livraison_souhaitee_M"></div>
     </div>
 </div>
 
-<div class="two fields">
+{{-- <div class="two fields">
     <div class="four wide field" style="margin-top: auto;margin-bottom: auto;">
         <label> Date de Livraison Confirmée </label>
     </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="msgError date_livraison_confirmee_M"></div>
     </div>
-</div>
+</div> --}}
 <br>
 <table class="ui celled striped table">
     <thead>

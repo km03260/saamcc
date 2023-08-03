@@ -53,7 +53,6 @@ class ClientPolicy
     {
         return match ($user->Profil) {
             100, 9 => true,
-            8 => $user->clients()->first()?->id == $client->id,
             default => false
         };
     }

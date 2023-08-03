@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
@@ -50,7 +52,7 @@ class ArticleController extends Controller
         $this->authorize('create', $this->model::class);
 
         $vdata = $this->vdata();
-        $client_id = $request->get('client_id') ?? null;
+        $client_id = Gate::allows('is_client', [App\Models\User::class]) ? Auth::user()->client  : ($request->get('client_id') ?? null);
         return response()->json([
             "template" => view('components.article.create', compact('vdata', 'client_id'))->render(),
         ], 200);
@@ -100,6 +102,8 @@ class ArticleController extends Controller
      */
     public function savewhat(StoreArticleRequest $request, Article $article)
     {
+        $this->authorize('update', [$this->model::class, $article]);
+
         $article->update($request->only($this->model->fillable));
 
         return response()->json([
@@ -114,7 +118,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        $this->authorize('create', $this->model::class);
+        $this->authorize('delete', [$this->model::class, $article]);
 
         $article->delete();
 

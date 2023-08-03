@@ -51,7 +51,11 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article): bool
     {
-        //
+        return match ($user->Profil) {
+            100, 9 => true,
+            8 => $article->prospect_id == $user->client,
+            default => false
+        };
     }
 
     /**
@@ -59,7 +63,11 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article): bool
     {
-        //
+        return match ($user->Profil) {
+            100, 9 => true,
+            8 => $article->prospect_id == $user->client,
+            default => false
+        };
     }
 
     /**

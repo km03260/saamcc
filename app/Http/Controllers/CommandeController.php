@@ -10,6 +10,8 @@ use App\Models\Commande;
 use App\Models\Lcommande;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CommandeController extends Controller
 {
@@ -51,7 +53,8 @@ class CommandeController extends Controller
         $this->authorize('create', $this->model::class);
 
         $vdata = $this->vdata();
-        $client_id = $request->get('client_id') ?? null;
+        $client_id = Gate::allows('is_client', [App\Models\User::class]) ? Auth::user()->client  : ($request->get('client_id') ?? null);
+
         return response()->json([
             "template" => view('components.commande.create', compact('vdata', 'client_id'))->render(),
         ], 200);
@@ -64,6 +67,8 @@ class CommandeController extends Controller
     {
         $this->authorize('create', $this->model::class);
         try {
+            $request->request->add(['statut_id' => 1]);
+
             $_prm =  $this->model::Create($request->only($this->model->fillable));
 
             foreach ($request->articles ?? [] as $key => $ligne) {
@@ -119,7 +124,7 @@ class CommandeController extends Controller
     public function fields(Client $client)
     {
         $vdata = $this->vdata();
-        $client_id = $client->id;
+        $client_id = Gate::allows('is_client', [App\Models\User::class]) ? Auth::user()->client  :  $client->id;
         return view('components.commande.fields', compact('vdata', 'client_id'))->render();
     }
 
@@ -137,6 +142,10 @@ class CommandeController extends Controller
     public function update(StoreCommandeRequest $request, Commande $commande)
     {
         $this->authorize('update', [$this->model::class, $commande]);
+
+        if ($request->has('date_livraison_confirmee')) {
+            $this->authorize('liv_confirme', [$this->model::class, $commande]);
+        }
 
         $_data = $request->only($this->model->fillable);
 
@@ -161,7 +170,7 @@ class CommandeController extends Controller
      */
     public function destroy(Commande $commande)
     {
-        $this->authorize('create', $this->model::class);
+        $this->authorize('delete', [$this->model::class, $commande]);
 
         $commande->delete();
 

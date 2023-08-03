@@ -27,11 +27,13 @@
                         value="" placeholder="Article" :vdata="$vdata" :push="false"
                         url="{{ Route('handle.select', 'article') }}" />
                 </div>
-                <div class="four wide field">
-                    <x-includes.search-drop name="prospect_id" classes="list_stocks{{ $vdata }}_filter"
-                        value="" placeholder="Client" :vdata="$vdata" :push="false"
-                        url="{{ Route('handle.select', 'client') }}" />
-                </div>
+                @if (!Gate::allows('is_client', [App\Models\User::class]))
+                    <div class="four wide field">
+                        <x-includes.search-drop name="prospect_id" classes="list_stocks{{ $vdata }}_filter"
+                            value="" placeholder="Client" :vdata="$vdata" :push="false"
+                            url="{{ Route('handle.select', 'client') }}" />
+                    </div>
+                @endif
             </div>
         </div>
         <div class="content" style="margin:0; padding:0;">

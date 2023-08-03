@@ -43,8 +43,10 @@ class Client extends Model
      * Grid Search scope
      *
      * @param Builder $query
+     * @param string|null $search
+     * @param string|null $selected
      * @param array $cond
-     * @return Builder
+     * @return \Illuminate\Database\Query\Builder
      */
     public function scopeSearch(Builder $query, String $search = null, String $selected = null, array $cond = [])
     {
@@ -64,6 +66,9 @@ class Client extends Model
                 "trash" => 0,
                 "type" => 'Client',
             ])
+            ->when(Auth::user()->Profil == 8, function ($q) {
+                $q->where('id', Auth::user()->clients()->first()->id);
+            })
             ->limit(100);
     }
 

@@ -109,9 +109,22 @@ class Lcommande extends Model
         ];
     }
 
+    /**
+     * Get article
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function article()
     {
         return $this->belongsTo(Article::class);
+    }
+
+    /**
+     * Get commande
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function commande()
+    {
+        return $this->belongsTo(Commande::class);
     }
 
     /**

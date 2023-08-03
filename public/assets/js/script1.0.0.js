@@ -3,7 +3,18 @@ var IS_SMALL_DEVICE = ($(window).width() < 768 ? true : false);
 var SCREENHEIGHT = $(window).height();
 var sys_loading = false;
 var currentSearchList = null;
-
+var calendarText = {
+    days: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+    months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre',
+        'Octobre', 'Novembre', 'Decembre'
+    ],
+    monthsShort: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+    today: 'Aujourd\'hui',
+    now: 'Maintenant',
+    am: 'AM',
+    pm: 'PM',
+    weekNo: 'Semaine'
+};
 
 /**
  * Datatable options
@@ -984,3 +995,44 @@ var resizePopup = function () { $('.ui.popup').css('max-height', $(window).heigh
 $(window).resize(function (e) {
     resizePopup();
 });
+
+function calendarHandle(params, success_action = null) {
+    $(params.element).calendar({
+        type: 'date',
+        today: true,
+        firstDayOfWeek: 1,
+        showWeekNumbers: true,
+        text: calendarText,
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                var date_format = `${day}/${month}/${year}`;
+                $(params.field).val(date_format)
+                return date_format;
+            }
+        },
+        parser: {
+            date: function (text, settings) {
+                return params.initialDate;
+            }
+        },
+        onChange: function (date, text, mode) {
+            if (date && success_action) {
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                var date_format = `${day}/${month}/${year}`;
+                $(params.field).val(date_format)
+                if (success_action) {
+                    success_action(date_format);
+                }
+            }
+        },
+        onHide: function () {
+            $(".RefOrd").focus();
+        }
+    });
+}

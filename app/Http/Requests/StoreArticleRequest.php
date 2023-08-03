@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class StoreArticleRequest extends FormRequest
@@ -35,15 +36,22 @@ class StoreArticleRequest extends FormRequest
     public function rules()
     {
 
+        $_in_prospect = match (Gate::allows('is_client', [App\Models\User::class])) {
+            true => "in:" . Auth::user()->client,
+            false => "",
+        };
+
         $rules = [
-            "prospect_id" => ['required', "exists:com_prospects,id"],
+            "prospect_id" => ['required', "exists:com_prospects,id", $_in_prospect],
             "ref" => ['required', 'max:50'],
             "designation" => ['nullable', 'max:150'],
             "puht" => ['nullable', 'numeric', 'regex:/^((?!0)\d{1,10}|0|\.\d{1,2})($|\.$|\.\d{1,2}$)/'],
         ];
+
         if ($this->methode == "savewhat") {
             return array_intersect_key($rules, request()->all());
         }
+
         return $rules;
     }
 

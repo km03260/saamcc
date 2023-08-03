@@ -8,6 +8,7 @@ use App\Models\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ClientController extends Controller
 {
@@ -95,7 +96,7 @@ class ClientController extends Controller
             ["name" => 'articles', "title" => 'Articles', 'color' => "cornflowerblue"],
             ["name" => 'stocks', "title" => 'Stock', 'color' => "springgreen"],
             ["name" => 'commandes', "title" => 'Commandes', 'color' => "#ffff0a"],
-            ["name" => 'users', "title" => 'Utilisateurs', 'color' => "darkgray"],
+            ["name" => 'users', "title" => 'Utilisateurs', 'color' => "darkgray", "can" => Gate::allows('access', App\Models\User::class)],
         ];
         return response()->json(['child' => view('components.client.show', compact('client', 'vdata', 'tabs'))->render()], 200);
     }
@@ -113,6 +114,8 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
+        $this->authorize('update', [$this->model::class, $client]);
+
         $client->update($request->only($this->model->fillable));
 
         return response()->json([

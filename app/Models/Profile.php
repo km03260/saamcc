@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Profile extends Model
@@ -40,6 +41,12 @@ class Profile extends Model
                 $q->where(function ($w) use ($search) {
                     $w->where('designation', 'LIKE', "%$search%");
                 });
+            })
+            ->when(Auth::user()->Profil == 9, function ($q) {
+                $q->whereIn('code', [8]);
+            })
+            ->when(Auth::user()->Profil == 8, function ($q) {
+                $q->whereIn('code', [8]);
             })
             ->limit(100);
     }

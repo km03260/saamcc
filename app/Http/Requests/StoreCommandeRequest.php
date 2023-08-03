@@ -7,6 +7,7 @@ use App\Rules\DateFormatFR;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class StoreCommandeRequest extends FormRequest
@@ -35,9 +36,14 @@ class StoreCommandeRequest extends FormRequest
      */
     public function rules()
     {
+        $_in_prospect = match (Gate::allows('is_client', [App\Models\User::class])) {
+            true => "in:" . Auth::user()->client,
+            false => "",
+        };
+
         $rules = [
-            "client_id" => ['required', "exists:com_prospects,id"],
-            "statut_id" => ['required', 'exists:cc_commande_statuts,id'],
+            "client_id" => ['required', "exists:com_prospects,id", $_in_prospect],
+            "statut_id" => ['nullable', 'exists:cc_commande_statuts,id'],
             "date_livraison_souhaitee" => ['nullable', new DateFormatFR('d/m/Y')],
             "date_livraison_confirmee" => ['nullable', new DateFormatFR('d/m/Y')],
             "articles.*.qty"  => ['nullable', 'numeric'],

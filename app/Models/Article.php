@@ -74,8 +74,12 @@ class Article extends Model
             })
             ->when($search, function ($q) use ($search) {
                 $q->where(function ($w) use ($search) {
-                    $w->where('ref', 'LIKE', "%$search%");
+                    $w->where('ref', 'LIKE', "%$search%")
+                        ->orWhere('designation', 'LIKE', "%$search%");
                 });
+            })
+            ->when(Auth::user()->Profil == 8, function ($q) {
+                $q->where('prospect_id', Auth::user()->clients()->first()->id);
             })
             ->limit(100);
     }

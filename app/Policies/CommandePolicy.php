@@ -53,7 +53,7 @@ class CommandePolicy
     {
         return match ($user->Profil) {
             100, 9 => true,
-            8 => $user->getClient->id == $commande->client_id && $commande->statut_id == 1,
+            8 => $user->clients()->first()?->id == $commande->client_id && $commande->statut_id == 1,
             default => false
         };
     }
@@ -61,9 +61,12 @@ class CommandePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Commande $commande): bool
+    public function liv_confirme(User $user, Commande $commande): bool
     {
-        //
+        return match ($user->Profil) {
+            100, 9 => true,
+            default => false
+        };
     }
 
     /**
@@ -80,5 +83,17 @@ class CommandePolicy
     public function forceDelete(User $user, Commande $commande): bool
     {
         //
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function delete(User $user, Commande $commande): bool
+    {
+        return match ($user->Profil) {
+            100, 9 => true,
+            8 => $user->clients()->first()?->id == $commande->client_id && $commande->statut_id == 1,
+            default => false
+        };
     }
 }

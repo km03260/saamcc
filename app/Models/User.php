@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -98,6 +99,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * Appends atrbuttes
+     *
+     * @var array
+     */
+    protected $append = [
+        'client',
+    ];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
@@ -184,6 +194,16 @@ class User extends Authenticatable
         return $this->belongsTo(Profile::class, 'Profil', 'code');
     }
 
+
+    /**
+     * Get the user's related client.
+     */
+    public function client(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->clients()->first()?->id,
+        );
+    }
 
     /**
      * The "booted" method of the model.

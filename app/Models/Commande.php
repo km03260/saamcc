@@ -42,7 +42,10 @@ class Commande extends Model
             })
             ->when(key_exists('id', $cond), function ($q) use ($cond) {
                 $q->where('id', $cond['id']);
-            });
+            })
+            ->when(Auth::user()->Profil == 8, function ($q) {
+                $q->where('client_id', Auth::user()->clients()->first()->id);
+            });;
     }
 
 

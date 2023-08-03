@@ -1,3 +1,5 @@
 @foreach ($items as $item)
-    <x-navbar.item :item="$item" />
+    @if ($item['can'])
+        <x-navbar.item :item="$item" />
+    @endif
 @endforeach
