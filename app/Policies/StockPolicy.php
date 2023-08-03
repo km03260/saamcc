@@ -4,10 +4,13 @@ namespace App\Policies;
 
 use App\Models\Stock;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class StockPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
@@ -22,7 +25,7 @@ class StockPolicy
     public function access(User $user): bool
     {
         return match ($user->Profil) {
-            100, 9, 8 => true,
+            100, 9, 8, 10 => true,
             default => false
         };
     }
@@ -50,9 +53,12 @@ class StockPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Stock $stock): bool
+    public function update(User $user): bool
     {
-        //
+        return match ($user->Profil) {
+            100, 9, 10 => true,
+            default => false
+        };
     }
 
     /**
@@ -66,9 +72,9 @@ class StockPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Stock $stock): bool
+    public function upStock(User $user): bool
     {
-        //
+        return $user->actions->contains($this->action("3_update-stock"));
     }
 
     /**

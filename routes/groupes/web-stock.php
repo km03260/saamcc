@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Gate;
+
 Route::controller(App\Http\Controllers\StockController::class)->group(
     function () {
         Route::prefix('stock')->group(

@@ -38,7 +38,7 @@ class StoreUserRequest extends FormRequest
         $rules = [
             "Nom" => ['required'],
             "Prenom" => ['required'],
-            "Login" => ['required', 'unique:NEW_User,Login'],
+            "Login" => ['required', 'unique:sso_user,Login'],
             "Profil" => ['required'],
             "Email" => ['required', 'email'],
             "Tel" => ['nullable'],

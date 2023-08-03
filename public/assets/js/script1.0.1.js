@@ -77,9 +77,18 @@ $(document).on('click', '.ax_get', function (e) {
     var message = !confirm ? _ele_.data('message') : false;
     var rtl = _ele_.data('rtl') != undefined ? true : false;
     var target = _ele_.data('target') != undefined ? _ele_.data('target') : null;
+    var inputs = _ele_.data('inputs');
+    var ids = ``;
+    if (inputs != undefined) {
+        if ($(`${inputs}`).length > 0) {
+            $.map($(`${inputs}`), function (_ein) {
+                ids += `,${_ein.value}`
+            })
+        }
+    }
     confirm_popup(message, color, () => {
         _ele_.addClass('disabled loading');
-        ajax_get(null, `${url}?${appends}`,
+        ajax_get(null, `${url}?${appends}&ids=${ids}`,
             res => {
                 _ele_.removeClass('disabled loading');
                 if (res.ok) {
@@ -594,10 +603,18 @@ function HasValue(param) {
         case "NaN":
             return 0;
             break;
+        case NaN:
+            return 0;
+            break;
         default:
             return param;
             break;
     }
+}
+
+function notNaN(val) {
+    if (isNaN(val)) return 0;
+    return val;
 }
 
 /**

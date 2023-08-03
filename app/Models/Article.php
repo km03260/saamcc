@@ -63,11 +63,17 @@ class Article extends Model
     public function scopeSearch(Builder $query, String $search = null, String $selected = null, array $cond = [])
     {
         return $query
-            ->select(DB::raw("ref as name, id as value, ref as text ,
+            ->select(DB::raw("ref as name, id as value, ref as text , designation as description,
                               CASE WHEN id = '$selected' THEN true ELSE false END AS selected
                     "))
             ->when(key_exists('id', $cond), function ($q) use ($cond) {
                 $q->where("id", $cond['id']);
+            })
+            ->when(key_exists('ids', $cond), function ($q) use ($cond) {
+                $q->whereNotIn("id", array_filter(explode(',', $cond['ids'])));
+            })
+            ->when(key_exists('notin', $cond), function ($q) use ($cond) {
+                $q->whereNotIn("id", array_filter(explode(',', $cond['notin'])));
             })
             ->when(key_exists('prospect_id', $cond), function ($q) use ($cond) {
                 $q->where('prospect_id', $cond['prospect_id']);
@@ -142,49 +148,6 @@ class Article extends Model
                 "visible" => Gate::allows('create', [self::class]),
                 'width' => "55px"
             ],
-            // [
-            //     "name" => "Code",
-            //     "data" => "code_article",
-            //     'column' => 'code_article',
-            //     "render" => false,
-            //     "className" => 'left aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Famille",
-            //     "data" => "famille.nom",
-            //     'column' => 'famille.nom',
-            //     "render" => 'relation',
-            //     "className" => 'left aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Tailles",
-            //     "data" => "tailles",
-            //     'column' => 'tailles',
-            //     "render" => false,
-            //     "className" => 'left aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Points",
-            //     "data" => "points",
-            //     'column' => 'points',
-            //     "render" => false,
-            //     "className" => 'right aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Prix",
-            //     "data" => "prix",
-            //     'column' => 'prix',
-            //     "render" => false,
-            //     "className" => 'right aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Dans le métier",
-            //     "data" => "metier_checkbox",
-            //     'column' => "/handle/render?com=_metier_checkbox_column&model=article&metier=" . (key_exists('vmetier', $cond) ? $cond['vmetier'] : ''),
-            //     "render" => 'url',
-            //     "className" => 'center aligned open p-0',
-            //     "visible" => key_exists('vmetier', $cond),
-            // ],
         ];
     }
 

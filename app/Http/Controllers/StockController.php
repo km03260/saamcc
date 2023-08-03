@@ -114,7 +114,10 @@ class StockController extends Controller
      */
     public function sens(Request $request, Int $dir, Article $article, Zone $zone)
     {
-        $this->authorize('create', $this->model::class);
+        $this->authorize('update', $this->model::class);
+        if ($dir == 3) {
+            $this->authorize('upStock', $this->model::class);
+        }
         $_stock = $this->model::firstOrCreate(['article_id' => $article->id, 'zone_id' => $zone->id]);
         $_old_qty = $_stock->qte;
         $_stock->update(['qte' => $request->qty]);
@@ -128,7 +131,7 @@ class StockController extends Controller
 
         return response()->json([
             "ok" => "Stock est mis à jour",
-            "_row" => $this->model::Grid(['article_id' => $article->id, 'zone_id' => $zone->id])->first(),
+            "_row" => $this->model::Grid(['article_id' => $article->id])->first(),
             "list" => "stocks",
         ], 200);
     }

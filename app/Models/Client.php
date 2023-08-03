@@ -188,6 +188,26 @@ class Client extends Model
     }
 
     /**
+     * related commandes
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function commandes()
+    {
+        return $this->hasMany(Commande::class);
+    }
+
+    /**
+     * related articles
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'prospect_id');
+    }
+
+    /**
      * The "booted" method of the model.
      *
      * @return void
@@ -199,6 +219,11 @@ class Client extends Model
         });
         static::updating(function ($_mdl) {
             $_mdl->updated_by = Auth::id();
+        });
+        static::deleting(function ($_mdl) {
+            $_mdl->commandes->each->delete();
+            $_mdl->articles->each->delete();
+            $_mdl->users()->sync([]);
         });
     }
 }

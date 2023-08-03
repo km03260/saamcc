@@ -48,6 +48,7 @@
         <tr>
             <th colspan="3" style="padding: 4px 11px;">
                 Articles de commande <div class="ui mini blue icon button right floated ax_get"
+                    data-inputs=".{{ $vdata }}_lcmd_rows input[type='hidden']:not(.prompt,.refer)"
                     data-url="{{ Route('commande.ligne.row') }}?target=.{{ $vdata }}_lcmd_rows&client={{ $client_id }}&ressourc">
                     <i class="add icon"></i>&nbsp;Ajouter
                     article

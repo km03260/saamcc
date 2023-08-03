@@ -76,9 +76,10 @@ class CommandeController extends Controller
                 $_article = Article::Grid(['id', $ligne['id']])->first();
 
                 if ($ligne['id'] && $_article && $ligne['qty'] > 0) {
-                    Lcommande::create([
+                    Lcommande::updateOrCreate([
                         'commande_id' => $_prm->id,
                         'article_id' => $ligne['id'],
+                    ], [
                         'qty' => $ligne['qty'],
                         'pu' =>  $_article->puht,
                     ]);
@@ -123,6 +124,8 @@ class CommandeController extends Controller
      */
     public function fields(Client $client)
     {
+        $this->authorize('create', $this->model::class);
+
         $vdata = $this->vdata();
         $client_id = Gate::allows('is_client', [App\Models\User::class]) ? Auth::user()->client  :  $client->id;
         return view('components.commande.fields', compact('vdata', 'client_id'))->render();

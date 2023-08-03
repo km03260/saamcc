@@ -3,10 +3,13 @@
 namespace App\Policies;
 
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
+    use HandlesAuthorization;
+
     /**
      * Determine whether the user can view any models.
      */
@@ -72,6 +75,14 @@ class UserPolicy
     public function is_client(User $user): bool
     {
         return $user->Profil == 8;
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     */
+    public function is_operateur(User $user): bool
+    {
+        return $user->Profil == 10;
     }
 
     /**

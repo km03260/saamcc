@@ -34,12 +34,18 @@ class StoreMouvementRequest extends FormRequest
      */
     public function rules()
     {
+        $max_stock =  (int) request()->article->stocks()->where('zone_id', request()->zone->id)->first()?->qte ?? 0;
+
         $max = match (request()->dir) {
             '0' => 'min:0',
             '1', '2' => 'max:' . (int) request()->article->stocks()->where('zone_id', request()->zone->id)->first()?->qte ?? 0,
         };
+
+        $_range = ((int) request()->qte ?? 0) + ((int) request()->perte ?? 0) > $max_stock ? "ends_with:max" : '';
+
         $rules = [
-            "qte"  => ['nullable', 'numeric', 'min:0', $max],
+            "qte"  => ['nullable', 'numeric', 'min:0', $max, $_range],
+            "perte"  => ['nullable', 'numeric', 'min:0', $max],
         ];
         if ($this->methode == "savewhat") {
             return array_intersect_key($rules, request()->all());
@@ -66,7 +72,9 @@ class StoreMouvementRequest extends FormRequest
      */
     public function messages()
     {
-        return [];
+        return [
+            'qte.ends_with' => "La quantité transférée avec perte ne doit pas dépasser la quantité prélevée sur le stock"
+        ];
     }
 
     /**

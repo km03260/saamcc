@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\permission\Action;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -202,6 +203,22 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get: fn () => $this->clients()->first()?->id,
+        );
+    }
+
+
+    /**
+     * Define relationship with actions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function actions()
+    {
+        return $this->belongsToMany(
+            Action::class,
+            'sso_access_rights',
+            'user_id',
+            'action_id'
         );
     }
 

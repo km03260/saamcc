@@ -9,6 +9,7 @@ use Illuminate\View\Component;
 
 class Menu extends Component
 {
+
     /**
      * Create a new component instance.
      *
@@ -16,7 +17,6 @@ class Menu extends Component
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -45,7 +45,7 @@ class Menu extends Component
                 "icon-type" => "icon",
                 "type" => Auth::user()->Profil == 8 ?  "inline" : 'item',
                 "can" => Gate::allows('access', [\App\Models\Client::class]),
-                "route" => "/",
+                "route" => Gate::allows('is_operateur', [App\Models\User::class]) ? '/client' : '/',
                 "current" => $this->current("clients"),
             ],
             "Articles" => [
@@ -53,7 +53,7 @@ class Menu extends Component
                 "icon" => "building icon",
                 "icon-type" => "icon",
                 "type" => "item",
-                "can" => true,
+                "can" => Gate::allows('access', [\App\Models\Article::class]),
                 "route" => "/article/index",
                 "current" => $this->current("articles"),
             ],
@@ -62,8 +62,8 @@ class Menu extends Component
                 "icon" => "building icon",
                 "icon-type" => "icon",
                 "type" => "item",
-                "can" => true,
-                "route" => "/stock/index",
+                "can" => Gate::allows('access', [\App\Models\Stock::class]),
+                "route" => Gate::allows('is_operateur', [App\Models\User::class]) ? '/' : '/stock/index',
                 "current" => $this->current("stocks"),
             ],
             "Commandes" => [
@@ -71,7 +71,7 @@ class Menu extends Component
                 "icon" => "shopping cart icon",
                 "icon-type" => "icon",
                 "type" => "item",
-                "can" => true,
+                "can" => Gate::allows('access', [\App\Models\Commande::class]),
                 "route" => "/commande/index",
                 "current" => $this->current("commandes"),
             ],

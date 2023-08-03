@@ -7,10 +7,10 @@
         <p>{{ $article->ref }} &nbsp;&nbsp;{{ $article->description }}</p>
     </div>
 
-    <div class="two fields">
+    <div class="three fields">
         @switch($dir)
             @case(1)
-                <div class="seven wide field">
+                <div class="six wide field">
                     @if ($zones->where('id', $zone->id)->first())
                         <div class="ui compact menu" style="border: 1px solid #d32212">
                             <a class="item" style="min-width:150px">
@@ -25,7 +25,15 @@
                     @endif
 
                 </div>
-                <div class="two wide field"></div>
+                <div class="three wide field">
+                    <div class="ui compact menu" style="border: 1px solid #d32212;background: #d760551c;">
+                        <a class="item" style="min-width:65px">
+                            Perte
+                        </a>
+                        <a class="item perte_{{ $vdata }}">0</a>
+                    </div>
+                    <input type="hidden" id="sperte_{{ $vdata }}" value="">
+                </div>
                 <div class="seven wide field">
                     @if ($zones->where('id', $zone->id)->first())
                         <div class="ui compact menu right floated" style="border: 1px solid #21ba45">
@@ -55,13 +63,17 @@
                 <input name="qte" id="qte_{{ $vdata }}"
                     max="{{ $article->stocks()->where('zone_id', $zone->id)->first()?->qte ?? 0 }}" min="0"
                     type="number" placeholder="Quantité" style="max-width: 150px; padding:4px 11px" />
-                <div class="msgError qte_M"></div>
-
+                <div class="msgError qte_M"></div> <br>
+                <input name="perte" id="perte_{{ $vdata }}"
+                    max="{{ $article->stocks()->where('zone_id', $zone->id)->first()?->qte ?? 0 }}" min="0"
+                    type="number" placeholder="Quantité perte"
+                    style="max-width: 150px; padding:4px 11px;border: 1px solid #d32212;" />
+                <div class="msgError perte_M"></div>
             </div>
         @break
 
         @case(2)
-            <div class="seven wide field">
+            <div class="six wide field">
                 @if ($zones->where('id', $zone->id - 1)->first())
                     <div class="ui compact menu" style="border: 1px solid #d32212">
                         <a class="item">
@@ -76,7 +88,15 @@
                 @endif
 
             </div>
-            <div class="two wide field"></div>
+            <div class="three wide field">
+                <div class="ui compact menu" style="border: 1px solid #d32212;background: #d760551c;">
+                    <a class="item" style="min-width:65px">
+                        Perte
+                    </a>
+                    <a class="item perte_{{ $vdata }}">0</a>
+                </div>
+                <input type="hidden" id="sperte_{{ $vdata }}" value="">
+            </div>
             <div class="seven wide field">
                 @if ($zones->where('id', $zone->id)->first())
                     <div class="ui compact menu right floated" style="border: 1px solid #21ba45">
@@ -104,8 +124,12 @@
                 <input name="qte" id="qte_{{ $vdata }}"
                     max="{{ $article->stocks()->where('zone_id', $zone->id)->first()?->qte ?? 0 }}" min="0"
                     type="number" placeholder="Quantité" style="max-width: 150px; padding:4px 11px" />
-                <div class="msgError qte_M"></div>
-
+                <div class="msgError qte_M"></div> <br>
+                <input name="perte" id="perte_{{ $vdata }}"
+                    max="{{ $article->stocks()->where('zone_id', $zone->id)->first()?->qte ?? 0 }}" min="0"
+                    type="number" placeholder="Quantité perte"
+                    style="max-width: 150px; padding:4px 11px;border: 1px solid #d32212;" />
+                <div class="msgError perte_M"></div>
             </div>
         @break
 
@@ -146,18 +170,18 @@
         style="width: 110px; padding: 4px 11px"><i class="save icon"></i>
         Valider</button>
 
-    <button class="ui mini button grey" type="button" style="width: 110px; padding: 4px 11px" data-izimodal-close=""
-        data-izimodal-transitionout="bounceOutDown"> Annuler</button>
+    <button class="ui mini button grey" type="button" style="width: 110px; padding: 4px 11px"
+        data-izimodal-close="" data-izimodal-transitionout="bounceOutDown"> Annuler</button>
 
 
     <script>
+        var qstock = {{ $article->stocks()->where('zone_id', $zone->id)->first()?->qte ?? 0 }};
         $(document).on('change', '#qte_{{ $vdata }}', function(e) {
-            var _val = e.target.value;
-            if (e.target.value > {{ $article->stocks()->where('zone_id', $zone->id)->first()?->qte ?? 0 }} &&
-                {{ $dir }} != 0) {
-                $('#qte_{{ $vdata }}').val(
-                    {{ $article->stocks()->where('zone_id', $zone->id)->first()?->qte ?? 0 }});
-                _val = {{ $article->stocks()->where('zone_id', $zone->id)->first()?->qte ?? 0 }};
+            var _val = notNaN(parseInt(e.target.value));
+            var _perte = notNaN(parseInt($('#perte_{{ $vdata }}').val()));
+            if (e.target.value > (qstock - _perte) && {{ $dir }} != 0) {
+                $('#qte_{{ $vdata }}').val(qstock - _perte);
+                _val = qstock - _perte;
             }
             if (e.target.value < 0) {
                 $('#qte_{{ $vdata }}').val(0);
@@ -166,10 +190,29 @@
             _val = parseInt(_val);
             if ($(`#sort_{{ $vdata }}`).length > 0) {
                 $(`.tsort_{{ $vdata }}`).text(parseInt(parseInt($(`#sort_{{ $vdata }}`).val()) -
-                    _val));
+                    (_val + _perte)));
             }
             if ($(`#enter_{{ $vdata }}`).length > 0) {
                 $(`.tenter_{{ $vdata }}`).text(parseInt(parseInt($(`#enter_{{ $vdata }}`).val()) +
+                    _val));
+            }
+        });
+        $(document).on('change', '#perte_{{ $vdata }}', function(e) {
+            var _val = notNaN(parseInt(e.target.value));
+            var _qty = notNaN(parseInt($('#qte_{{ $vdata }}').val()));
+            if (e.target.value > (qstock - _qty) && {{ $dir }} != 0) {
+                $('#perte_{{ $vdata }}').val(qstock - _qty);
+                _val = qstock - _qty;
+            }
+            if (e.target.value < 0) {
+                $('#perte_{{ $vdata }}').val(0);
+                _val = 0;
+            }
+            $('.perte_{{ $vdata }}').text(_val);
+            _val = parseInt(_val) + _qty;
+            if ($(`#sort_{{ $vdata }}`).length > 0) {
+                $(`.tsort_{{ $vdata }}`).text(parseInt(parseInt($(`#sort_{{ $vdata }}`)
+                        .val()) -
                     _val));
             }
         });

@@ -6,7 +6,7 @@
 <script src="{{ asset('assets/Semantic-UI-CSS-master/calendar/calendar.min.js') }}"></script>
 <script src="{{ asset('assets/modal/js/iModal.min.js') }}"></script>
 <script src="{{ asset('assets/js/moment.js') }}"></script>
-<script src="{{ asset('assets/js/script1.0.0.js') }}"></script>
+<script src="{{ asset('assets/js/script1.0.1.js') }}"></script>
 @yield('scripts')
 @stack('script')
 </body>

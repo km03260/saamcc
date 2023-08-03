@@ -2,7 +2,7 @@
      <td>
          <x-includes.search-drop name="articles[{{ $vdata }}][id]" classes="" value=""
              placeholder="Sélectionner l'article" :vdata="$vdata" :push="false"
-             url="{{ Route('handle.select', 'article') }}?prospect_id={{ $client }}&sources" />
+             url="{{ Route('handle.select', 'article') }}?prospect_id={{ $client }}&ids={{ $ids ?? '' }}&notin={{ $notIn ?? '' }}&sources" />
          <div class="msgError articles_{{ $vdata }}_id_M"></div>
      </td>
      <td>

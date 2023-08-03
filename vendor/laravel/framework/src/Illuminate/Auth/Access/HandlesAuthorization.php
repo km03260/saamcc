@@ -2,8 +2,16 @@
 
 namespace Illuminate\Auth\Access;
 
+use App\Models\permission\Action;
+use App\Models\permission\Module;
+
 trait HandlesAuthorization
 {
+    public function __construct()
+    {
+        $this->moduleID = Module::whereId(3)->value('id');
+    }
+
     /**
      * Create a new access response.
      *
@@ -51,5 +59,17 @@ trait HandlesAuthorization
     public function denyAsNotFound($message = null, $code = null)
     {
         return Response::denyWithStatus(404, $message, $code);
+    }
+
+
+    /**
+     * Get related action ID
+     *
+     * @param string $name
+     * @return integer
+     */
+    protected function action(string $name): int
+    {
+        return Action::whereCode($name)->whereModuleId($this->moduleID)->value('id') ?? 7777;
     }
 }

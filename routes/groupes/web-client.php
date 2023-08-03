@@ -1,8 +1,14 @@
 <?php
 
+
 Route::controller(App\Http\Controllers\ClientController::class)->group(
     function () {
-        Route::get('/', 'index')->name('clients');
+
+        Route::middleware(['operator', 'can:access,App\Models\Client'])->group(
+            function () {
+                Route::get('/', 'index')->name('clients');
+            }
+        );
         Route::prefix('client')->group(
             function () {
                 Route::get('/grid', 'grid')->name('client.grid');

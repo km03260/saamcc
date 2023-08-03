@@ -56,6 +56,7 @@ class Mouvement extends Model
         "sen_id",
         'zone_id',
         "qte",
+        "perte",
     ];
 
 
@@ -92,6 +93,14 @@ class Mouvement extends Model
                 "width" => "75px",
             ],
             [
+                "name" => "Perte",
+                'data' => "perte",
+                'column' => "perte",
+                "render" => false,
+                "className" => 'right aligned',
+                "width" => "75px",
+            ],
+            [
                 "name" => "Date",
                 'data' => "created_at",
                 'column' => "created_at",
@@ -99,47 +108,6 @@ class Mouvement extends Model
                 "className" => 'center aligned',
                 "width" => "75px",
             ],
-            // [
-            //     "name" => "Référence",
-            //     "data" => "ref",
-            //     'column' => 'ref',
-            //     "render" => false,
-            //     "edit" => 'data-field="red" data-model="/article/savewhat" data-type="text"',
-            //     "className" => 'left aligned open_child open editFieldLine',
-            // ],
-            // [
-            //     "name" => "Désignation",
-            //     "data" => "designation",
-            //     'column' => 'designation',
-            //     "render" => false,
-            //     "edit" => 'data-field="designation" data-model="/article/savewhat" data-type="text"',
-            //     "className" => 'left aligned open_child open editFieldLine',
-            // ],
-            // [
-            //     "name" => "PU",
-            //     "data" => "puht",
-            //     'column' => 'puht',
-            //     "render" => false,
-            //     "edit" => 'data-field="puht" data-model="/article/savewhat" data-type="decimal"',
-            //     "className" => 'right aligned  editFieldLine',
-            // ],
-            // [
-            //     "name" => "Client",
-            //     "data" => "client.raison_sociale",
-            //     'column' => 'prospect_id',
-            //     "render" => 'relation',
-            //     'visible' => key_exists('wclient', $cond),
-            //     "className" => 'right aligned',
-            // ],
-            // [
-            //     "name" => "",
-            //     "data" => "default",
-            //     'column' => "/handle/render?com=default&model=article&D=D&width=50",
-            //     "render" => 'url',
-            //     "className" => 'center aligned open p-0',
-            //     "visible" => Gate::allows('create', [self::class]),
-            //     'width' => "55px"
-            // ],
         ];
     }
 

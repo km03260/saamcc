@@ -22,7 +22,7 @@ class CommandePolicy
     public function access(User $user): bool
     {
         return match ($user->Profil) {
-            100, 9, 8 => true,
+            100, 9, 8, 10 => true,
             default => false
         };
     }

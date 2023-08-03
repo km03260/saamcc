@@ -13,6 +13,12 @@ class Stock extends Model
     use HasFactory;
 
     /**
+     * Table name
+     * @var string
+     */
+    protected $table = "stocks";
+
+    /**
      * Scope grid
      * 
      * @param Builder $query
@@ -23,13 +29,14 @@ class Stock extends Model
     {
         $cond = array_filter($cond);
         return $query
-            ->select(DB::raw("article_id AS id, article_id"))
+            ->leftJoin('mouvements as m', "$this->table.id", "m.stock_id")
+            ->select(DB::raw("article_id AS id, article_id, SUM(m.perte) AS total_perte"))
             ->with(['article'])
             ->when(key_exists('article_id', $cond), function ($q) use ($cond) {
                 $q->where('article_id', $cond['article_id']);
             })
             ->when(key_exists('zone_id', $cond), function ($q) use ($cond) {
-                $q->where('zone_id', $cond['zone_id']);
+                $q->where("$this->table.zone_id", $cond['zone_id']);
             })
             ->when(key_exists('prospect_id', $cond), function ($q) use ($cond) {
                 $q->whereHas('article', function ($qha) use ($cond) {
@@ -56,38 +63,6 @@ class Stock extends Model
     public static function gridColumns($cond = []): array
     {
         $_columns = [
-            // [
-            //     "name" => "Id",
-            //     "data" => "id",
-            //     'column' => "id",
-            //     "render" => false,
-            //     "className" => 'left aligned',
-            //     "width" => "75px",
-            // ],
-            // [
-            //     "name" => "Référence",
-            //     "data" => "ref",
-            //     'column' => 'ref',
-            //     "render" => false,
-            //     "edit" => 'data-field="red" data-model="/article/savewhat" data-type="text"',
-            //     "className" => 'left aligned open_child open editFieldLine',
-            // ],
-            // [
-            //     "name" => "Désignation",
-            //     "data" => "designation",
-            //     'column' => 'designation',
-            //     "render" => false,
-            //     "edit" => 'data-field="designation" data-model="/article/savewhat" data-type="text"',
-            //     "className" => 'left aligned open_child open editFieldLine',
-            // ],
-            // [
-            //     "name" => "PU",
-            //     "data" => "puht",
-            //     'column' => 'puht',
-            //     "render" => false,
-            //     "edit" => 'data-field="puht" data-model="/article/savewhat" data-type="decimal"',
-            //     "className" => 'right aligned  editFieldLine',
-            // ],
             [
                 "name" => "Référence",
                 "data" => "article.ref",
@@ -110,58 +85,6 @@ class Stock extends Model
                 'visible' => key_exists('wclient', $cond),
                 "className" => 'left aligned open_child',
             ],
-            // [
-            //     "name" => "",
-            //     "data" => "default",
-            //     'column' => "/handle/render?com=default&model=article&D=D&width=50",
-            //     "render" => 'url',
-            //     "className" => 'center aligned open p-0',
-            //     "visible" => Gate::allows('create', [self::class]),
-            //     'width' => "55px"
-            // ],
-            // [
-            //     "name" => "Code",
-            //     "data" => "code_article",
-            //     'column' => 'code_article',
-            //     "render" => false,
-            //     "className" => 'left aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Famille",
-            //     "data" => "famille.nom",
-            //     'column' => 'famille.nom',
-            //     "render" => 'relation',
-            //     "className" => 'left aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Tailles",
-            //     "data" => "tailles",
-            //     'column' => 'tailles',
-            //     "render" => false,
-            //     "className" => 'left aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Points",
-            //     "data" => "points",
-            //     'column' => 'points',
-            //     "render" => false,
-            //     "className" => 'right aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Prix",
-            //     "data" => "prix",
-            //     'column' => 'prix',
-            //     "render" => false,
-            //     "className" => 'right aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Dans le métier",
-            //     "data" => "metier_checkbox",
-            //     'column' => "/handle/render?com=_metier_checkbox_column&model=article&metier=" . (key_exists('vmetier', $cond) ? $cond['vmetier'] : ''),
-            //     "render" => 'url',
-            //     "className" => 'center aligned open p-0',
-            //     "visible" => key_exists('vmetier', $cond),
-            // ],
         ];
 
         foreach (Zone::orderBy('order')->get() as $zone) {
@@ -175,6 +98,13 @@ class Stock extends Model
             ]);
         }
 
+        array_push($_columns, [
+            "name" => "total des pertes",
+            "data" => "total_perte",
+            'column' => "total_perte",
+            "render" => false,
+            "className" => 'right aligned',
+        ]);
         array_push($_columns, [
             "name" => "Total",
             "data" => "total_zone_qty_$zone->id",
@@ -195,6 +125,16 @@ class Stock extends Model
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+    /**
+     * get related mouvement
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function mouvements()
+    {
+        return $this->hasMany(Mouvement::class);
     }
 
     /**
@@ -226,6 +166,8 @@ class Stock extends Model
         "zone_id",
         "qte",
     ];
+
+    const LAST_ZONE = 4;
 
     /**
      * The "booted" method of the model.

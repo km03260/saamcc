@@ -2,13 +2,14 @@
     <form class="ui small form" id="lcommmande_new_form-{{ $vdata }}">
         <input type="hidden" name="commande_id" value="{{ $commande->id }}">
         <div class="msgError commande_id_M"></div>
-
         <table class="ui celled striped table">
             <thead>
                 <tr>
                     <th colspan="3" style="padding: 4px 11px;">
-                        Articles de commande <div class="ui mini blue icon button right floated ax_get"
-                            data-url="{{ Route('commande.ligne.row') }}?target=.{{ $vdata }}_lcmd_rows&client={{ $commande->client_id }}&ressourc">
+                        Articles de commande <div
+                            class="ui mini blue icon button right floated ax_get {{ $vdata }}-nrbtn"
+                            data-inputs=".{{ $vdata }}_lcmd_rows input[type='hidden']:not(.prompt,.refer)"
+                            data-url="{{ Route('commande.ligne.row') }}?target=.{{ $vdata }}_lcmd_rows&client={{ $commande->client_id }}&notIn={{ implode(',', $commande->articles->pluck('article_id')->toArray()) }}&ressourc">
                             <i class="add icon"></i>&nbsp;Ajouter
                             article
                         </div>
@@ -21,7 +22,7 @@
                 </tr>
             </thead>
             <tbody class="{{ $vdata }}_lcmd_rows">
-                <x-commande.ligne.create-rows :client="$commande->client_id" />
+                {{-- <x-commande.ligne.create-rows :client="$commande->client_id" /> --}}
             </tbody>
         </table>
 
@@ -46,3 +47,8 @@
 
     </form>
 </div>
+<script>
+    setTimeout(() => {
+        $('.{{ $vdata }}-nrbtn').click();
+    }, 350);
+</script>

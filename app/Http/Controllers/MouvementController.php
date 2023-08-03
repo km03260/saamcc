@@ -63,63 +63,63 @@ class MouvementController extends Controller
      */
     public function store(StoreMouvementRequest $request, string $dir, Article $article, Zone $zone)
     {
-        $this->authorize('create', Stock::class);
-
+        $this->authorize('update', Stock::class);
         $_stock = Stock::firstOrCreate(['article_id' => $article->id, 'zone_id' => $zone->id]);
-        // $_old_qty = $_stock->qte;
-        // $_stock->update(['qte' => $request->qty]);
+        $qte = (int)$request->qte;
+        $perte = (int)$request->perte;
 
         switch ($dir) {
             case '1':
                 $_e_stock = Stock::firstOrCreate(['article_id' => $article->id, 'zone_id' => $zone->id + 1]);
-                $_stock->decrement('qte', $request->qte);
-                $_e_stock->increment('qte', $request->qte);
+                $_stock->decrement('qte', $qte + $perte);
+                $_e_stock->increment('qte', $qte);
                 $this->model::create([
                     "stock_id" => $_stock->id,
                     "sen_id" => 2,
                     "zone_id" => $zone->id,
-                    "qte" => $request->qte
+                    "qte" => $qte,
+                    "perte" => $perte
                 ]);
                 $this->model::create([
                     "stock_id" => $_e_stock->id,
                     "sen_id" => 1,
                     "zone_id" => $zone->id + 1,
-                    "qte" => $request->qte
+                    "qte" => $qte
                 ]);
                 break;
             case '2':
                 $_e_stock = Stock::firstOrCreate(['article_id' => $article->id, 'zone_id' => $zone->id - 1]);
-                $_stock->decrement('qte', $request->qte);
-                $_e_stock->increment('qte', $request->qte);
+                $_stock->decrement('qte', $qte + $perte);
+                $_e_stock->increment('qte', $qte);
                 $this->model::create([
                     "stock_id" => $_stock->id,
-                    "sen_id" => 1,
+                    "sen_id" => 2,
                     "zone_id" => $zone->id,
-                    "qte" => $request->qte
+                    "qte" => $qte,
+                    "perte" => $perte
                 ]);
-                $_e_stock->increment('qte', $request->qte);
                 $this->model::create([
                     "stock_id" => $_e_stock->id,
-                    "sen_id" => 2,
+                    "sen_id" => 1,
                     "zone_id" => $zone->id - 1,
-                    "qte" => $request->qte
+                    "qte" => $qte
                 ]);
                 break;
 
             default:
-                $_stock->increment('qte', $request->qte);
+                $_stock->increment('qte', $qte);
                 $this->model::create([
                     "stock_id" => $_stock->id,
                     "sen_id" => 3,
                     "zone_id" => $zone->id,
-                    "qte" => $request->qte
+                    "qte" => $qte
                 ]);
                 break;
         }
 
         return response()->json([
             "ok" => "Stock est mis à jour",
-            "_row" => Stock::Grid(['article_id' => $article->id, 'zone_id' => $zone->id])->first(),
+            "_row" => Stock::Grid(['article_id' => $article->id])->first(),
             "list" => "stocks",
         ], 200);
     }

@@ -57,10 +57,12 @@ class LcommandeController extends Controller
     {
         $vdata = $this->vdata();
         $client = $request->client;
+        $ids = $request->has('ids') ? $request->get('ids') : '';
+        $notIn = $request->has('notIn') ? $request->get('notIn') : '';
 
         return response()->json([
             '_target' => $request->target,
-            "_append_row" => view('components.commande.ligne.row', compact('vdata', 'client'))->render()
+            "_append_row" => view('components.commande.ligne.row', compact('vdata', 'client', 'ids', 'notIn'))->render()
         ], 200);
     }
 
@@ -76,9 +78,10 @@ class LcommandeController extends Controller
             $_article = Article::Grid(['id', $ligne['id']])->first();
 
             if ($ligne['id'] && $_article && $ligne['qty'] > 0) {
-                $this->model::create([
+                $this->model::updateOrCreate([
                     'commande_id' => $request->commande_id,
                     'article_id' => $ligne['id'],
+                ], [
                     'qty' => $ligne['qty'],
                     'pu' =>  $_article->puht,
                 ]);
