@@ -422,13 +422,13 @@ button.load-model:not(.off) {
     margin-right: 3px !important;
 }
 
-.tabs .item:not(.active) {
+.tabs .item:not(.active, .im) {
     background-color: #fff !important;
     border-radius: 0;
 
 }
 
-.tabs.child-tab .item.active:not(.off) {
+.tabs.child-tab .item.active:not(.off, .im) {
     background-color: #a6fb08 !important;
     box-shadow: 2px 2px 2px 2px gray !important;
     min-width: 100px !important;
@@ -438,7 +438,7 @@ button.load-model:not(.off) {
     border-bottom: 2px solid #a6fb08 !important;
 }
 
-.tabs.child-tab .item:not(.off) {
+.tabs.child-tab .item:not(.off, .im) {
     background-color: #a8a4a4b7 !important;
     min-width: 100px !important;
     justify-content: center !important;
@@ -448,7 +448,7 @@ button.load-model:not(.off) {
     height: 3px !important;
 }
 
-.tabs .item:not(.off) {
+.tabs .item:not(.off, .im) {
     background: #fff;
     min-width: 100px !important;
     justify-content: center !important;
@@ -460,7 +460,7 @@ button.load-model:not(.off) {
     /* height: 3px !important; */
 }
 
-.item.active.selected:not(.off) {
+.item.active.selected:not(.off, .im) {
     border-radius: 0 !important;
     border: 0px solid !important;
     box-shadow: none !important;
@@ -491,4 +491,9 @@ td.max-h {
 
 .tab .ui.dropdown .menu>.item {
     line-height: 0.8em !important;
+}
+
+.aliceblue_table tr td:nth-child(1) {
+    background-color: aliceblue;
+    height: 30px;
 }

@@ -84,6 +84,15 @@ class Menu extends Component
                 "route" => "/user/index",
                 "current" => $this->current("users"),
             ],
+            "Suivi" => [
+                "name" => "Suivi",
+                "icon" => "users icon",
+                "icon-type" => "icon",
+                "type" => "item",
+                "can" => Gate::allows('accessSuivi', [\App\Models\Commande::class]),
+                "route" => "/commande/suivi",
+                "current" => $this->current("commande.suivi.index"),
+            ],
         ];
     }
 

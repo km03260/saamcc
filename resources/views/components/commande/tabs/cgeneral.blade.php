@@ -1,134 +1,133 @@
- <table class="ui celled striped table">
-     <thead>
-     </thead>
-     <tbody>
-         <tr>
-             <td width="175px">
-                 Client
-             </td>
-             <td>{{ $commande->client->raison_sociale }}</td>
-         </tr>
-         <tr>
-             <td>
-                 Statut
-             </td>
-             <td>
-                 @if ($commande->statut_id == 1)
-                     {{ $commande->statut->designation }} &nbsp;&nbsp;
-                     @can('update', [App\Models\Commande::class, $commande])
-                         <div class="ui mini inverted button yellow ax_get"
-                             style="box-shadow: 0px 0px 0px 1px #ffdf05 !important; min-width:100px; padding: 5px 11px;    color: #000;"
-                             data-url="{{ Route('commande.update', [$commande->id]) }}?statut_id=2&methode=savewhat&commande">
-                             Valider</div>
+<x-commande.buttons :commande="$commande" />
 
-                         <div class="msgError up_statut_id_M"></div>
-                     @endcan
-                 @else
-                     {{ $commande->statut->designation }}
-                 @endif
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 Date de livraison souhaitée
-             </td>
-             <td>
-                 @can('update', [App\Models\Commande::class, $commande])
-                     <div class="ui calendar" id="date_livraison_souhaitee-{{ $vdata }}">
-                         <div class="ui input left icon" style="width: 160px">
-                             <i class="calendar icon"></i>
-                             <input style="border-radius: 0;padding:6px;" type="text" name="date_livraison_souhaitee"
-                                 class="date_livraison_souhaitee_value" placeholder="Date confirmée" readonly>
-                         </div>
-                     </div>
-                     <div class="msgError up_date_livraison_souhaitee_M"></div>
-                 @endcan
+<table class="ui celled table aliceblue_table">
+    <thead>
+    </thead>
+    <tbody>
+        <tr>
+            <td width="175px">
+                Commande N°
+            </td>
+            <td>{{ $commande->id }}</td>
+        </tr>
+        <tr>
+            <td width="175px">
+                Client
+            </td>
+            <td>{{ $commande->client->raison_sociale }}</td>
+        </tr>
+        <tr>
+            <td>
+                Statut
+            </td>
+            <td>
+                {{ $commande->statut->designation }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Date de livraison souhaitée
+            </td>
+            <td>
+                @can('update', [App\Models\Commande::class, $commande])
+                    <div class="ui calendar" id="date_livraison_souhaitee-{{ $vdata }}">
+                        <div class="ui input left icon" style="width: 160px">
+                            <i class="calendar icon"></i>
+                            <input style="border-radius: 0;padding:6px;" type="text" name="date_livraison_souhaitee"
+                                class="date_livraison_souhaitee_value" placeholder="Date souhaitée" readonly>
+                        </div>
+                    </div>
+                    <div class="msgError up_date_livraison_souhaitee_M"></div>
+                @endcan
 
-                 @cannot('update', [App\Models\Commande::class, $commande])
-                     {{ $commande->date_livraison_souhaitee ? Carbon\Carbon::parse($commande->date_livraison_souhaitee)->format('d/m/Y') : '' }}
-                 @endcannot
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 Date de livraison confirmée
-             </td>
-             <td>
-                 @can('liv_confirme', [App\Models\Commande::class, $commande])
-                     <div class="ui calendar" id="date_livraison_confirmee-{{ $vdata }}">
-                         <div class="ui input left icon" style="width: 160px">
-                             <i class="calendar icon"></i>
-                             <input style="border-radius: 0;padding:6px;" type="text" name="date_livraison_confirmee"
-                                 class="date_livraison_confirmee_value" placeholder="Date confirmée" readonly>
-                         </div>
-                     </div>
-                     <div class="msgError up_date_livraison_confirmee_M"></div>
-                 @endcan
+                @cannot('update', [App\Models\Commande::class, $commande])
+                    {{ $commande->date_livraison_souhaitee ? Carbon\Carbon::parse($commande->date_livraison_souhaitee)->format('d/m/Y') : '' }}
+                @endcannot
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Date de livraison confirmée
+            </td>
+            <td>
+                @can('liv_confirme', [App\Models\Commande::class, $commande])
+                    <div class="ui calendar" id="date_livraison_confirmee-{{ $vdata }}">
+                        <div class="ui input left icon" style="width: 160px">
+                            <i class="calendar icon"></i>
+                            <input style="border-radius: 0;padding:6px;" type="text" name="date_livraison_confirmee"
+                                class="date_livraison_confirmee_value" placeholder="Date confirmée" readonly>
+                        </div>
+                    </div>
+                    <div class="msgError up_date_livraison_confirmee_M"></div>
+                @endcan
 
-                 @cannot('liv_confirme', [App\Models\Commande::class, $commande])
-                     {{ $commande->date_livraison_confirmee ? Carbon\Carbon::parse($commande->date_livraison_confirmee)->format('d/m/Y') : '' }}
-                 @endcannot
-             </td>
-             {{-- <td>{{ $commande->date_livraison_confirmee }}</td> --}}
-         </tr>
-         <tr>
-             <td colspan="2" style="background-color: #1678c2 !important; color: #fff">
-                 Créé Le {{ Carbon\Carbon::parse($commande->cree_le)->format('d/m/Y') }} Par
-                 {{ $commande->user?->Prenom }}
-             </td>
-         </tr>
-     </tbody>
- </table>
+                @cannot('liv_confirme', [App\Models\Commande::class, $commande])
+                    {{ $commande->date_livraison_confirmee ? Carbon\Carbon::parse($commande->date_livraison_confirmee)->format('d/m/Y') : '' }}
+                @endcannot
+            </td>
+            {{-- <td>{{ $commande->date_livraison_confirmee }}</td> --}}
+        </tr>
+        <tr>
+            <td colspan="2" style="">
+                Créé Le {{ Carbon\Carbon::parse($commande->cree_le)->format('d/m/Y') }} Par
+                {{ $commande->user?->Prenom }}
+            </td>
+        </tr>
+    </tbody>
+</table>
 
+<div class="ui divider"></div>
 
- <script>
-     calendarHandle({
-         element: '#date_livraison_souhaitee-{{ $vdata }}',
-         field: `.date_livraison_souhaitee_value`,
-         initialDate: @if ($commande->date_livraison_souhaitee)
-             new Date("{{ $commande->date_livraison_souhaitee }}")
-         @else
-             null
-         @endif
-     }, (date) => {
-         ajax_post({
-                 date_livraison_souhaitee: date
-             }, `/commande/update/{{ $commande->id }}?methode=savewhat`, res => {
-                 if (res.ok) {
-                     load_row(res._row.id, res._row, res.list ?? "");
-                 }
-                 if (res.error_messages) {
-                     setError(res.error_messages, 'up_');
-                 }
-             },
-             err => {
-                 flash('Error lors de mettre à jour la date de livraison confirmée', "warning",
-                     'topRight');
-             });
-     });
+@include('components.commande.tabs.lignes')
 
-     calendarHandle({
-         element: '#date_livraison_confirmee-{{ $vdata }}',
-         field: `.date_livraison_confirmee_value`,
-         initialDate: @if ($commande->date_livraison_confirmee)
-             new Date("{{ $commande->date_livraison_confirmee }}")
-         @else
-             null
-         @endif
-     }, (date) => {
-         ajax_post({
-                 date_livraison_confirmee: date
-             }, `/commande/update/{{ $commande->id }}?methode=savewhat`, res => {
-                 if (res.ok) {
-                     load_row(res._row.id, res._row, res.list ?? "");
-                 }
-                 if (res.error_messages) {
-                     setError(res.error_messages, 'up_');
-                 }
-             },
-             err => {
-                 flash('Error lors de mettre à jour la date de livraison confirmée', "warning",
-                     'topRight');
-             });
-     });
- </script>
+<script>
+    calendarHandle({
+        element: '#date_livraison_souhaitee-{{ $vdata }}',
+        field: `.date_livraison_souhaitee_value`,
+        initialDate: @if ($commande->date_livraison_souhaitee)
+            new Date("{{ $commande->date_livraison_souhaitee }}")
+        @else
+            null
+        @endif
+    }, (date) => {
+        ajax_post({
+                date_livraison_souhaitee: date
+            }, `/commande/update/{{ $commande->id }}?methode=savewhat`, res => {
+                if (res.ok) {
+                    load_row(res._row.id, res._row, res.list ?? "");
+                }
+                if (res.error_messages) {
+                    setError(res.error_messages, 'up_');
+                }
+            },
+            err => {
+                flash('Error lors de mettre à jour la date de livraison confirmée', "warning",
+                    'topRight');
+            });
+    });
+
+    calendarHandle({
+        element: '#date_livraison_confirmee-{{ $vdata }}',
+        field: `.date_livraison_confirmee_value`,
+        initialDate: @if ($commande->date_livraison_confirmee)
+            new Date("{{ $commande->date_livraison_confirmee }}")
+        @else
+            null
+        @endif
+    }, (date) => {
+        ajax_post({
+                date_livraison_confirmee: date
+            }, `/commande/update/{{ $commande->id }}?methode=savewhat`, res => {
+                if (res.ok) {
+                    load_row(res._row.id, res._row, res.list ?? "");
+                }
+                if (res.error_messages) {
+                    setError(res.error_messages, 'up_');
+                }
+            },
+            err => {
+                flash('Error lors de mettre à jour la date de livraison confirmée', "warning",
+                    'topRight');
+            });
+    });
+</script>

@@ -30,6 +30,22 @@ Route::prefix('commande')->group(
                         );
                     }
                 );
+                Route::prefix('suivi')->group(
+                    function () {
+                        Route::middleware(['can:accessSuivi,App\Models\Commande'])->group(
+                            function () {
+
+                                Route::controller(App\Http\Controllers\SuiviCommandeController::class)->group(
+                                    function () {
+                                        Route::get('/', 'index')->name('commande.suivi.index');
+                                        Route::get('/grid', 'grid')->name('commande.suivi.grid');
+                                        Route::get('/show/{commande}', 'show')->name('commande.suivi.show');
+                                    }
+                                );
+                            }
+                        );
+                    }
+                );
             }
         );
     }

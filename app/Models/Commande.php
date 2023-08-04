@@ -111,6 +111,15 @@ class Commande extends Model
             ],
             [
                 "name" => "",
+                "data" => "statut_suivi",
+                'column' => "/handle/render?com=update-statut-column&model=commande&D=D&width=50",
+                "render" => 'url',
+                "className" => 'center aligned open p-0',
+                "visible" => Gate::allows('create', [self::class]) && key_exists('suivi', $cond),
+                'width' => "55px"
+            ],
+            [
+                "name" => "",
                 "data" => "default",
                 'column' => "/handle/render?com=default&model=commande&D=D&width=50",
                 "render" => 'url',

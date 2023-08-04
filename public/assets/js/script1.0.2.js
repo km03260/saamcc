@@ -67,8 +67,10 @@ $(document).on('click', '.load-model', function (e) {
  */
 $(document).on('click', '.ax_get', function (e) {
     e.preventDefault();
+    resetError();
     var _ele_ = $(this);
     var url = _ele_.data('url');
+    var ref = _ele_.data('ref') != undefined ? _ele_.data('ref') : '';
     var appends = _ele_.data('appends') != undefined ? _ele_.data('appends') : '';
     var color = _ele_.data('color') == undefined ? 'green' : _ele_.data('color');
     var classes = _ele_.data('classes') != undefined ? _ele_.data('classes') : '';
@@ -115,7 +117,10 @@ $(document).on('click', '.ax_get', function (e) {
                     }
                 } else if (res._append_row) {
                     $(res._target).append(res._append_row);
-                } else {
+                } else if (res.error_messages) {
+                    setError(res.error_messages, ref);
+                }
+                else {
                     flash(res.error, 'error', 'topRight');
                 }
 
@@ -324,7 +329,7 @@ function confirm_popup(message = "", color, success_action, target = false, with
             backgroundColor: color,
             color: color,
             drag: true,
-            balloon: true,
+            balloon: target ? true : false,
             displayMode: 2,
             buttons: [
                 ['<button><b>Oui</b></button>', function (instance, toast) {

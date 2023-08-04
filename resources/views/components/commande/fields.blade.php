@@ -67,47 +67,9 @@
 </table>
 
 <script>
-    $('.calendar_field').calendar({
-        type: 'date',
-        today: true,
-        firstDayOfWeek: 1,
-        showWeekNumbers: true,
-        text: {
-            days: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-            months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre',
-                'Octobre', 'Novembre', 'Decembre'
-            ],
-            monthsShort: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
-            today: 'Aujourd\'hui',
-            now: 'Maintenant',
-            am: 'AM',
-            pm: 'PM',
-            weekNo: 'Semaine'
-        },
-        formatter: {
-            date: function(date, settings) {
-                if (!date) return '';
-                var day = date.getDate();
-                var month = date.getMonth() + 1;
-                var year = date.getFullYear();
-                var date_format = `${day}/${month}/${year}`;
-                return date_format;
-            }
-        },
-        parser: {
-            date: function(text, settings) {}
-        },
-        onChange: function(date, text, mode) {
-            if (date) {
-                var day = date.getDate();
-                var month = date.getMonth() + 1;
-                var year = date.getFullYear();
-                var date_format = `${day}/${month}/${year}`;
-                return date_format
-            }
-        },
-        onHide: function() {
-            // $(".RefOrd").focus();
-        }
+    calendarHandle({
+        element: '.calendar_field',
+        field: ``,
+        initialDate: null
     });
 </script>

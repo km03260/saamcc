@@ -113,8 +113,8 @@ class CommandeController extends Controller
             return view("components.commande.tabs.$tab", compact('commande', 'vdata'))->render();
         }
         $tabs = [
-            ["name" => 'cgeneral', "title" => 'Infos générales', 'color' => "aliceblue"],
-            ["name" => 'lignes', "title" => 'Articles', 'color' => "cornflowerblue"],
+            ["name" => 'cgeneral', "title" => "Commande N°$commande->id", 'color' => "aliceblue"],
+            // ["name" => 'lignes', "title" => 'Articles', 'color' => "cornflowerblue"],
         ];
         return response()->json(['child' => view('components.commande.show', compact('commande', 'vdata', 'tabs'))->render()], 200);
     }
@@ -145,7 +145,6 @@ class CommandeController extends Controller
     public function update(StoreCommandeRequest $request, Commande $commande)
     {
         $this->authorize('update', [$this->model::class, $commande]);
-
         if ($request->has('date_livraison_confirmee')) {
             $this->authorize('liv_confirme', [$this->model::class, $commande]);
         }

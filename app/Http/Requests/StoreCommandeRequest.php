@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Commande;
 use App\Rules\DateFormatFR;
+use App\Rules\UpdateCommandeStatutRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -43,7 +44,7 @@ class StoreCommandeRequest extends FormRequest
 
         $rules = [
             "client_id" => ['required', "exists:com_prospects,id", $_in_prospect],
-            "statut_id" => ['nullable', 'exists:cc_commande_statuts,id'],
+            "statut_id" => ['nullable', 'exists:cc_commande_statuts,id', new UpdateCommandeStatutRule($this)],
             "date_livraison_souhaitee" => ['nullable', new DateFormatFR('d/m/Y')],
             "date_livraison_confirmee" => ['nullable', new DateFormatFR('d/m/Y')],
             "articles.*.qty"  => ['nullable', 'numeric'],
