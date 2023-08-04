@@ -1,6 +1,6 @@
 <table id="{{ $params['list'] }}" vdata="{{ $params['vdata'] }}" data-open-child="{{ $childRow }}"
     data-list="{{ $params['list'] }}" data-vdata="{{ $vdata }}"
-    class="ui celled compact table disabled {{ $list }} datatable row-border hover {{ $classes }}">
+    class="ui celled striped compact table disabled {{ $list }} datatable row-border hover {{ $classes }}">
     <thead style="@if ($noHead) display:none; @endif" id="{{ $vdata }}-head"></thead>
     <tbody></tbody>
     @if ($tfoot)
@@ -57,7 +57,6 @@
                     var width = column_attributtes[5];
                     var edit_params = column_attributtes[6];
                     var visible = column_attributtes[7];
-
                     const column = {
                         "data": column_data,
                         className: className.includes('open_child') ? className +
@@ -163,6 +162,8 @@
                             break;
                     }
 
+                    column["title"] = column_name +
+                        `${className.includes('editFieldLine')?'&nbsp;<i class="pencil alternate small icon right floated"></i>':''}`;
                     column["width"] = width;
 
                     column["visible"] = visible == 1 ? true : false;

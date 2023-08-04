@@ -2,7 +2,7 @@
     style="
     border-radius: 16px;
     border-radius: 0;
-    padding: 7px
+    padding: 0
         ">
     <div class="ui pointing secondary tab_menu menu" style="margin-bottom: -2px;margin-top: -10px;">
         @foreach ($tabs as $tab)
