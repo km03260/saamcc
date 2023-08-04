@@ -25,6 +25,7 @@ Route::prefix('commande')->group(
                                 Route::get('/grid', 'grid')->name('commande.ligne.grid');
                                 Route::get('/destroy/{lcommande}', 'destroy')->name('lcommande.destroy');
                                 Route::get('/create/{commande}', 'create')->name('commande.ligne.create');
+                                Route::post('/update/{lcommande}', 'update')->name('commande.ligne.update');
                                 Route::post('/store', 'store')->name('commande.ligne.store');
                             }
                         );

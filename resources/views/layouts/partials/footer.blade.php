@@ -1,6 +1,6 @@
 <script type="text/javascript" src="{{ asset('assets/DataTables/DataTables-1.11.4/js/jquery.dataTables.min.js') }}">
 </script>
-<script src="{{ asset('assets/js/5_213devops-edit-dataTable.min.js') }}"></script>
+<script src="{{ asset('assets/js/213devops-edit-dataTable.min.js') }}"></script>
 <script src="{{ asset('assets/DataTables/FixedHeader-3.2.1/js/dataTables.fixedHeader.min.js') }}"></script>
 <script src="{{ asset('assets/Toast/dist/js/toast.min.js') }}"></script>
 <script src="{{ asset('assets/Semantic-UI-CSS-master/calendar/calendar.min.js') }}"></script>

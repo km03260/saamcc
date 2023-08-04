@@ -37,7 +37,6 @@
                 _durl.replaceAll('amp;', '&'),
                 res => {
                     $("#dropdown-{{ $vdrop }}").dropdown({
-                        clearable: true,
                         cache: true,
                         allowAdditions: "{{ $allowAdditions }}",
                         fields: {

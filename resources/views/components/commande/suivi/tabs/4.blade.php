@@ -1,3 +1,4 @@
 <div>
-    <x-data-table list="commandes" :vdata="$vdata" childRow="/commande/show" appends="statut_id=4&suivi=true" />
+    <x-data-table list="commandes" :vdata="$vdata" childRow="/commande/show" appends="statut_id=4&suivi=true"
+        :length="50" />
 </div>

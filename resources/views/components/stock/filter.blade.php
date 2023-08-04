@@ -1,5 +1,5 @@
 <form class="ui mini form" id="list_stocks{{ $vdata }}datatable_form">
-    <div class="ui styled accordion" style="border-radius: 0; width: 99%">
+    <div class="ui styled accordion" style="border-radius: 0; width: 100%">
         <div class="title" style="padding: 4px;">
             <i title="Rafraîchir le filtre" class="sync blue large icon list_stocks{{ $vdata }}_reset"
                 style="float: right;margin-top: 6px;"></i>

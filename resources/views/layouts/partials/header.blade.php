@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="{{ asset('assets/modal/css/iModal.min.css') }}">
     <script src="{{ asset('assets/jquery-confirm/jquery-confirm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/Semantic-UI-CSS-master/semantic.min.js') }}"></script>
-    <link href="{{ asset('assets/css/sty1.0.0.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/sty1.0.1.css') }}" rel="stylesheet">
 
     @vite('resources/js/app.js')
 </head>

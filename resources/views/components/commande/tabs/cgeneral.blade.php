@@ -45,28 +45,30 @@
                 @endcannot
             </td>
         </tr>
-        <tr>
-            <td>
-                Date de livraison confirmée
-            </td>
-            <td>
-                @can('liv_confirme', [App\Models\Commande::class, $commande])
-                    <div class="ui calendar" id="date_livraison_confirmee-{{ $vdata }}">
-                        <div class="ui input left icon" style="width: 160px">
-                            <i class="calendar icon"></i>
-                            <input style="border-radius: 0;padding:6px;" type="text" name="date_livraison_confirmee"
-                                class="date_livraison_confirmee_value" placeholder="Date confirmée" readonly>
+        @if (!in_array($commande->statut_id, [1, 2]))
+            <tr>
+                <td>
+                    Date de livraison confirmée
+                </td>
+                <td>
+                    @can('liv_confirme', [App\Models\Commande::class, $commande])
+                        <div class="ui calendar" id="date_livraison_confirmee-{{ $vdata }}">
+                            <div class="ui input left icon" style="width: 160px">
+                                <i class="calendar icon"></i>
+                                <input style="border-radius: 0;padding:6px;" type="text" name="date_livraison_confirmee"
+                                    class="date_livraison_confirmee_value" placeholder="Date confirmée" readonly>
+                            </div>
                         </div>
-                    </div>
-                    <div class="msgError up_date_livraison_confirmee_M"></div>
-                @endcan
+                        <div class="msgError up_date_livraison_confirmee_M"></div>
+                    @endcan
 
-                @cannot('liv_confirme', [App\Models\Commande::class, $commande])
-                    {{ $commande->date_livraison_confirmee ? Carbon\Carbon::parse($commande->date_livraison_confirmee)->format('d/m/Y') : '' }}
-                @endcannot
-            </td>
-            {{-- <td>{{ $commande->date_livraison_confirmee }}</td> --}}
-        </tr>
+                    @cannot('liv_confirme', [App\Models\Commande::class, $commande])
+                        {{ $commande->date_livraison_confirmee ? Carbon\Carbon::parse($commande->date_livraison_confirmee)->format('d/m/Y') : '' }}
+                    @endcannot
+                </td>
+                {{-- <td>{{ $commande->date_livraison_confirmee }}</td> --}}
+            </tr>
+        @endif
         <tr>
             <td colspan="2" style="">
                 Créé Le {{ Carbon\Carbon::parse($commande->cree_le)->format('d/m/Y') }} Par

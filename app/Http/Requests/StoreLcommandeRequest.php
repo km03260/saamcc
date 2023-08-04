@@ -39,6 +39,14 @@ class StoreLcommandeRequest extends FormRequest
             "articles.*.qty"  => ['nullable', 'numeric'],
             "articles.*.id"  => ['nullable', 'exists:cc_articles,id'],
         ];
+        if ($this->has('lcommande')) {
+            $rules = [
+                "commande_id" => ['required', "exists:cc_commandes,id"],
+                "qty"  => ['required', 'numeric', 'min:1'],
+                "pu" => ['required', 'numeric', 'regex:/^((?!0)\d{1,10}|0|\.\d{1,2})($|\.$|\.\d{1,2}$)/'],
+                "article_id"  => ['required', 'exists:cc_articles,id'],
+            ];
+        }
         if ($this->methode == "savewhat") {
             return array_intersect_key($rules, request()->all());
         }
@@ -55,6 +63,8 @@ class StoreLcommandeRequest extends FormRequest
         return [
             "commande_id" => "Commande",
             "articles.*.qty" => "Quantité",
+            "qty" => "Quantité",
+            "pu" => "Prix unitaire",
             "articles.*.id" => "Article",
         ];
     }

@@ -219,7 +219,7 @@ class User extends Authenticatable
             'sso_access_rights',
             'user_id',
             'action_id'
-        );
+        )->withPivot(['module_id', 'profile_id']);
     }
 
     /**

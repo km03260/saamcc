@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Models\permission\Action;
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -73,6 +75,18 @@ class UserController extends Controller
         if ($request->has('client_id')) {
             $_prm->clients()->attach($request->client_id);
         }
+
+        /**
+         * Authorize new user to Access
+         */
+        $_action = Action::where('code', '3_view')->value('id');
+
+        $_profile_id = Profile::whereCode($_prm->Profil)->value('id');
+
+        $_prm->actions()->syncWithoutDetaching([$_action]);
+
+        $_prm->actions()->updateExistingPivot($_action, ['module_id' => 3, 'profile_id' => $_profile_id]);
+
         return response()->json([
             "ok" => "L'utilisateur $_prm->Prenom est bien enregistré",
             "_new" => ".users.datatable",

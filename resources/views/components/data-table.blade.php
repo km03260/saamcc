@@ -296,6 +296,7 @@
                     $('.{{ $params['list'] }}_filter_ku').val('');
                     $('.{{ $params['list'] }}_filter').closest('.ui.dropdown').dropdown(
                         'clear');
+                    $("#{{ $params['list'] }}datatable_form").find('.ui.search .close').click();
                     $('#{{ $params['list'] }}').DataTable().draw();
                 })
 

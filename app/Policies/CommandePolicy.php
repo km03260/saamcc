@@ -102,7 +102,7 @@ class CommandePolicy
     public function delete(User $user, Commande $commande): bool
     {
         return match ($user->Profil) {
-            100, 9 => true,
+            100, 9 => $commande->statut_id == 1,
             8 => $user->clients()->first()?->id == $commande->client_id && $commande->statut_id == 1,
             default => false
         };

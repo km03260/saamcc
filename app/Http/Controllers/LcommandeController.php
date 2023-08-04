@@ -41,7 +41,7 @@ class LcommandeController extends Controller
      */
     public function create(Request $request, Commande $commande)
     {
-        $this->authorize('create', Commande::class);
+        $this->authorize('create', [$this->model::class, $commande]);
 
         $vdata = $this->vdata();
 
@@ -71,7 +71,9 @@ class LcommandeController extends Controller
      */
     public function store(StoreLcommandeRequest $request)
     {
-        $this->authorize('create', Commande::class);
+        $commande = Commande::find($request->commande_id);
+
+        $this->authorize('create', [$this->model::class, $commande]);
 
         foreach ($request->articles ?? [] as $key => $ligne) {
 
@@ -113,9 +115,17 @@ class LcommandeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLcommandeRequest $request, Lcommande $lcommande)
+    public function update(StoreLcommandeRequest $request, Lcommande $lcommande)
     {
-        //
+        $this->authorize('update', [Commande::class, $lcommande->commande]);
+
+        $lcommande->update($request->only($this->model->fillable));
+
+        return response()->json([
+            "ok" => "L'article ($lcommande->article->ref) est mis à jour",
+            "_row" => $this->model::Grid(["id" => $lcommande->id])->first(),
+            "list" => "lcommandes",
+        ], 200);
     }
 
     /**

@@ -32,10 +32,15 @@ class Commande extends Model
     {
         $cond = array_filter($cond);
         return $query
-            ->select(DB::raw("$this->table.*"))
+            ->select(DB::raw("$this->table.*, CASE WHEN $this->table.statut_id NOT IN (1,2) THEN $this->table.date_livraison_confirmee ELSE '' END AS date_livraison_confirmee"))
             ->with(['statut', 'user', 'client'])
             ->when(key_exists('client_id', $cond), function ($q) use ($cond) {
                 $q->where('client_id', $cond['client_id']);
+            })
+            ->when(key_exists('article_id', $cond), function ($q) use ($cond) {
+                $q->whereHas('articles', function ($qha) use ($cond) {
+                    $qha->where('cc_commande_articles.article_id', $cond['article_id']);
+                });
             })
             ->when(key_exists('statut_id', $cond), function ($q) use ($cond) {
                 $q->where('statut_id', $cond['statut_id']);
@@ -67,10 +72,11 @@ class Commande extends Model
                 "width" => "75px",
             ],
             [
-                "name" => "Statut",
-                "data" => "statut.designation",
-                'column' => 'statut_id',
-                "render" => "relation",
+                "name" => "Client",
+                "data" => "client.raison_sociale",
+                'column' => 'client_id',
+                "render" => 'relation',
+                'visible' => key_exists('wclient', $cond),
                 "className" => 'left aligned open_child',
             ],
             [
@@ -81,20 +87,21 @@ class Commande extends Model
                 "className" => 'left aligned open_child',
             ],
             [
+                "name" => "Statut",
+                "data" => "statut.designation",
+                'column' => 'statut_id',
+                "render" => "relation",
+                "className" => 'left aligned open_child',
+            ],
+
+            [
                 "name" => "Date de livraison confirmée",
                 "data" => "date_livraison_confirmee",
                 'column' => 'date_livraison_confirmee',
                 "render" => false,
                 "className" => 'left aligned open_child',
             ],
-            [
-                "name" => "Client",
-                "data" => "client.raison_sociale",
-                'column' => 'client_id',
-                "render" => 'relation',
-                'visible' => key_exists('wclient', $cond),
-                "className" => 'left aligned open_child',
-            ],
+
             [
                 "name" => "Créé Par",
                 "data" => "user.Prenom",
@@ -118,15 +125,15 @@ class Commande extends Model
                 "visible" => Gate::allows('create', [self::class]) && key_exists('suivi', $cond),
                 'width' => "55px"
             ],
-            [
-                "name" => "",
-                "data" => "default",
-                'column' => "/handle/render?com=default&model=commande&D=D&width=50",
-                "render" => 'url',
-                "className" => 'center aligned open p-0',
-                "visible" => Gate::allows('create', [self::class]),
-                'width' => "55px"
-            ],
+            // [
+            //     "name" => "",
+            //     "data" => "default",
+            //     'column' => "/handle/render?com=default&model=commande&D=D&width=50",
+            //     "render" => 'url',
+            //     "className" => 'center aligned open p-0',
+            //     "visible" => Gate::allows('create', [self::class]),
+            //     'width' => "55px"
+            // ],
         ];
     }
 

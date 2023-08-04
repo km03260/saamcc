@@ -53,6 +53,7 @@ class Lcommande extends Model
      */
     public static function gridColumns($cond = []): array
     {
+
         return [
             [
                 "name" => "Id",
@@ -81,6 +82,7 @@ class Lcommande extends Model
                 "data" => "pu",
                 'column' => 'pu',
                 "render" => false,
+                "edit" => 'data-field="pu" data-model="/commande/ligne/update" data-type="decimal" data-appends="lcommande=true"',
                 "className" => 'right aligned',
             ],
             [
@@ -88,7 +90,8 @@ class Lcommande extends Model
                 "data" => "qty",
                 'column' => 'qty',
                 "render" => false,
-                "className" => 'right aligned',
+                "edit" => 'data-field="qty" data-model="/commande/ligne/update" data-type="number" data-appends="lcommande=true"',
+                "className" => 'right aligned  ' . (key_exists('commande_id', $cond) ? (Gate::allows('update', [Commande::class, Commande::find($cond['commande_id'])]) ? ' editFieldLine' : '') : ' editFieldLine'),
             ],
             [
                 "name" => "Total",
@@ -104,7 +107,7 @@ class Lcommande extends Model
                 "render" => 'url',
                 "className" => 'center aligned open p-0',
                 "visible" => Gate::allows('create', [Commande::class]),
-                'width' => "55px"
+                // 'width' => "55px"
             ],
         ];
     }

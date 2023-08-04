@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Commande;
 use App\Models\Lcommande;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -27,9 +28,13 @@ class LcommandePolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, Commande $commande): bool
     {
-        //
+        return match ($user->Profil) {
+            100, 9 => $commande->statut_id == 1,
+            8 => $user->clients()->first()?->id == $commande->client_id && $commande->statut_id == 1,
+            default => false
+        };
     }
 
     /**
@@ -46,7 +51,7 @@ class LcommandePolicy
     public function delete(User $user, Lcommande $lcommande): bool
     {
         return match ($user->Profil) {
-            100, 9 => true,
+            100, 9 => $lcommande->commande->statut_id == 1,
             8 => $user->clients()->first()?->id == $lcommande->commande->client_id && $lcommande->commande->statut_id == 1,
             default => false
         };
