@@ -1,6 +1,6 @@
 <table id="{{ $params['list'] }}" vdata="{{ $params['vdata'] }}" data-open-child="{{ $childRow }}"
     data-list="{{ $params['list'] }}" data-vdata="{{ $vdata }}"
-    class="ui celled striped compact table disabled {{ $list }} datatable row-border hover {{ $classes }}">
+    class="ui celled compact table disabled {{ $list }} datatable row-border hover {{ $classes }}">
     <thead style="@if ($noHead) display:none; @endif" id="{{ $vdata }}-head"></thead>
     <tbody></tbody>
     @if ($tfoot)
