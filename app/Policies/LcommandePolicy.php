@@ -42,7 +42,11 @@ class LcommandePolicy
      */
     public function update(User $user, Lcommande $lcommande): bool
     {
-        //
+        return match ($user->Profil) {
+            100, 9 => $lcommande->commande->statut_id == 1,
+            8 => $user->clients()->first()?->id == $lcommande->commande->client_id && $lcommande->commande->statut_id == 1,
+            default => false
+        };
     }
 
     /**

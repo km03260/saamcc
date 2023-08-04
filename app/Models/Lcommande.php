@@ -91,7 +91,7 @@ class Lcommande extends Model
                 'column' => 'qty',
                 "render" => false,
                 "edit" => 'data-field="qty" data-model="/commande/ligne/update" data-type="number" data-appends="lcommande=true"',
-                "className" => 'right aligned  ' . (key_exists('commande_id', $cond) ? (Gate::allows('update', [Commande::class, Commande::find($cond['commande_id'])]) ? ' editFieldLine' : '') : ' editFieldLine'),
+                "className" => 'right aligned  ' . (key_exists('commande_id', $cond) ? (Gate::allows('delete', [Commande::class, Commande::find($cond['commande_id'])]) ? ' editFieldLine' : '') : ' editFieldLine'),
             ],
             [
                 "name" => "Total",
