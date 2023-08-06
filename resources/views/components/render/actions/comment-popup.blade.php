@@ -1,7 +1,7 @@
 <div>
     @can('update', [$_model::class, $_model])
         <div class="ui form form_field" data-id="{{ $_model->id }}"
-            data-url="{{ Route('commande.update', $_model->id) }}?methode=savewhat&noClicked=true&commande">
+            data-url="{{ Route('commande.update', $_model->id) }}?methode=savewhat&noClicked=true&planif=true&commande">
             <div class="field">
                 <textarea class="up_field" data-name="commentaire" cols="80" rows="7" placeholder="Commentaire"
                     style="width:100%; border:0">{!! $_model->commentaire !!}</textarea>

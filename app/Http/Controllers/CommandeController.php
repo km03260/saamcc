@@ -8,6 +8,7 @@ use App\Models\Article;
 use App\Models\Client;
 use App\Models\Commande;
 use App\Models\Lcommande;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -145,12 +146,17 @@ class CommandeController extends Controller
     public function update(StoreCommandeRequest $request, Commande $commande)
     {
         $this->authorize('update', [$this->model::class, $commande]);
-
         if ($request->has('date_livraison_confirmee')) {
             $this->authorize('liv_confirme', [$this->model::class, $commande]);
         }
 
         $_data = $request->only($this->model->fillable);
+
+        if ($request->has('ids')) {
+            $_dl_conf = trim($request->ids, ',');
+            $this->authorize('liv_confirme', [$this->model::class, $commande]);
+            $_data['date_livraison_confirmee'] = $_dl_conf && $_dl_conf != '' ? $_dl_conf : null;
+        }
 
         $commande->update($_data);
 
@@ -162,7 +168,8 @@ class CommandeController extends Controller
         }
         if ($request->has('planif')) {
             $_prm =  $this->model::Grid(['id' => $commande->id])->first();
-            $week = $request->week;
+            $week = $request->has('week') ? $request->week : $_prm->weekSte;
+            $_resp['close'] = true;
             $_resp['_target'] = "#ui-cardplanif_" . str_replace('/', '_', $week) . "_" . $commande->id;
             $_resp['_replace'] = view('components.commande.planif.includes.card')
                 ->with([

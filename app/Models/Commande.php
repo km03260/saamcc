@@ -186,6 +186,9 @@ class Commande extends Model
             if ($_mdl->isDirty('statut_id') && $_mdl->statut_id == 3 && !$_mdl->date_livraison_confirmee) {
                 $_mdl->date_livraison_confirmee = Carbon::parse($_mdl->date_livraison_souhaitee)->format('d/m/Y');
             }
+            if ($_mdl->isDirty('date_livraison_souhaitee') && $_mdl->statut_id == 3 && $_mdl->date_livraison_souhaitee) {
+                $_mdl->date_livraison_confirmee = Carbon::parse($_mdl->date_livraison_souhaitee)->format('d/m/Y');
+            }
         });
         static::deleting(function ($_mdl) {
             $_mdl->articles->each->delete();

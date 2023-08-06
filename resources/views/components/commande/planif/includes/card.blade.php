@@ -8,7 +8,9 @@
             style=" background: {{ $commande->statut->color }}; color: #000000" data-week="{{ $week }}"
             data-client="{{ $commande->client_id }}" data-usine="saam" data-baril="{{ $statut }}">
             N°{{ $commande->id }}
-            <i class="info circle right floated blue icon ui-popup_{{ str_replace('/', '_', $commande->id) }}"></i>
+            <span id="info_{{ $commande->id }}">
+                @include('components.commande.planif.includes.info')
+            </span>
         </h3>
         <div class="details-uren" data-week="{{ $week }}" data-client="{{ $commande->client_id }}"
             data-usine="saam" data-baril="{{ $statut }}">
@@ -40,10 +42,9 @@
                 @case(2)
                     <div class="ui mini" style="margin-top: 7px">
                         <span id="up_statut_id_popup"></span>
-                        <a class="item im ax_get ui button" data-ref="up_" data-color=""
-                            data-message="<div style='color:#000'><i class='ui large check circle green icon'></i> Êtes-vous sûr de confirmer la commande N° ({{ $commande->id }})?</div>"
-                            data-url="{{ Route('commande.update', [$commande->id]) }}?statut_id=3&week={{ $week }}&methode=savewhat&planif=true&commande"
-                            data-color="#d8ea5c"
+                        <a class="item im load-model ui button" data-ref="up_" data-color="" data-title=""
+                            data-class="toast-body"
+                            data-url="/handle/render?com=confirm-statut-action&model=commande&key={{ $commande->id }}&commande"
                             style="padding: 5px 13px;min-width: 110px ;justify-content: center; font-size:13px; font-weight: bold; background: #d8ea5c; color: #000">
                             <i class=" check circle green icon"></i> Confirmer la date
                         </a>
