@@ -29,7 +29,7 @@
                       <input
                         class="prompt client_prompt_"
                         type="text"
-                        placeholder="Clients ..."
+                        placeholder="Client ..."
                         style="padding: 7px; border-radius: 0"
                       />
                       <input

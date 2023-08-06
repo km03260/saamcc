@@ -71,7 +71,7 @@ class SuiviCommandeController extends Controller
 
         if ($request->ajax()) {
 
-            $_commandes = $this->model::Grid($request->all());
+            $_commandes = $this->model::Grid(array_merge($request->all(), ['planif' => true]));
 
             $weeks = array_filter(collect($_commandes->get()->toArray())->unique('weekSte')->sortBy('dateSteUF')->pluck('weekSte')->toArray());
 
@@ -101,8 +101,7 @@ class SuiviCommandeController extends Controller
             ], 200);
         }
 
-        $statuts = Scommande::all();
-
+        $statuts = Scommande::whereNotIn('id', [1])->get();
         return  view('components.commande.planif.index', compact('vdata', 'statuts'));
     }
 
@@ -125,11 +124,11 @@ class SuiviCommandeController extends Controller
     {
         try {
 
-            $data_request = $request->all();
+            $data_request = array_merge($request->all(), ['planif' => true]);
 
             $__week = str_replace('/', '_', $request->week);
 
-            $commandes = $this->model::Grid($request->all());
+            $commandes = $this->model::Grid($data_request);
 
             return response()->json([
                 "ok" => "Les commande de la semaine $request->week ont été téléchargés avec succès",

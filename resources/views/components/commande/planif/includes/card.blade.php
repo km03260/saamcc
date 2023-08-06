@@ -72,34 +72,29 @@
             var commande = event.target.getAttribute('data-commande');
             var old_week = event.target.getAttribute('data-week');
             if (new_week != old_week && new_week != null) {
-                confirm_popup(
-                    `<div style='color:#000'><i class='ui large check circle green icon'></i> Êtes-vous sûr de passer la commande N° (${commande})?</div>`,
-                    "", res => {
-                        $(`#${old_week.replaceAll('/', '_')}_box`).html(
-                            `<i class="spinner huge blue loading icon" style="margin:17px"></i>`
-                        );
-                        $(`#${new_week.replaceAll('/', '_')}_box`).html(
-                            `<i class="spinner huge blue loading icon" style="margin:17px"></i>`
-                        );
-
-                        $(`#${old_week.replaceAll('/', '-')}_qty`).text("");
-                        $(`#${new_week.replaceAll('/', '-')}_qty`).text("");
-                        $(`#${old_week.replaceAll('/', '-')}_qty`).hide();
-                        $(`#${new_week.replaceAll('/', '-')}_qty`).hide();
-
-                        var client = event.target.getAttribute('data-client');
-                        var usine = event.target.getAttribute('data-usine');
-                        var baril = event.target.getAttribute('data-baril');
-                        var _params = {
-                            week: old_week,
-                            new_week: new_week,
-                            selfBaril: baril,
-                            client: `${client}`,
-                            Usine: `${usine}`
-                        };
-                        $.loadWeekData(_params, `/commande/planif/week/mouvement/${commande}`);
-                    }
+                $(`#${old_week.replaceAll('/', '_')}_box`).html(
+                    `<i class="spinner huge blue loading icon" style="margin:17px"></i>`
                 );
+                $(`#${new_week.replaceAll('/', '_')}_box`).html(
+                    `<i class="spinner huge blue loading icon" style="margin:17px"></i>`
+                );
+
+                $(`#${old_week.replaceAll('/', '-')}_qty`).text("");
+                $(`#${new_week.replaceAll('/', '-')}_qty`).text("");
+                $(`#${old_week.replaceAll('/', '-')}_qty`).hide();
+                $(`#${new_week.replaceAll('/', '-')}_qty`).hide();
+
+                var client = event.target.getAttribute('data-client');
+                var usine = event.target.getAttribute('data-usine');
+                var baril = event.target.getAttribute('data-baril');
+                var _params = {
+                    week: old_week,
+                    new_week: new_week,
+                    selfBaril: baril,
+                    client: `${client}`,
+                    Usine: `${usine}`
+                };
+                $.loadWeekData(_params, `/commande/planif/week/mouvement/${commande}`);
             }
         }
     });
