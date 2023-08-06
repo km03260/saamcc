@@ -49,6 +49,7 @@ class StoreCommandeRequest extends FormRequest
             "date_livraison_confirmee" => ['nullable', new DateFormatFR('d/m/Y')],
             "articles.*.qty"  => ['nullable', 'numeric'],
             "articles.*.id"  => ['nullable', 'exists:cc_articles,id'],
+            "commentaire" => ['nullable']
         ];
         if ($this->methode == "savewhat") {
             return array_intersect_key($rules, request()->all());

@@ -4,9 +4,11 @@
         data-week="{{ $week }}" data-client="{{ $commande->client_id }}" data-commande="{{ $commande->id }}"
         data-usine="saam" data-baril="{{ $statut }}"
         style="margin-bottom:0;border-radius:0;border-left: 5px solid {{ $commande->statut->color }}; position: relative; z-index: 999 !important;padding: 7px 15px; background: {{ $commande->statut->background }}">
-        <h3 class="details-task" style=" background: {{ $commande->statut->color }}; color: #000000"
-            data-week="{{ $week }}" data-client="{{ $commande->client_id }}" data-usine="saam"
-            data-baril="{{ $statut }}">N°{{ $commande->id }}
+        <h3 class="details-task target-popup_{{ str_replace('/', '_', $commande->id) }}"
+            style=" background: {{ $commande->statut->color }}; color: #000000" data-week="{{ $week }}"
+            data-client="{{ $commande->client_id }}" data-usine="saam" data-baril="{{ $statut }}">
+            N°{{ $commande->id }}
+            <i class="info circle right floated blue icon ui-popup_{{ str_replace('/', '_', $commande->id) }}"></i>
         </h3>
         <div class="details-uren" data-week="{{ $week }}" data-client="{{ $commande->client_id }}"
             data-usine="saam" data-baril="{{ $statut }}">
@@ -52,13 +54,6 @@
             @endswitch
         </div>
     </div>
-    @if ($commande->commentaire)
-        <div class="ui fluid flowing popup bottom left transition hidden">
-            <div class="ui middle aligned">
-                {!! $commande->commentaire !!}
-            </div>
-        </div>
-    @endif
 </div>
 
 <script>
@@ -98,13 +93,46 @@
             }
         }
     });
+
     $(function() {
 
-        $('.ui-draggable.ui-draggable_{{ str_replace('/', '_', $commande->id) }}').popup({
-            inline: true,
+        $('.ui-popup_{{ str_replace('/', '_', $commande->id) }}').popup({
+            on: 'click',
+            target: $('.target-popup_{{ str_replace('/', '_', $commande->id) }}'),
+            exclusive: true,
             hoverable: true,
-            on: 'hover',
-            position: 'bottom center'
+            position: 'bottom center',
+            html: `<i class="big spinner loading blue icon"></i>`,
+            variation: 'wide',
+            setFluidWidth: true,
+            delay: {
+                show: 400,
+                hide: 2200
+            },
+            onShow: function(el) {
+
+                // $('.ui.popup').hide(150);
+                // $('#of-action-tab').remove();
+                // $('.ui.popup').removeClass('visible');
+
+                resizePopup();
+                var popup = this;
+                popup.css('width', '100% !important')
+                popup.html(`<i class="big spinner loading blue icon"></i>`);
+
+                $.ajax({
+                    url: `/handle/render?com=comment-popup&model=commande&key={{ $commande->id }}&commande`
+                }).done(function(result) {
+                    popup.html(result.render);
+                }).fail(function() {
+                    popup.html(
+                        '<i style="color:red;">Erreur lors du chargement les details de commande N°({{ $commande->id }}) </i>'
+                    );
+                });
+            },
+            onHide: function(el) {
+                // return false;
+            }
         });
     })
 </script>

@@ -61,6 +61,12 @@ $.loadWeekData = function (params, url) {
     );
 };
 
+$.resizePopup = function () { $('.ui.popup').css('max-height', $(window).height()); };
+
+$(window).resize(function (e) {
+    $.resizePopup();
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

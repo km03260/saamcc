@@ -29,7 +29,7 @@
     <script type="text/javascript" src="{{ asset('assets/Semantic-UI-CSS-master/semantic.min.js') }}"></script>
 
     <link href="{{ asset('assets/css/sty1.0.4.css') }}" rel="stylesheet">
-    <script type="module" src="{{ asset('/build/assets/app-9a5e4c9b.js') }}"></script>
+    <script type="module" src="{{ asset('/build/assets/app-eec918f2.js') }}"></script>
 
     {{-- @vite('resources/js/app.js') --}}
 </head>
