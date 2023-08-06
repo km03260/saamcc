@@ -449,7 +449,7 @@ button.load-model:not(.off) {
 }
 
 .tabs .item:not(.active, .im) {
-    background-color: #fff !important;
+    background-color: transparent !important;
     border-radius: 0;
 
 }
@@ -526,4 +526,33 @@ td.max-h {
 .aliceblue_table tr td:nth-child(1) {
     background-color: aliceblue;
     height: 30px;
+}
+
+table.ssem {
+    border-spacing: 6px !important;
+    background: transparent !important;
+    border: 0 !important;
+}
+
+table.ssem .cal-usine {
+    position: sticky;
+    left: 0;
+}
+
+table.ssem thead th {
+    position: sticky;
+    top: 0;
+}
+
+.cal-toprow {
+    height: 20px;
+    width: 195px;
+    min-width: 195px;
+    color: #3e5569;
+    background-color: #f7f9fb !important;
+    border: 1px solid #ebebeb !important;
+}
+
+.cal-toprow.current {
+    border: 2px solid #057dfd !important;
 }

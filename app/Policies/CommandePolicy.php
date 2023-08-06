@@ -39,6 +39,17 @@ class CommandePolicy
     }
 
     /**
+     * Determine whether the user can view any models.
+     */
+    public function accessPlanif(User $user): bool
+    {
+        return match ($user->Profil) {
+            100, 9 => true,
+            default => false
+        };
+    }
+
+    /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Commande $commande): bool

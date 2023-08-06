@@ -35,13 +35,8 @@
 <div style="position: fixed; bottom:10px; text-align: center; margin-top:17px;width: 100%">
 
     <button class="ui mini button green submit_form  bradius-0" data-form="#commande_new_form-{{ $vdata }}"
-        data-action="new" data-url="{{ Route('commande.store') }}" type="button" style="padding: 4px 11px"><i
-            class="save outline icon"></i>
-        Enregistrer puis Nouveau</button>
-
-    <button class="ui mini button green submit_form  bradius-0" data-form="#commande_new_form-{{ $vdata }}"
         data-url="{{ Route('commande.store') }}" type="button" style="padding: 4px 11px"><i class="save icon"></i>
-        Enregistrer et fermer</button>
+        Enregistrer</button>
 
     <button class="ui mini button grey" type="button" style="width: 110px;padding: 4px 11px" data-izimodal-close=""
         data-izimodal-transitionout="bounceOutDown"> Annuler</button>

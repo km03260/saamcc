@@ -47,6 +47,22 @@ Route::prefix('commande')->group(
                         );
                     }
                 );
+                Route::prefix('planif')->group(
+                    function () {
+                        Route::middleware(['can:accessPlanif,App\Models\Commande'])->group(
+                            function () {
+
+                                Route::controller(App\Http\Controllers\SuiviCommandeController::class)->group(
+                                    function () {
+                                        Route::get('/', 'planification')->name('commande.planif.index');
+                                        Route::get('/week', 'week')->name('commande.planif.week');
+                                        Route::get('/week/mouvement/{commande}', 'mouvement')->name('commande.planif.mouvement');
+                                    }
+                                );
+                            }
+                        );
+                    }
+                );
             }
         );
     }

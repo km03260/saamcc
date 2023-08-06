@@ -1,6 +1,7 @@
 // Initial 
 var IS_SMALL_DEVICE = ($(window).width() < 768 ? true : false);
 var SCREENHEIGHT = $(window).height();
+var isMozBrowser = navigator.userAgent.search("Firefox") > -1 ? true : false;
 var sys_loading = false;
 var currentSearchList = null;
 var calendarText = {
@@ -115,6 +116,8 @@ $(document).on('click', '.ax_get', function (e) {
                     if (res.hide) {
                         $(`${res.hide}`).hide(250);
                     }
+                } else if (res._replace) {
+                    $(res._target).html(res._replace);
                 } else if (res._append_row) {
                     $(res._target).append(res._append_row);
                 } else if (res.error_messages) {
@@ -1058,3 +1061,13 @@ function calendarHandle(params, success_action = null) {
         }
     });
 }
+
+var inViewObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+        } else {
+            entry.target.classList.remove('in-view')
+        }
+    })
+}, { threshold: .0 })

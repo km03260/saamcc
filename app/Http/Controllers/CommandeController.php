@@ -145,6 +145,7 @@ class CommandeController extends Controller
     public function update(StoreCommandeRequest $request, Commande $commande)
     {
         $this->authorize('update', [$this->model::class, $commande]);
+
         if ($request->has('date_livraison_confirmee')) {
             $this->authorize('liv_confirme', [$this->model::class, $commande]);
         }
@@ -154,14 +155,25 @@ class CommandeController extends Controller
         $commande->update($_data);
 
         $_resp = [
-            "ok" => "la commande mise à jour avec succès",
             "list" => "commandes",
             "_clicked" => ".commandes.datatable .cgeneral.item.active"
         ];
-
-        if ($request->has('statut_id') && $request->has('suivi')) {
+        if ($request->has('planif')) {
+            $_prm =  $this->model::Grid(['id' => $commande->id])->first();
+            $week = $request->week;
+            $_resp['_target'] = "#ui-cardplanif_" . str_replace('/', '_', $week) . "_" . $commande->id;
+            $_resp['_replace'] = view('components.commande.planif.includes.card')
+                ->with([
+                    'week' => $week,
+                    'sem' => $week,
+                    "statut" =>  $_prm->statut_id,
+                    "commande" => $_prm
+                ])->render();
+        } else  if ($request->has('statut_id') && $request->has('suivi')) {
+            $_resp['ok'] =  "la commande mise à jour avec succès";
             $_resp['_drow'] = "#tr_commandes_$commande->id";
         } else {
+            $_resp['ok'] =  "la commande mise à jour avec succès";
             $_resp['_row'] = $this->model::Grid(['id' => $commande->id])->first();
         }
 

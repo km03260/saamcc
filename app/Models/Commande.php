@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class Commande extends Model
 {
@@ -31,11 +33,22 @@ class Commande extends Model
     public function scopeGrid(Builder $query, array $cond = [])
     {
         $cond = array_filter($cond);
+
         return $query
-            ->select(DB::raw("$this->table.*, CASE WHEN $this->table.statut_id NOT IN (1,2) THEN $this->table.date_livraison_confirmee ELSE '' END AS date_livraison_confirmee"))
+            ->select(DB::raw("
+             $this->table.*,
+             CASE WHEN $this->table.statut_id NOT IN (1,2) THEN $this->table.date_livraison_confirmee ELSE '' END AS date_livraison_confirmee,
+             UNIX_TIMESTAMP($this->table.date_livraison_souhaitee) AS dateSteUF,
+             DATE_FORMAT($this->table.date_livraison_souhaitee, '%V/%Y') AS weekSte
+             "))
             ->with(['statut', 'user', 'client'])
             ->when(key_exists('client_id', $cond), function ($q) use ($cond) {
                 $q->where('client_id', $cond['client_id']);
+            })
+            ->when(key_exists('week', $cond), function ($q) use ($cond) {
+                $_date = new DateTime('midnight');
+                $_date->setISODate(Str::after($cond['week'], '/'), Str::before($cond['week'], '/'));
+                $q->whereBetween('date_livraison_souhaitee', [$_date->modify('-1 days')->format('Y-m-d'), $_date->modify('+5 days')->format('Y-m-d')]);
             })
             ->when(key_exists('article_id', $cond), function ($q) use ($cond) {
                 $q->whereHas('articles', function ($qha) use ($cond) {
@@ -44,6 +57,9 @@ class Commande extends Model
             })
             ->when(key_exists('statut_id', $cond), function ($q) use ($cond) {
                 $q->where('statut_id', $cond['statut_id']);
+            })
+            ->when(key_exists('statuts', $cond), function ($q) use ($cond) {
+                $q->whereIn('statut_id', $cond['statuts']);
             })
             ->when(key_exists('id', $cond), function ($q) use ($cond) {
                 $q->where('id', $cond['id']);
@@ -162,6 +178,10 @@ class Commande extends Model
         });
         static::updating(function ($_mdl) {
             $_mdl->updated_by = Auth::id();
+
+            if ($_mdl->isDirty('statut_id') && $_mdl->statut_id == 3 && !$_mdl->date_livraison_confirmee) {
+                $_mdl->date_livraison_confirmee = Carbon::parse($_mdl->date_livraison_souhaitee)->format('d/m/Y');
+            }
         });
         static::deleting(function ($_mdl) {
             $_mdl->articles->each->delete();

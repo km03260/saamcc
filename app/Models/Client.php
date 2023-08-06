@@ -86,7 +86,7 @@ class Client extends Model
                 "data" => "id",
                 'column' => "id",
                 "render" => false,
-                "className" => 'left aligned',
+                "className" => 'left aligned open_child',
                 "width" => "75px",
             ],
             [

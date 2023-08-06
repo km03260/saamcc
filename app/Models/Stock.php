@@ -103,7 +103,7 @@ class Stock extends Model
             "data" => "total_perte",
             'column' => "total_perte",
             "render" => false,
-            "className" => 'right aligned',
+            "className" => 'right aligned open_child',
         ]);
         array_push($_columns, [
             "name" => "Total",
@@ -111,7 +111,7 @@ class Stock extends Model
             'column' => "/handle/render?com=total-stock-zone&model=article",
             "render" => 'url',
             "width" => "75px",
-            "className" => 'right aligned',
+            "className" => 'right aligned open_child',
         ]);
 
         return $_columns;

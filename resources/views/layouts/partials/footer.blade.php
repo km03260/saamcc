@@ -6,6 +6,7 @@
 <script src="{{ asset('assets/Semantic-UI-CSS-master/calendar/calendar.min.js') }}"></script>
 <script src="{{ asset('assets/modal/js/iModal.min.js') }}"></script>
 <script src="{{ asset('assets/js/moment.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.3/jquery.scrollTo.min.js"></script>
 <script src="{{ asset('assets/js/script1.0.2.js') }}"></script>
 @yield('scripts')
 @stack('script')

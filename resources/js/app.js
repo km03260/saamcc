@@ -15,8 +15,51 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+import Planification from './components/Planification.vue';
+app.component('planification', Planification);
+
+
+$.loadWeekData = function (params, url) {
+    var week_data = $("#planif1254879856hyuook5454_form").serializeArray()
+    var obj_w = {};
+    obj_w["statuts"] = [];
+    $.map(week_data, function (input) {
+        if (input.name == "statuts[]") {
+            obj_w["statuts"][input.value] = input.value;
+        }
+        obj_w[input.name] = input.value;
+    });
+    
+    $.map(params, function (val, key) {
+        obj_w[key] = val;
+        
+    });
+    
+    ajax_get(obj_w, url, (res) => {
+        if (res.content) {
+            $.map(res.content, function (tem, w) {
+                $(`#${w}_box`).addClass("out-dimmer");
+                $(`#${w}_box`).html(tem);
+            });
+        } else if (res.weeks) {
+            $.map(res.weeks, function (_week) {
+                $.loadWeekData(
+                    {
+                        week: _week,
+                        async: true,
+                    },
+                    "/commande/planif/week"
+                );
+            });
+        } else {
+            console.log("server error !");
+        }
+    },
+        (err) => {
+            console.log("server error !");
+        }
+    );
+};
 
 /**
  * The following block of code may be used to automatically register your
