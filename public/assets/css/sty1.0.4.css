@@ -297,11 +297,16 @@ tr td.detail_ {
 }
 
 .popup::before {
-    background: azure !important;
+    /* background: azure !important; */
+}
+
+.ui.popup.calendar::before {
+    background: none 0% 0% repeat scroll rgb(112, 142, 164) !important;
+    background-color: #88a0b9;
 }
 
 .ui.popup {
-    background: azure !important;
+    /* background: azure !important; */
     padding: 0px;
 }
 

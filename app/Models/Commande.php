@@ -163,6 +163,7 @@ class Commande extends Model
         'statut_id',
         'date_livraison_souhaitee',
         'date_livraison_confirmee',
+        'commentaire'
     ];
 
 

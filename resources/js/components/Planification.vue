@@ -14,7 +14,7 @@
           </div>
         </div>
 
-        <div class="twelve wide field" style="margin: auto">
+        <div class="fourteen wide field" style="margin: auto">
           <form
             class="ui form filter_ofs_form"
             id="planif1254879856hyuook5454_form"
@@ -22,12 +22,42 @@
           >
             <div class="ui form">
               <div class="four fields">
-                <div
-                  class="three wide field p-0"
-                  style="margin-left: 7px"
-                ></div>
+                <div class="three wide field p-0" style="margin-left: 7px">
+                  <div class="ui selection search multiple" id="search-client">
+                    <div class="ui action icon input">
+                      <i class="search icon"></i>
+                      <input
+                        class="prompt client_prompt_"
+                        type="text"
+                        placeholder="Clients ..."
+                        style="padding: 7px; border-radius: 0"
+                      />
+                      <input
+                        v-model="client"
+                        type="hidden"
+                        name="client_id"
+                        class="client_search_"
+                      />
+                      <div
+                        class="ui basic red mini button"
+                        style="border: 0; display: none"
+                        id="close-client"
+                      >
+                        <i
+                          class="close red icon"
+                          style="
+                            margin-right: 14px;
+                            padding: 4px;
+                            font-size: 19px;
+                          "
+                        ></i>
+                      </div>
+                    </div>
+                    <div class="result"></div>
+                  </div>
+                </div>
 
-                <div class="seven wide field">
+                <div class="ten wide field">
                   <div
                     class="inline fields"
                     style="margin: 0; justify-content: center"
@@ -69,29 +99,6 @@
       </div>
     </div>
 
-    <!-- <div class="ui center aligned container" style="margin: 7px">
-      <div class="ui mini buttons">
-        <button
-          class="ui labeled basic blue icon button btn_scroll"
-          data-dir="left"
-        >
-          <i class="left chevron icon"></i>
-          En arrière
-        </button>
-        <button @click="ScrollTo(weekyeartr)" class="ui basic blue button">
-          Semaine en cours
-        </button>
-
-        <button
-          class="ui icon basic blue right labeled button btn_scroll"
-          data-dir="right"
-        >
-          En avant
-          <i class="right chevron icon"></i>
-        </button>
-      </div>
-    </div> -->
-
     <div class="ui center aligned container" style="margin: 7px">
       <i
         title=" En arrière"
@@ -124,17 +131,47 @@ export default {
   props: ["weekyeartr", "statuts"],
   data() {
     return {
+      client: null,
       selected_statuts: [],
     };
   },
   mounted() {
+    var _vm_pl = this;
     $(".ui.checkbox").checkbox();
+    $("#search-client").search({
+      apiSettings: {
+        url: `/handle/select/client?search={query}&client`,
+      },
+      fields: {
+        results: "results",
+        title: "name",
+        value: "value",
+      },
+      maxResults: 150,
+      cache: false,
+      clearable: true,
+      searchOnFocus: true,
+      onSelect: function (result) {
+        _vm_pl.client = result.value;
+        $("#close-client").css("display", "block");
+        _vm_pl.loadPlanif();
+      },
+    });
+    $("#close-client").on("click", function (e) {
+      e.preventDefault();
+      _vm_pl.client = null;
+      $(".client_search_").val("");
+      $(".client_prompt_").val("");
+      $(`.client_search_`).change();
+      $("#close-client").css("display", "none");
+      _vm_pl.loadPlanif();
+    });
     this.loadPlanif();
   },
   methods: {
     loadPlanif: function () {
       ajax_get(
-        { statuts: this.selected_statuts },
+        { client_id: this.client, statuts: this.selected_statuts },
         "/commande/planif",
         (res) => {
           $("#suivi_box").html(res.sections);

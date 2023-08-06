@@ -52,6 +52,13 @@
             @endswitch
         </div>
     </div>
+    @if ($commande->commentaire)
+        <div class="ui fluid flowing popup bottom left transition hidden">
+            <div class="ui middle aligned">
+                {!! $commande->commentaire !!}
+            </div>
+        </div>
+    @endif
 </div>
 
 <script>
@@ -98,10 +105,11 @@
     });
     $(function() {
 
-        $('.suivi-{{ str_replace('/', '_', $week) }}').popup({
+        $('.ui-draggable.ui-draggable_{{ str_replace('/', '_', $commande->id) }}').popup({
             inline: true,
             hoverable: true,
-            on: 'click'
+            on: 'hover',
+            position: 'bottom center'
         });
     })
 </script>

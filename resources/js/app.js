@@ -29,12 +29,12 @@ $.loadWeekData = function (params, url) {
         }
         obj_w[input.name] = input.value;
     });
-    
+
     $.map(params, function (val, key) {
         obj_w[key] = val;
-        
+
     });
-    
+
     ajax_get(obj_w, url, (res) => {
         if (res.content) {
             $.map(res.content, function (tem, w) {

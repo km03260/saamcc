@@ -156,8 +156,10 @@ class CommandeController extends Controller
 
         $_resp = [
             "list" => "commandes",
-            "_clicked" => ".commandes.datatable .cgeneral.item.active"
         ];
+        if (!$request->has('noClicked')) {
+            $_resp['_clicked'] = ".commandes.datatable .cgeneral.item.active";
+        }
         if ($request->has('planif')) {
             $_prm =  $this->model::Grid(['id' => $commande->id])->first();
             $week = $request->week;
