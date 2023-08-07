@@ -32,22 +32,7 @@
                 </div>
                 {{ $commande->articles->count() }}
             </div>
-
-            @switch($commande->statut_id)
-                @case(2)
-                    <div class="ui mini" style="margin-top: 7px">
-                        <span id="up_statut_id_popup"></span>
-                        <a class="item im load-model ui button" data-ref="up_" data-color="" data-title=""
-                            data-class="toast-body" data-top="25%"
-                            data-url="/handle/render?com=confirm-statut-action&model=commande&key={{ $commande->id }}&commande"
-                            style="padding: 5px 13px;min-width: 110px ;justify-content: center; font-size:13px; font-weight: bold; background: #d8ea5c; color: #000">
-                            <i class=" check circle green icon"></i> Confirmer la date
-                        </a>
-                    </div>
-                @break
-
-                @default
-            @endswitch
+            <x-commande.planif.includes.statut-button :commande="$commande" />
         </div>
     </div>
 </div>

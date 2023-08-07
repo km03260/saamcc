@@ -89,7 +89,7 @@ class Menu extends Component
                 "icon" => "sort amount up icon",
                 "icon-type" => "icon",
                 "type" => "item",
-                "can" => Gate::allows('accessSuivi', [\App\Models\Commande::class]),
+                "can" => false, // Gate::allows('accessSuivi', [\App\Models\Commande::class]),
                 "route" => "/commande/suivi",
                 "current" => $this->current("commande.suivi.index"),
             ],

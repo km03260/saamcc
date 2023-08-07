@@ -146,13 +146,14 @@ class CommandeController extends Controller
     public function update(StoreCommandeRequest $request, Commande $commande)
     {
         $this->authorize('update', [$this->model::class, $commande]);
+
         if ($request->has('date_livraison_confirmee')) {
             $this->authorize('liv_confirme', [$this->model::class, $commande]);
         }
 
         $_data = $request->only($this->model->fillable);
 
-        if ($request->has('ids')) {
+        if ($request->has('ids') && $request->ids) {
             $_dl_conf = trim($request->ids, ',');
             $this->authorize('liv_confirme', [$this->model::class, $commande]);
             $_data['date_livraison_confirmee'] = $_dl_conf && $_dl_conf != '' ? $_dl_conf : null;
