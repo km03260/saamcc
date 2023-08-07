@@ -41,7 +41,7 @@ class ArticlePolicy
     public function create(User $user): bool
     {
         return match ($user->Profil) {
-            100, 9, 8 => true,
+            100, 9 => true,
             default => false
         };
     }
@@ -53,7 +53,7 @@ class ArticlePolicy
     {
         return match ($user->Profil) {
             100, 9 => true,
-            8 => $article->prospect_id == $user->client,
+                // 8 => $article->prospect_id == $user->client,
             default => false
         };
     }
@@ -65,7 +65,7 @@ class ArticlePolicy
     {
         return match ($user->Profil) {
             100, 9 => true,
-            8 => $article->prospect_id == $user->client,
+                // 8 => $article->prospect_id == $user->client,
             default => false
         };
     }

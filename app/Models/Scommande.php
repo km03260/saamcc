@@ -6,6 +6,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class Scommande extends Model
 {
@@ -34,6 +35,9 @@ class Scommande extends Model
                     "))
             ->when(key_exists('id', $cond), function ($q) use ($cond) {
                 $q->where("id", $cond['id']);
+            })
+            ->when(Gate::allows('is_operateur', [User::class]), function ($q) {
+                $q->whereIn('id', [4, 5]);
             })
             ->when($search, function ($q) use ($search) {
                 $q->where(function ($w) use ($search) {

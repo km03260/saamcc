@@ -67,9 +67,12 @@ class Commande extends Model
             ->when(key_exists('planif', $cond), function ($q) use ($cond) {
                 $q->whereNotIn('statut_id', [1]);
             })
+            ->when(Gate::allows('is_operateur', [User::class]), function ($q) {
+                $q->whereIn('statut_id', [4, 5]);
+            })
             ->when(Auth::user()->Profil == 8, function ($q) {
                 $q->where('client_id', Auth::user()->clients()->first()->id);
-            });;
+            });
     }
 
 

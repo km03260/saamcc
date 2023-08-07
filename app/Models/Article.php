@@ -62,8 +62,9 @@ class Article extends Model
      */
     public function scopeSearch(Builder $query, String $search = null, String $selected = null, array $cond = [])
     {
+        $_name = key_exists('add', $cond) ? "CONCAT(ref, ' ', designation) as name" : "ref AS name";
         return $query
-            ->select(DB::raw("ref as name, id as value, ref as text , designation as description,
+            ->select(DB::raw("$_name, id as value, ref as text , designation as description,
                               CASE WHEN id = '$selected' THEN true ELSE false END AS selected
                     "))
             ->when(key_exists('id', $cond), function ($q) use ($cond) {
@@ -113,7 +114,7 @@ class Article extends Model
                 'column' => 'ref',
                 "render" => false,
                 "edit" => 'data-field="red" data-model="/article/savewhat" data-type="text"',
-                "className" => 'left aligned open_child open editFieldLine',
+                "className" => 'left aligned open_child open ' . (Gate::allows('create', [self::class]) ? 'editFieldLine' : ''),
             ],
             [
                 "name" => "Désignation",
@@ -121,7 +122,7 @@ class Article extends Model
                 'column' => 'designation',
                 "render" => false,
                 "edit" => 'data-field="designation" data-model="/article/savewhat" data-type="text"',
-                "className" => 'left aligned open_child open editFieldLine',
+                "className" => 'left aligned open_child open ' . (Gate::allows('create', [self::class]) ? 'editFieldLine' : ''),
             ],
             [
                 "name" => "PU",
@@ -129,7 +130,7 @@ class Article extends Model
                 'column' => 'puht',
                 "render" => false,
                 "edit" => 'data-field="puht" data-model="/article/savewhat" data-type="decimal"',
-                "className" => 'right aligned  editFieldLine',
+                "className" => 'right aligned  ' . (Gate::allows('create', [self::class]) ? 'editFieldLine' : ''),
             ],
             [
                 "name" => "Client",

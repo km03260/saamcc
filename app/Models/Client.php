@@ -26,6 +26,8 @@ class Client extends Model
      */
     public function scopeGrid(Builder $query, array $cond = [])
     {
+        $cond = array_filter($cond);
+
         return $query
             ->where([
                 "trash" => 0,

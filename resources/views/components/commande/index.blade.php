@@ -9,7 +9,7 @@
             background-color: #88a0b9; color: #fff"
                 data-url="{{ Route('commande.create') }}"
                 data-title="<img src='{{ asset('assets/images/app_logo.png') }}' height='25px' /> <span style='vertical-align: super;'>&nbsp;Nouveau commande</span>"
-                data-color="rgb(112, 142, 164) none repeat scroll 0% 0%" data-width="850"><i class="add icon"></i>&nbsp;Nouveau
+                data-color="rgb(112, 142, 164) none repeat scroll 0% 0%" data-width="950"><i class="add icon"></i>&nbsp;Nouveau
                 commande</div>
         @endcan
         <br>
