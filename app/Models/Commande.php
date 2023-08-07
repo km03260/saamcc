@@ -39,9 +39,11 @@ class Commande extends Model
              $this->table.*,
              CASE WHEN $this->table.statut_id NOT IN (1,2) THEN $this->table.date_livraison_confirmee ELSE $this->table.date_livraison_souhaitee END AS date_liv,
              UNIX_TIMESTAMP($this->table.date_livraison_confirmee) AS dateSteUF,
-             DATE_FORMAT($this->table.date_livraison_confirmee, '%V/%Y') AS weekSte
+             DATE_FORMAT($this->table.date_livraison_confirmee, '%V/%Y') AS weekSte,
+             sc.background AS line_color
              "))
             ->with(['statut', 'user', 'client'])
+            ->leftJoin('cc_commande_statuts as sc', "$this->table.statut_id", "sc.id")
             ->when(key_exists('client_id', $cond), function ($q) use ($cond) {
                 $q->where('client_id', $cond['client_id']);
             })
@@ -62,7 +64,7 @@ class Commande extends Model
                 $q->whereIn('statut_id', $cond['statuts']);
             })
             ->when(key_exists('id', $cond), function ($q) use ($cond) {
-                $q->where('id', $cond['id']);
+                $q->where("$this->table.id", $cond['id']);
             })
             ->when(key_exists('planif', $cond), function ($q) use ($cond) {
                 $q->whereNotIn('statut_id', [1]);
