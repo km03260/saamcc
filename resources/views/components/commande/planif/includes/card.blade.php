@@ -19,9 +19,9 @@
                 <span>{{ $commande->statut->designation }}</span>
             </div>
             <div style="display:flex">
-                <div style="min-width:150px; font-weight: bold;text-align: right;padding-right:14px">Liv Souhaitée:
+                <div style="min-width:150px; font-weight: bold;text-align: right;padding-right:14px">Date livraison:
                 </div>
-                {{ Carbon\Carbon::parse($commande->date_livraison_souhaitee)->format('d/m/Y') }}
+                {{ $commande->date_livraison_confirmee ? Carbon\Carbon::parse($commande->date_livraison_confirmee)->format('d/m/Y') : '' }}
             </div>
             <div style="display:flex">
                 <div style="min-width:150px; font-weight: bold;text-align: right;padding-right:14px">Quantité: </div>
@@ -31,11 +31,6 @@
                 <div style="min-width:150px; font-weight: bold;text-align: right;padding-right:14px">Nmbr d'articles:
                 </div>
                 {{ $commande->articles->count() }}
-            </div>
-            <div style="display:flex">
-                <div style="min-width:150px; font-weight: bold;text-align: right;padding-right:14px">Liv Confirmée:
-                </div>
-                {{ $commande->date_livraison_confirmee ? Carbon\Carbon::parse($commande->date_livraison_confirmee)->format('d/m/Y') : '' }}
             </div>
 
             @switch($commande->statut_id)

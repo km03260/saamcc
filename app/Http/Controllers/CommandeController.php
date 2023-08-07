@@ -178,6 +178,9 @@ class CommandeController extends Controller
                     "statut" =>  $_prm->statut_id,
                     "commande" => $_prm
                 ])->render();
+            if ($week != $_prm->weekSte) {
+                $_resp["weeks"] = [$week, $_prm->weekSte];
+            }
         } else  if ($request->has('statut_id') && $request->has('suivi')) {
             $_resp['ok'] =  "la commande mise à jour avec succès";
             $_resp['_drow'] = "#tr_commandes_$commande->id";

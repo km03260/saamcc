@@ -155,12 +155,11 @@ class SuiviCommandeController extends Controller
     public function mouvement(Request $request, Commande $commande)
     {
         $this->authorize('update', [$this->model::class, $commande]);
-
         $_date = new DateTime('midnight');
         $_date->setISODate(Str::after($request->new_week, '/'), Str::before($request->new_week, '/'));
 
         $commande->update([
-            'date_livraison_souhaitee' => $_date->format('d/m/Y'),
+            'date_livraison_confirmee' => $_date->format('d/m/Y'),
         ]);
 
         return response()->json([

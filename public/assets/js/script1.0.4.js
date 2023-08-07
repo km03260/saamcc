@@ -131,6 +131,18 @@ $(document).on('click', '.ax_get', function (e) {
                     $('#izimodal-main').iziModal('close');
                 }
 
+                if (res.weeks) {
+                    $.map(res.weeks, function (_week) {
+                        $.loadWeekData(
+                            {
+                                week: _week,
+                                async: true,
+                            },
+                            "/commande/planif/week"
+                        );
+                    });
+                }
+
             },
             err => {
                 _ele_.removeClass('disabled loading');

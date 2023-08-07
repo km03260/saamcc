@@ -19,10 +19,14 @@
                     </div>
                     <div class="msgError up_date_livraison_confirmee_M"></div>
                 @endcan
-
+                @php
+                    $_week = Carbon\Carbon::parse($_model->date_livraison_confirmee)
+                        ->startOfWeek(Carbon\Carbon::MONDAY)
+                        ->format('W/Y');
+                @endphp
                 <div>
                     <div class="ui mini green button ax_get" style="padding:4px 11px; font-size:15px"
-                        data-url="{{ Route('commande.update', [$_model->id]) }}?statut_id=3&methode=savewhat&planif=true&noClicked=true&commande"
+                        data-url="{{ Route('commande.update', [$_model->id]) }}?statut_id=3&methode=savewhat&planif=true&noClicked=true&week={{ $_week }}&commande"
                         data-inputs=".date_liv_confirm-{{ $kdata }}">Oui</div>
                     <div class="ui mini button" data-izimodal-close="" data-izimodal-transitionout="bounceOutDown"
                         style="padding:4px 11px; font-size:15px">Non

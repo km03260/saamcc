@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class Stock extends Model
 {
@@ -82,7 +83,7 @@ class Stock extends Model
                 "data" => "article.client_name",
                 'column' => 'article_id',
                 "render" => 'relation',
-                'visible' => key_exists('wclient', $cond),
+                'visible' => key_exists('wclient', $cond) && !Gate::allows('is_client', User::class),
                 "className" => 'left aligned open_child',
             ],
         ];

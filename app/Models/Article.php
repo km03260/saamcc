@@ -136,7 +136,7 @@ class Article extends Model
                 "data" => "client.raison_sociale",
                 'column' => 'prospect_id',
                 "render" => 'relation',
-                'visible' => key_exists('wclient', $cond),
+                'visible' => key_exists('wclient', $cond) && !Gate::allows('is_client', User::class),
                 "className" => 'right aligned',
             ],
             [
