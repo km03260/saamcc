@@ -48,7 +48,7 @@ class Commande extends Model
             ->when(key_exists('week', $cond), function ($q) use ($cond) {
                 $_date = new DateTime('midnight');
                 $_date->setISODate(Str::after($cond['week'], '/'), Str::before($cond['week'], '/'));
-                $q->whereBetween('date_livraison_confirmee', [$_date->modify('-1 days')->format('Y-m-d'), $_date->modify('+5 days')->format('Y-m-d')]);
+                $q->whereBetween('date_livraison_confirmee', [$_date->modify('-1 days')->format('Y-m-d'), $_date->modify('+6 days')->format('Y-m-d')]);
             })
             ->when(key_exists('article_id', $cond), function ($q) use ($cond) {
                 $q->whereHas('articles', function ($qha) use ($cond) {

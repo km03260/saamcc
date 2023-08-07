@@ -128,6 +128,7 @@ class SuiviCommandeController extends Controller
 
             $__week = str_replace('/', '_', $request->week);
 
+
             $commandes = $this->model::Grid($data_request);
 
             return response()->json([
