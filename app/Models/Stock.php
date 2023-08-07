@@ -104,6 +104,7 @@ class Stock extends Model
             "data" => "total_perte",
             'column' => "total_perte",
             "render" => false,
+            'visible' =>  !Gate::allows('is_client', User::class),
             "className" => 'right aligned open_child',
         ]);
         array_push($_columns, [
