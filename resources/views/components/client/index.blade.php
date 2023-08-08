@@ -17,6 +17,7 @@
                 :length="50" />
         @endcannot
         <br>
+        <br>
         <x-client.filter :vdata="$vdata" length="50" />
         <x-data-table list="clients" childRow="/client/show" :vdata="$vdata" :length="50"
             open="{{ Auth::user()->Profil == 8 && $client ? $client->id : false }}" />

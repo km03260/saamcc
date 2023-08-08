@@ -25,7 +25,7 @@ class StockPolicy
     public function access(User $user): bool
     {
         return match ($user->Profil) {
-            100, 9, 8, 10 => true,
+            100, 9, 8, 4 => true,
             default => false
         };
     }
@@ -56,7 +56,7 @@ class StockPolicy
     public function update(User $user): bool
     {
         return match ($user->Profil) {
-            100, 9, 10 => true,
+            100, 9, 4 => true,
             default => false
         };
     }

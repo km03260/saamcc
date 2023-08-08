@@ -82,7 +82,7 @@ class UserPolicy
      */
     public function is_operateur(User $user): bool
     {
-        return $user->Profil == 10;
+        return $user->Profil == 4;
     }
 
     /**
