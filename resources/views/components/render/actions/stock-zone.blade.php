@@ -4,12 +4,12 @@
         @if ($zone_id == 1)
             <i class="large arrow alternate circle right green icon load-model"
                 data-url="{{ Route('mouvement.create', [0, $_model->id, $zone_id]) }}"
-                data-title="<img src='{{ asset('assets/images/app_logo.png') }}' height='25px' /> <span style='vertical-align: super;'>&nbsp;Modification quantitée</span>"
+                data-title="<img src='{{ asset('assets/images/app_logo.png') }}' height='25px' /> <span style='vertical-align: super;'>&nbsp;Modification quantité</span>"
                 data-color="rgb(112, 142, 164) none repeat scroll 0% 0%" data-width="750"></i>
         @else
             <i class="large arrow alternate circle left red icon load-model"
                 data-url="{{ Route('mouvement.create', [2, $_model->id, $zone_id]) }}"
-                data-title="<img src='{{ asset('assets/images/app_logo.png') }}' height='25px' /> <span style='vertical-align: super;'>&nbsp;Modification quantitée</span>"
+                data-title="<img src='{{ asset('assets/images/app_logo.png') }}' height='25px' /> <span style='vertical-align: super;'>&nbsp;Modification quantité</span>"
                 data-color="rgb(112, 142, 164) none repeat scroll 0% 0%" data-width="750"></i>
         @endif
         @can('upStock', [App\Models\Stock::class])
@@ -25,7 +25,7 @@
         @else
             <i class="large arrow alternate circle right green icon load-model"
                 data-url="{{ Route('mouvement.create', [1, $_model->id, $zone_id]) }}"
-                data-title="<img src='{{ asset('assets/images/app_logo.png') }}' height='25px' /> <span style='vertical-align: super;'>&nbsp;Modification quantitée</span>"
+                data-title="<img src='{{ asset('assets/images/app_logo.png') }}' height='25px' /> <span style='vertical-align: super;'>&nbsp;Modification quantité</span>"
                 data-color="rgb(112, 142, 164) none repeat scroll 0% 0%" data-width="750"></i>
         @endif
     </div>

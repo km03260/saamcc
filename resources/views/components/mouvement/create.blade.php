@@ -55,7 +55,7 @@
                     <span class="ui red label" style="padding: 4px 11px">
                         {{ $zones->where('id', $zone->id)->first()?->libelle }}
                     </span>
-                    a la zone
+                    à la zone
                     <span class="ui green label" style="padding: 4px 11px">
                         {{ $zones->where('id', $zone->id + 1)->first()?->libelle }}
                     </span>
@@ -149,9 +149,8 @@
             </div>
             <br>
             <div class="field">
-                <label>Quantité a ajouté à la zone <span class="ui green label"
-                        style="padding: 4px 11px">{{ $zones->where('id', $zone->id)->first()?->libelle }}</span> a la
-                    zone
+                <label>Quantité à ajouter à la zone <span class="ui green label"
+                        style="padding: 4px 11px">{{ $zones->where('id', $zone->id)->first()?->libelle }}</span>
                 </label>
                 <input name="qte" id="qte_{{ $vdata }}" min="0" type="number" placeholder="Quantité"
                     style="max-width: 150px; padding:4px 11px" />
