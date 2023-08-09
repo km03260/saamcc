@@ -81,15 +81,17 @@ class LcommandeController extends Controller
             $_article = Article::Grid(['id' => $ligne['id']])->first();
             if ($ligne['id'] && $_article) {
                 foreach ($ligne['variation'] as $t_var => $c_var) {
-                    if ($c_var['qty'] > 0) {
-                        Lcommande::updateOrCreate([
-                            'commande_id' => $commande->id,
-                            'article_id' => $_article->id,
-                            'variation' => $t_var != 0 ? ("$t_var" . (key_exists('value', $c_var) ? "/" . $c_var['value'] : '')) : null,
-                        ], [
-                            'qty' => $c_var['qty'],
-                            'pu' =>  $_article->puht,
-                        ]);
+                    foreach ($c_var as $bvar => $qty) {
+                        if ($qty > 0) {
+                            Lcommande::updateOrCreate([
+                                'commande_id' => $commande->id,
+                                'article_id' => $ligne['id'],
+                                'variation' => $t_var != 0 ? ("$t_var" . ($bvar != 0 ? "/" . $bvar : '')) : null,
+                            ], [
+                                'qty' => $qty,
+                                'pu' =>  $_article->puht,
+                            ]);
+                        }
                     }
                 }
             }

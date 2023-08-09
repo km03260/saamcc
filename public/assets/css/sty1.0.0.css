@@ -305,6 +305,12 @@ tr td.detail_ {
     background-color: #88a0b9;
 }
 
+.ui.popup.calendar table thead th {
+    background: none 0% 0% repeat scroll rgb(112, 142, 164) !important;
+    background-color: #88a0b9;
+    color: #fff;
+}
+
 .ui.popup {
     /* background: azure !important; */
     padding: 0px;
