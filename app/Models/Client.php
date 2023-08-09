@@ -200,6 +200,16 @@ class Client extends Model
     }
 
     /**
+     * related variations
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function variations()
+    {
+        return $this->hasMany(Variation::class);
+    }
+
+    /**
      * related articles
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

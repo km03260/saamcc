@@ -1,1 +1,1 @@
-<x-commande.ligne.row client="{{ $client }}" />
+<x-commande.ligne.row :client="$client" />

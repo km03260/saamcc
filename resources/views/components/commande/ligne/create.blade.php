@@ -17,12 +17,13 @@
                 </tr>
                 <tr>
                     <th style="padding: 4px 11px;">Article</th>
-                    <th style="padding: 4px 11px;">Quantité</th>
+                    @if ($commande->client->variations()->count() == 0)
+                        <th style="padding: 4px 11px;">Quantité</th>
+                    @endif
                     <th style="padding: 4px 11px;"></th>
                 </tr>
             </thead>
             <tbody class="{{ $vdata }}_lcmd_rows">
-                {{-- <x-commande.ligne.create-rows :client="$commande->client_id" /> --}}
             </tbody>
         </table>
 

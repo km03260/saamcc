@@ -7,3 +7,4 @@ include_once(base_path('/routes/groupes/web-stock.php'));
 include_once(base_path('/routes/groupes/web-mouvement.php'));
 include_once(base_path('/routes/groupes/web-commande.php'));
 include_once(base_path('/routes/groupes/web-user.php'));
+include_once(base_path('/routes/groupes/web-variation.php'));

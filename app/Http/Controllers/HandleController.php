@@ -109,31 +109,21 @@ class HandleController extends Controller
                     $result[] = ["name" => Str::ucfirst($origin), "text" => Str::ucfirst($origin), "value" => $origin, 'selected' => $selected == $origin];
                 }
                 break;
-            case 'devis_article_bloc':
+            case 'type_field':
                 foreach ([
-                    'matiere',
-                    'colorant',
-                    'composant',
-                    'emballage',
-                    'opération',
+                    'options',
+                    'text',
+                    'nombre',
+                    'décimale',
+                    'texte',
+                    'checkbox'
                 ] as $bloc) {
-                    if (
-                        (request()->has('operation') && $bloc == 'opération')
-                        || (request()->has('composant') && $bloc != 'opération') ||
-                        (!request()->has('operation') && !request()->has('composant'))
-                    ) {
-                        $selected = $selected;
-                        $result[] = ["name" => Str::ucfirst($bloc), "text" => Str::ucfirst($bloc), "value" => $bloc, 'selected' => $selected == $bloc];
-                    }
+                    $selected = $selected;
+                    $result[] = ["name" => Str::ucfirst($bloc), "text" => Str::ucfirst($bloc), "value" => $bloc, 'selected' => $selected == $bloc];
                 }
                 break;
-            case 'blocs':
-                foreach ([
-                    'opération',
-                    'energie',
-                    'matiere-composant',
-                    'général'
-                ] as $bloc) {
+            case 'empty':
+                foreach ([] as $bloc) {
                     $selected = $selected;
                     $result[] = ["name" => Str::ucfirst($bloc), "text" => Str::ucfirst($bloc), "value" => $bloc, 'selected' => $selected == $bloc];
                 }

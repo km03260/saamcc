@@ -1,19 +1,19 @@
 <?php
 
-namespace App\View\Components\Commande\Ligne;
+namespace App\View\Components\Client\Tabs;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
-class CreateRows extends Component
+class Variations extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public Model $client)
+    public function __construct()
     {
+        //
     }
 
     /**
@@ -21,6 +21,6 @@ class CreateRows extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.commande.ligne.create-rows');
+        return view('components.client.tabs.variations');
     }
 }

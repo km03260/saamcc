@@ -1,19 +1,19 @@
 <?php
 
-namespace App\View\Components\Commande\Ligne;
+namespace App\View\Components\Variation\Includes;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
-class CreateRows extends Component
+class FieldType extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public Model $client)
+    public function __construct()
     {
+        //
     }
 
     /**
@@ -21,6 +21,6 @@ class CreateRows extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.commande.ligne.create-rows');
+        return view('components.variation.includes.field-type');
     }
 }

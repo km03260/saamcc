@@ -96,6 +96,7 @@ class ClientController extends Controller
             ["name" => 'articles', "title" => 'Articles', 'color' => "cornflowerblue"],
             ["name" => 'stocks', "title" => 'Stock', 'color' => "springgreen"],
             ["name" => 'commandes', "title" => 'Commandes', 'color' => "#ffff0a"],
+            ["name" => 'variations', "title" => 'Varitions', 'color' => "#62ff0a"],
             ["name" => 'users', "title" => 'Utilisateurs', 'color' => "darkgray", "can" => Gate::allows('access', App\Models\User::class)],
         ];
         return response()->json(['child' => view('components.client.show', compact('client', 'vdata', 'tabs'))->render()], 200);

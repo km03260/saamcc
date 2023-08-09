@@ -1,6 +1,6 @@
 <div class="ui fluid search selection {{ $multiple ? 'multiple' : '' }} dropdown" id="dropdown-{{ $vdrop }}"
     style="
-    min-height: max-content !important;
+    min-height: {{ $multiple ? '' : 'max-content !important' }};
     border-radius: 0;
     width: 100%;
     width: -moz-available ;

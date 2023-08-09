@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLcommandeRequest;
 use App\Http\Requests\UpdateLcommandeRequest;
 use App\Models\Article;
+use App\Models\Client;
 use App\Models\Commande;
 use App\Models\Lcommande;
 use Illuminate\Database\Eloquent\Model;
@@ -56,7 +57,7 @@ class LcommandeController extends Controller
     public function row(Request $request)
     {
         $vdata = $this->vdata();
-        $client = $request->client;
+        $client = Client::find($request->client);
         $ids = $request->has('ids') ? $request->get('ids') : '';
         $notIn = $request->has('notIn') ? $request->get('notIn') : '';
 
@@ -77,16 +78,21 @@ class LcommandeController extends Controller
 
         foreach ($request->articles ?? [] as $key => $ligne) {
 
-            $_article = Article::Grid(['id', $ligne['id']])->first();
+            $_article = Article::Grid(['id' => $ligne['id']])->first();
+            if ($ligne['id'] && $_article) {
+                foreach ($ligne['variation'] as $t_var => $c_var) {
+                    if ($c_var['qty'] > 0) {
+                        Lcommande::updateOrCreate([
+                            'commande_id' => $commande->id,
+                            'article_id' => $_article->id,
+                            'variation' => $t_var != 0 ? ("$t_var" . ($c_var['value'] ? "/" . $c_var['value'] : '')) : null,
 
-            if ($ligne['id'] && $_article && $ligne['qty'] > 0) {
-                $this->model::updateOrCreate([
-                    'commande_id' => $request->commande_id,
-                    'article_id' => $ligne['id'],
-                ], [
-                    'qty' => $ligne['qty'],
-                    'pu' =>  $_article->puht,
-                ]);
+                        ], [
+                            'qty' => $c_var['qty'],
+                            'pu' =>  $_article->puht,
+                        ]);
+                    }
+                }
             }
         }
 

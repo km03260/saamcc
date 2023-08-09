@@ -78,6 +78,13 @@ class Lcommande extends Model
                 "className" => 'left aligned',
             ],
             [
+                "name" => "Caractéristique",
+                "data" => "variation",
+                'column' => 'variation',
+                "render" => false,
+                "className" => 'left aligned',
+            ],
+            [
                 "name" => "Prix unitaire",
                 "data" => "pu",
                 'column' => 'pu',
@@ -138,6 +145,7 @@ class Lcommande extends Model
     public $fillable = [
         'commande_id',
         'article_id',
+        'variation',
         'qty',
         'pu',
     ];

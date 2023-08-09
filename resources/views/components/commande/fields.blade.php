@@ -49,7 +49,7 @@
             <th colspan="3" style="padding: 4px 11px;">
                 Articles de commande <div class="ui mini blue icon button right floated ax_get"
                     data-inputs=".{{ $vdata }}_lcmd_rows input[type='hidden']:not(.prompt,.refer)"
-                    data-url="{{ Route('commande.ligne.row') }}?target=.{{ $vdata }}_lcmd_rows&client={{ $client_id }}&ressourc">
+                    data-url="{{ Route('commande.ligne.row') }}?target=.{{ $vdata }}_lcmd_rows&client={{ $client->id }}&ressourc">
                     <i class="add icon"></i>&nbsp;Ajouter
                     article
                 </div>
@@ -57,12 +57,15 @@
         </tr>
         <tr>
             <th style="padding: 4px 11px;">Article</th>
-            <th style="padding: 4px 11px;">Quantité</th>
-            <th style="padding: 4px 11px;"></th>
+            @if ($client->variations()->count() > 0)
+            @else
+                <th style="padding: 4px 11px;width:150px">Quantité</th>
+            @endif
+            <th style="padding: 4px 11px;width:55px"></th>
         </tr>
     </thead>
     <tbody class="{{ $vdata }}_lcmd_rows">
-        <x-commande.ligne.create-rows :client="$client_id" />
+        <x-commande.ligne.create-rows :client="$client" />
     </tbody>
 </table>
 

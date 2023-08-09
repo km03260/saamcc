@@ -62,9 +62,9 @@ class Article extends Model
      */
     public function scopeSearch(Builder $query, String $search = null, String $selected = null, array $cond = [])
     {
-        $_name = key_exists('add', $cond) ? "CONCAT(ref, ' ', designation) as name" : "ref AS name";
+        $_name = key_exists('add', $cond) ? "CONCAT(ref, ' ', CASE WHEN designation IS NOT NULL THEN designation ELSE '' END ) AS name" : "ref AS name";
         return $query
-            ->select(DB::raw("$_name, id as value, ref as text , designation as description,
+            ->select(DB::raw("$_name, id as value, ref as text , designation as description,id AS value,
                               CASE WHEN id = '$selected' THEN true ELSE false END AS selected
                     "))
             ->when(key_exists('id', $cond), function ($q) use ($cond) {
@@ -181,7 +181,6 @@ class Article extends Model
         "designation",
         "puht",
     ];
-
 
     /**
      * The "booted" method of the model.

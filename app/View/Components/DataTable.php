@@ -266,6 +266,13 @@ class DataTable extends Component
                 "list" => "list_users$this->vdata",
                 "key" => "id",
             ],
+            "variations" => [
+                "url" => Route('variation.grid'),
+                "vdata" => $this->vdata,
+                "name" => "variations",
+                "list" => "list_variations$this->vdata",
+                "key" => "id",
+            ],
         ]);
     }
 

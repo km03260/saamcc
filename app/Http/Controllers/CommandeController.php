@@ -55,9 +55,9 @@ class CommandeController extends Controller
 
         $vdata = $this->vdata();
         $client_id = Gate::allows('is_client', [App\Models\User::class]) ? Auth::user()->client  : ($request->get('client_id') ?? null);
-
+        $client = $client_id ? Client::find($client_id) : null;
         return response()->json([
-            "template" => view('components.commande.create', compact('vdata', 'client_id'))->render(),
+            "template" => view('components.commande.create', compact('vdata', 'client', 'client_id'))->render(),
         ], 200);
     }
 
@@ -73,17 +73,21 @@ class CommandeController extends Controller
             $_prm =  $this->model::Create($request->only($this->model->fillable));
 
             foreach ($request->articles ?? [] as $key => $ligne) {
-
                 $_article = Article::Grid(['id', $ligne['id']])->first();
 
-                if ($ligne['id'] && $_article && $ligne['qty'] > 0) {
-                    Lcommande::updateOrCreate([
-                        'commande_id' => $_prm->id,
-                        'article_id' => $ligne['id'],
-                    ], [
-                        'qty' => $ligne['qty'],
-                        'pu' =>  $_article->puht,
-                    ]);
+                if ($ligne['id'] && $_article) {
+                    foreach ($ligne['variation'] as $t_var => $c_var) {
+                        if ($c_var['qty'] > 0) {
+                            Lcommande::updateOrCreate([
+                                'commande_id' => $_prm->id,
+                                'article_id' => $ligne['id'],
+                                'variation' => $t_var != 0 ? ("$t_var" . ($c_var['value'] ? "/" . $c_var['value'] : '')) : null,
+                            ], [
+                                'qty' => $c_var['qty'],
+                                'pu' =>  $_article->puht,
+                            ]);
+                        }
+                    }
                 }
             }
 
@@ -128,8 +132,8 @@ class CommandeController extends Controller
         $this->authorize('create', $this->model::class);
 
         $vdata = $this->vdata();
-        $client_id = Gate::allows('is_client', [App\Models\User::class]) ? Auth::user()->client  :  $client->id;
-        return view('components.commande.fields', compact('vdata', 'client_id'))->render();
+        // $client_id = Gate::allows('is_client', [App\Models\User::class]) ? Auth::user()->client  :  $client->id;
+        return view('components.commande.fields', compact('vdata', 'client'))->render();
     }
 
     /**
