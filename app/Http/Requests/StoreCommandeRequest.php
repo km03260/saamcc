@@ -73,7 +73,7 @@ class StoreCommandeRequest extends FormRequest
             "date_livraison_confirmee" => "Date livraison confirmée",
             "articles.*.qty" => "Quantité",
             "articles.*.id" => "Article",
-            "ccnum" => "Numéro de commande",
+            "ccnum" => "N°Commande MagiSoft",
         ];
     }
 

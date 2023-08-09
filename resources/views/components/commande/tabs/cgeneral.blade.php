@@ -88,12 +88,12 @@
             @can('liv_confirme', [App\Models\Commande::class, $commande])
                 <tr>
                     <td class="" style="background-color:#f9fafb;border-bottom: 1px solid #fff;">
-                        <h5 class="ui header">Numéro de commande</h5>
+                        <h5 class="ui header">N°Commande MagiSoft</h5>
                     </td>
                     <td>
                         <div class="ui transparent right icon big input focus" style="width: 300px">
                             <input class="up_field" type="text" data-name="ccnum" value="{{ $commande->ccnum }}"
-                                placeholder="Numéro de commande ..." @if (!Gate::allows('liv_confirme', [App\Models\Commande::class, $commande])) readonly @endif
+                                placeholder="N°Commande MagiSoft ..." @if (!Gate::allows('liv_confirme', [App\Models\Commande::class, $commande])) readonly @endif
                                 style="padding: 3px;border-radius: 0;
                     ">
                             <i class="icon" style="margin: -2px;"></i>
@@ -106,7 +106,7 @@
                 @if (!in_array($commande->statut_id, [1, 2]))
                     <tr>
                         <td class="" style="background-color:#f9fafb;border-bottom: 1px solid #fff;">
-                            <h5 class="ui header">Numéro de commande</h5>
+                            <h5 class="ui header">N°Commande MagiSoft</h5>
                         </td>
                         <td>{{ $commande->ccnum }}</td>
                     </tr>
