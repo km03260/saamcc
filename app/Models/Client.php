@@ -16,7 +16,7 @@ class Client extends Model
      * Table name
      * @var string
      */
-    protected $table = "com_prospects";
+    protected $table = "cc_clients";
 
     /**
      * Scope grid
@@ -29,10 +29,7 @@ class Client extends Model
         $cond = array_filter($cond);
 
         return $query
-            ->where([
-                "trash" => 0,
-                "type" => 'Client',
-            ])
+            ->where(["trash" => 0])
             ->when(key_exists('id', $cond), function ($q) use ($cond) {
                 $q->where('id', $cond['id']);
             })
@@ -66,7 +63,6 @@ class Client extends Model
             })
             ->where([
                 "trash" => 0,
-                "type" => 'Client',
             ])
             ->when(Auth::user()->Profil == 8, function ($q) {
                 $q->where('id', Auth::user()->clients()->first()->id);
@@ -99,62 +95,12 @@ class Client extends Model
                 "className" => 'left aligned open_child open item',
             ],
             [
-                "name" => "Activité",
-                "data" => "activite",
-                'column' => 'activite',
+                "name" => "Code magisoft",
+                "data" => "code_magisoft",
+                'column' => 'code_magisoft',
                 "render" => false,
                 "className" => 'left aligned open_child open item',
             ],
-            [
-                "name" => "business",
-                "data" => "business",
-                'column' => 'business',
-                "render" => false,
-                "className" => 'left aligned open_child open item',
-            ],
-            // [
-            //     "name" => "Code",
-            //     "data" => "code_article",
-            //     'column' => 'code_article',
-            //     "render" => false,
-            //     "className" => 'left aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Famille",
-            //     "data" => "famille.nom",
-            //     'column' => 'famille.nom',
-            //     "render" => 'relation',
-            //     "className" => 'left aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Tailles",
-            //     "data" => "tailles",
-            //     'column' => 'tailles',
-            //     "render" => false,
-            //     "className" => 'left aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Points",
-            //     "data" => "points",
-            //     'column' => 'points',
-            //     "render" => false,
-            //     "className" => 'right aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Prix",
-            //     "data" => "prix",
-            //     'column' => 'prix',
-            //     "render" => false,
-            //     "className" => 'right aligned open_child open item',
-            // ],
-            // [
-            //     "name" => "Dans le métier",
-            //     "data" => "metier_checkbox",
-            //     'column' => "/handle/render?com=_metier_checkbox_column&model=article&metier=" . (key_exists('vmetier', $cond) ? $cond['vmetier'] : ''),
-            //     "render" => 'url',
-            //     "className" => 'center aligned open p-0',
-            //     "visible" => key_exists('vmetier', $cond),
-            // ],
         ];
     }
 
@@ -165,18 +111,7 @@ class Client extends Model
      */
     public $fillable = [
         "raison_sociale",
-        "type",
-        "adresse1",
-        "adresse2",
-        "cp",
-        "ville",
-        "pays",
-        "activite",
-        "siteweb",
-        "code_magi_soft",
-        "trash",
-        "business",
-        'account',
+        'code_magisoft'
     ];
 
     /**

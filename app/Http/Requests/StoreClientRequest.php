@@ -36,18 +36,8 @@ class StoreClientRequest extends FormRequest
     {
 
         $rules = [
-            "raison_sociale" => ['required', 'max:70', "unique:com_prospects,raison_sociale"],
-            "type" => ['nullable', 'in:prospect,client,prescripteur'],
+            "raison_sociale" => ['required', 'max:70', "unique:cc_clients,raison_sociale"],
             "code_magisoft" => ['nullable', 'max:50'],
-            "adresse1" => ['nullable', 'string', 'max:150'],
-            "adresse2" => ['nullable', 'string', 'max:150'],
-            "cp" => ['required', 'string', 'max:10'],
-            "ville" => ['required', 'string', 'max:50'],
-            "pays" => ['nullable', 'string', 'max:50'],
-            "account" => ['nullable', 'string', 'max:50', 'exists:sso_user,id'],
-            "activite" => ['nullable', 'string', 'max:200'],
-            "siteweb" => ['nullable', 'string', 'max:100'],
-            "business" => ['nullable', 'string'],
         ];
         if ($this->methode == "savewhat") {
             return array_intersect_key($rules, request()->all());
@@ -63,8 +53,7 @@ class StoreClientRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            "adresse1" => "adresse",
-            "adresse2" => "adresse",
+            "raison_sociale" => "Raison sociale",
             "code_magisoft" => "Code magisoft",
         ];
     }

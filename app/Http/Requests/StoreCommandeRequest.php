@@ -37,19 +37,21 @@ class StoreCommandeRequest extends FormRequest
      */
     public function rules()
     {
+        $_excep = request()->has('id') ? ',' . request()->get('id') : '';
         $_in_prospect = match (Gate::allows('is_client', [App\Models\User::class])) {
             true => "in:" . Auth::user()->client,
             false => "",
         };
 
         $rules = [
-            "client_id" => ['required', "exists:com_prospects,id", $_in_prospect],
+            "client_id" => ['required', "exists:cc_clients,id", $_in_prospect],
             "statut_id" => ['nullable', 'exists:cc_commande_statuts,id', new UpdateCommandeStatutRule($this)],
             "date_livraison_souhaitee" => ['nullable', new DateFormatFR('d/m/Y')],
             "date_livraison_confirmee" => ['nullable', new DateFormatFR('d/m/Y')],
             "articles.*.qty"  => ['nullable', 'numeric'],
             "articles.*.id"  => ['nullable', 'exists:cc_articles,id'],
-            "commentaire" => ['nullable']
+            "commentaire" => ['nullable'],
+            "ccnum" => ['nullable', 'max:50', 'unique:cc_commandes,ccnum' . $_excep],
         ];
         if ($this->methode == "savewhat") {
             return array_intersect_key($rules, request()->all());

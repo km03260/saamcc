@@ -36,7 +36,7 @@ class UpdateClientRequest extends FormRequest
     {
 
         $rules = [
-            "raison_sociale" => ['required', 'max:70', "unique:com_prospects,raison_sociale," . request()->client?->id],
+            "raison_sociale" => ['required', 'max:70', "unique:cc_clients,raison_sociale," . request()->client?->id],
             "type" => ['nullable', 'in:prospect,client,prescripteur'],
             "code_magisoft" => ['nullable', 'max:50'],
             "adresse1" => ['nullable', 'string', 'max:150'],

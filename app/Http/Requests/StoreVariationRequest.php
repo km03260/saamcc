@@ -37,7 +37,7 @@ class StoreVariationRequest extends FormRequest
     {
 
         $rules = [
-            "client_id" => ['required', "exists:com_prospects,id"],
+            "client_id" => ['required', "exists:cc_clients,id"],
             "label" => ['required', 'max:100'],
             "value" => ['required', 'max:255'],
         ];

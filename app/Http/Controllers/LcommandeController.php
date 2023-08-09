@@ -85,8 +85,7 @@ class LcommandeController extends Controller
                         Lcommande::updateOrCreate([
                             'commande_id' => $commande->id,
                             'article_id' => $_article->id,
-                            'variation' => $t_var != 0 ? ("$t_var" . ($c_var['value'] ? "/" . $c_var['value'] : '')) : null,
-
+                            'variation' => $t_var != 0 ? ("$t_var" . (key_exists('value', $c_var) ? "/" . $c_var['value'] : '')) : null,
                         ], [
                             'qty' => $c_var['qty'],
                             'pu' =>  $_article->puht,

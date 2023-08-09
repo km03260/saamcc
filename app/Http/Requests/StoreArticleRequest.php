@@ -42,7 +42,7 @@ class StoreArticleRequest extends FormRequest
         };
 
         $rules = [
-            "prospect_id" => ['required', "exists:com_prospects,id", $_in_prospect],
+            "prospect_id" => ['required', "exists:cc_clients,id", $_in_prospect],
             "ref" => ['required', 'max:50'],
             "designation" => ['nullable', 'max:150'],
             "puht" => ['nullable', 'numeric', 'regex:/^((?!0)\d{1,10}|0|\.\d{1,2})($|\.$|\.\d{1,2}$)/'],
