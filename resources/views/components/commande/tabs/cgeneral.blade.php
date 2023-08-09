@@ -72,19 +72,6 @@
                     </td>
                 </tr>
             @endif
-            <tr>
-                <td>
-                    Commentaire
-                </td>
-                <td>
-                    <div class="ui  fluid right icon big input focus">
-                        <textarea class="up_field" data-name="commentaire" placeholder="Commentaire ..." style="padding: 3px;border-radius: 0;"
-                            rows="7">{!! $commande->commentaire !!}</textarea>
-                        <i class="icon" style="margin: -2px;"></i>
-                    </div>
-                    <div class="msgError sw_commentaire_M"></div>
-                </td>
-            </tr>
             @can('liv_confirme', [App\Models\Commande::class, $commande])
                 <tr>
                     <td class="" style="background-color:#f9fafb;border-bottom: 1px solid #fff;">
@@ -112,6 +99,19 @@
                     </tr>
                 @endif
             @endcannot
+            <tr>
+                <td>
+                    Commentaire
+                </td>
+                <td>
+                    <div class="ui  fluid right icon big input focus">
+                        <textarea class="up_field" data-name="commentaire" placeholder="Commentaire ..." style="padding: 3px;border-radius: 0;"
+                            rows="7">{!! $commande->commentaire !!}</textarea>
+                        <i class="icon" style="margin: -2px;"></i>
+                    </div>
+                    <div class="msgError sw_commentaire_M"></div>
+                </td>
+            </tr>
             <tr>
                 <td colspan="2" style="">
                     Créé Le {{ Carbon\Carbon::parse($commande->cree_le)->format('d/m/Y') }} Par
