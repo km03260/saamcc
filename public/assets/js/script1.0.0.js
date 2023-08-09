@@ -101,6 +101,9 @@ $(document).on('click', '.ax_get', function (e) {
                     if (res._row) {
                         load_row(res._row.id, res._row, res.list ?? '');
                     }
+                    if (res._row_p) {
+                        load_row(res._row_p.id, res._row_p, res.list_p ?? '');
+                    }
                     if (res._new) {
                         $(res._new).DataTable().draw(false)
                     }
