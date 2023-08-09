@@ -74,8 +74,8 @@
             @endif
             @can('liv_confirme', [App\Models\Commande::class, $commande])
                 <tr>
-                    <td class="" style="background-color:#f9fafb;border-bottom: 1px solid #fff;">
-                        <h5 class="ui header">N°Commande MagiSoft</h5>
+                    <td class="" style="">
+                        N°Commande MagiSoft
                     </td>
                     <td>
                         <div class="ui transparent right icon big input focus" style="width: 300px">
@@ -92,8 +92,8 @@
             @cannot('liv_confirme', [App\Models\Commande::class, $commande])
                 @if (!in_array($commande->statut_id, [1, 2]))
                     <tr>
-                        <td class="" style="background-color:#f9fafb;border-bottom: 1px solid #fff;">
-                            <h5 class="ui header">N°Commande MagiSoft</h5>
+                        <td class="" style="">
+                            N°Commande MagiSoft
                         </td>
                         <td>{{ $commande->ccnum }}</td>
                     </tr>
