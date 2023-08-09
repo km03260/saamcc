@@ -31,8 +31,11 @@ class Lcommande extends Model
     {
         $cond = array_filter($cond);
         return $query
-            ->select(DB::raw("$this->table.*, $this->table.pu * $this->table.qty AS total"))
+            ->select(DB::raw("$this->table.*,
+             CONCAT((CASE WHEN a.designation IS NOT NULL THEN a.designation ELSE ''END) ,' ', (CASE WHEN  $this->table.variation IS NOT NULL THEN REPLACE( $this->table.variation, '/', ' ') ELSE ''END)) AS designation, 
+             $this->table.pu * $this->table.qty AS total"))
             ->with(['article'])
+            ->leftJoin('cc_articles as a', "$this->table.article_id", "a.id")
             ->when(key_exists('article_id', $cond), function ($q) use ($cond) {
                 $q->where('article_id', $cond['article_id']);
             })
@@ -72,15 +75,8 @@ class Lcommande extends Model
             ],
             [
                 "name" => "Désignation",
-                "data" => "article.designation",
-                'column' => 'article_id',
-                "render" => 'relation',
-                "className" => 'left aligned',
-            ],
-            [
-                "name" => "Caractéristique",
-                "data" => "variation",
-                'column' => 'variation',
+                "data" => "designation",
+                'column' => 'designation',
                 "render" => false,
                 "className" => 'left aligned',
             ],

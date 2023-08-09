@@ -69,7 +69,13 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        $_prm =  $this->model::Create($request->only($this->model->fillable));
+        $_data = $request->only($this->model->fillable);
+        if ($request->file('img')) {
+            $photo =  $this->_IMAGE_STORAGE($request->img, 'client/logo');
+            $_data['logo'] = $photo;
+        }
+
+        $_prm =  $this->model::Create($_data);
 
         return response()->json([
             "ok" => "$_prm->raison_sociale est bien enregistré",
@@ -94,9 +100,9 @@ class ClientController extends Controller
         $tabs = [
             ["name" => 'general', "title" => 'Infos générales', 'color' => "aliceblue"],
             ["name" => 'articles', "title" => 'Articles', 'color' => "cornflowerblue"],
+            ["name" => 'variations', "title" => 'Variations', 'color' => "#62ff0a"],
             ["name" => 'stocks', "title" => 'Stock', 'color' => "springgreen"],
             ["name" => 'commandes', "title" => 'Commandes', 'color' => "#ffff0a"],
-            ["name" => 'variations', "title" => 'Variations', 'color' => "#62ff0a"],
             ["name" => 'users', "title" => 'Utilisateurs', 'color' => "darkgray", "can" => Gate::allows('access', App\Models\User::class)],
         ];
         return response()->json(['child' => view('components.client.show', compact('client', 'vdata', 'tabs'))->render()], 200);
@@ -116,8 +122,14 @@ class ClientController extends Controller
     public function update(UpdateClientRequest $request, Client $client)
     {
         $this->authorize('update', [$this->model::class, $client]);
+        $_data = $request->only($this->model->fillable);
 
-        $client->update($request->only($this->model->fillable));
+        if ($request->file('img')) {
+            $photo =  $this->_IMAGE_STORAGE($request->img, 'client/logo', $client->logo);
+            $_data['logo'] = $photo;
+        }
+
+        $client->update($_data);
 
         return response()->json([
             "ok" => "Information du client ($client->raison_sociale) est mis à jour",

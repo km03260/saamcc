@@ -9,7 +9,8 @@
             <i class="sidebar icon"></i>
         </a>
         <a href="/" class="header" style="margin-right: 250px">
-            <img alt="Saamcom" src="{{ asset('assets/images/app_logo.png') }}"
+            <img alt="Saamcom"
+                src="{{ Gate::allows('is_client', [App\Models\User::class])? Auth::user()->clients()->first()->logo ?? asset('assets/images/app_logo.png'): asset('assets/images/app_logo.png') }}"
                 style="height: 32px;position: absolute;margin-top: 4px;">
         </a>
 

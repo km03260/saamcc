@@ -38,6 +38,8 @@ class StoreClientRequest extends FormRequest
         $rules = [
             "raison_sociale" => ['required', 'max:70', "unique:cc_clients,raison_sociale"],
             "code_magisoft" => ['nullable', 'max:50'],
+            "img" => ['nullable', "image", "mimes:jpeg,png,jpg,gif", "max:4096"],
+
         ];
         if ($this->methode == "savewhat") {
             return array_intersect_key($rules, request()->all());
@@ -55,6 +57,7 @@ class StoreClientRequest extends FormRequest
         return [
             "raison_sociale" => "Raison sociale",
             "code_magisoft" => "Code magisoft",
+            "img" => "Logo",
         ];
     }
 

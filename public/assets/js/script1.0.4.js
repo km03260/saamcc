@@ -537,6 +537,9 @@ $(document).on('change', '.up_field', function (event) {
             case 'checkbox':
                 var _value = _field.is(':checked') == true ? _field.val() : _field.data('uncheck');
                 break;
+            case 'image':
+                var _value = document.getElementById(_field.data('target')).files[0];
+                break;
 
             default:
                 var _value = _field.val();

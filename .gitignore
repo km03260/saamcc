@@ -1,5 +1,6 @@
 /.phpunit.cache
 /public/hot
+/datas/*
 /public/storage
 /storage/*.key
 .env

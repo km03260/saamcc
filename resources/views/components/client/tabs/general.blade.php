@@ -1,4 +1,4 @@
-<div class="ui form form_field" data-id="{{ $client->id }}"
+<div class="ui form form_field form_field-{{ $vdata }}" data-id="{{ $client->id }}"
     data-url="{{ Route('client.savewhat', $client->id) }}?methode=savewhat">
     @can('delete', [App\Models\Client::class, $client])
         <i title="Supprimer" class="ui c-pointer large red trash alternate icon ax_get" style="float: right;"
@@ -43,7 +43,50 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td class="" style="background-color:#f9fafb;border-bottom: 1px solid #fff;">
+                        <h5 class="ui header">Logo</h5>
+                    </td>
+                    <td>
+                        <div class="field  fieldControl au_img_F">
+                            <div class="ui fluid card bradius-0" style="margin: 0; border:0;">
+                                <div class="blurring dimmable image" style="background: #fff">
+                                    <div class="ui dimmer">
+                                        <div class="content">
+                                            <div class="center">
+                                                <input type="file" class="up_field" data-name="img" data-type="image"
+                                                    data-target="photo-{{ $vdata }}"
+                                                    id="photo-{{ $vdata }}" style="display: none"
+                                                    accept="image/png, image/gif, image/jpeg">
+                                                <label class="ui inverted button"
+                                                    for="photo-{{ $vdata }}">Nouveau
+                                                    logo
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img id="img-{{ $vdata }}" style="height: 250px;width: auto;"
+                                        src='{{ asset($client->logo ? $client->logo : 'assets/images/no-photo.jpg') }}''>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="msgError sw_img_M"></div>
+
+                    </td>
+                </tr>
+
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    $('.form_field-{{ $vdata }} .image').dimmer({
+        on: 'hover'
+    });
+    $(document).on('change', '#photo-{{ $vdata }}', function(e) {
+        var _prev_photo = e.target.files[0];
+        if (_prev_photo) $('#img-{{ $vdata }}').attr('src', URL.createObjectURL(
+            _prev_photo));
+    });
+</script>
