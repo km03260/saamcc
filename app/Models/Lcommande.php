@@ -43,7 +43,7 @@ class Lcommande extends Model
                 $q->where('commande_id', $cond['commande_id']);
             })
             ->when(key_exists('id', $cond), function ($q) use ($cond) {
-                $q->where('id', $cond['id']);
+                $q->where("$this->table.id", $cond['id']);
             });
     }
 
