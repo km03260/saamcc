@@ -1,4 +1,4 @@
-<x-commande.buttons :commande="$commande" />
+<x-commande.buttons :commande="$commande" /> <br>
 <div class="ui form form_field" data-id="{{ $commande->id }}"
     data-url="{{ Route('commande.update', $commande->id) }}?methode=savewhat&noClicked=true&commande">
     <table class="ui celled table aliceblue_table">
