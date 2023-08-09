@@ -57,6 +57,7 @@
                     var width = column_attributtes[5];
                     var edit_params = column_attributtes[6];
                     var visible = column_attributtes[7];
+                    var orderable = column_attributtes[8];
                     const column = {
                         "data": column_data,
                         className: className.includes('open_child') ? className +
@@ -168,7 +169,7 @@
 
                     column["visible"] = visible == 1 ? true : false;
 
-                    column['orderable'] = (!["field", "url", "relation_mtm"].includes(
+                    column['orderable'] = orderable ?? (!["field", "url", "relation_mtm"].includes(
                         isRender)) ? true : false;
 
                     return column;

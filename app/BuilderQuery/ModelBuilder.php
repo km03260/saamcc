@@ -117,7 +117,8 @@ trait ModelBuilder
                     . $s['className'] . "|"
                     . (key_exists('width', $s) ? $s['width'] : `auto`) . '|'
                     . (key_exists('edit', $s) ? $s['edit'] : "") . '|'
-                    . (key_exists('visible', $s) ? $s['visible'] : true),
+                    . (key_exists('visible', $s) ? $s['visible'] : true) . '|'
+                    . (key_exists('orderable', $s) ? $s['orderable'] : true),
             ];
         }
         return $temp;

@@ -43,6 +43,7 @@ class Commande extends Model
              sc.background AS line_color
              "))
             ->with(['statut', 'user', 'client'])
+            ->withCount(['articles'])
             ->leftJoin('cc_commande_statuts as sc', "$this->table.statut_id", "sc.id")
             ->when(key_exists('client_id', $cond), function ($q) use ($cond) {
                 $q->where('client_id', $cond['client_id']);
@@ -96,6 +97,14 @@ class Commande extends Model
                 "width" => "75px",
             ],
             [
+                "name" => "N°Commande",
+                "data" => "ccnum",
+                'column' => "ccnum",
+                "render" => false,
+                "className" => 'left aligned open_child',
+                "width" => "85px",
+            ],
+            [
                 "name" => "Client",
                 "data" => "client.raison_sociale",
                 'column' => 'client_id',
@@ -109,6 +118,14 @@ class Commande extends Model
                 'column' => 'date_liv',
                 "render" => false,
                 "className" => 'left aligned open_child',
+            ],
+            [
+                "name" => "Quantité",
+                "data" => "total_quantite",
+                'column' => 'total_quantite',
+                "render" => false,
+                "orderable" => false,
+                "className" => 'right aligned open_child open item',
             ],
             [
                 "name" => "Statut",
@@ -177,6 +194,13 @@ class Commande extends Model
         'ccnum',
     ];
 
+
+    /**
+     * Appends attributs
+     *
+     * @var array
+     */
+    protected $appends = ['total_quantite'];
 
     /**
      * The "booted" method of the model.
@@ -269,6 +293,16 @@ class Commande extends Model
     {
         return Attribute::make(
             set: fn ($value) => $value ? Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d') : null,
+        );
+    }
+
+    /**
+     * Get Sum quantite in panier attribute
+     */
+    public function totalQuantite(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->articles()->sum(DB::raw('qty'))
         );
     }
 }
