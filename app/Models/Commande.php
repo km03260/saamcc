@@ -102,7 +102,6 @@ class Commande extends Model
                 'column' => "ccnum",
                 "render" => false,
                 "className" => 'left aligned open_child',
-                "width" => "85px",
             ],
             [
                 "name" => "Client",
@@ -117,7 +116,8 @@ class Commande extends Model
                 "data" => "date_liv",
                 'column' => 'date_liv',
                 "render" => false,
-                "className" => 'left aligned open_child',
+                "width" => "150px",
+                "className" => 'center aligned open_child',
             ],
             [
                 "name" => "Quantité",
@@ -125,7 +125,7 @@ class Commande extends Model
                 'column' => 'total_quantite',
                 "render" => false,
                 "orderable" => false,
-                "className" => 'right aligned open_child open item',
+                "className" => 'right aligned open_child open',
             ],
             [
                 "name" => "Statut",
@@ -151,13 +151,15 @@ class Commande extends Model
                 'column' => 'created_by',
                 "render" => 'relation',
                 "className" => 'left aligned open_child',
+                'width' => "120px",
             ],
             [
                 "name" => "Créé Le",
                 "data" => "created_at",
                 'column' => 'created_at',
                 "render" => false,
-                "className" => 'left aligned open_child',
+                'width' => "120px",
+                "className" => 'center aligned open_child',
             ],
             [
                 "name" => "",
