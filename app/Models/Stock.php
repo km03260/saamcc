@@ -17,7 +17,7 @@ class Stock extends Model
      * Table name
      * @var string
      */
-    protected $table = "stocks";
+    protected $table = "cc_stocks";
 
     /**
      * Scope grid
@@ -30,7 +30,7 @@ class Stock extends Model
     {
         $cond = array_filter($cond);
         return $query
-            ->leftJoin('mouvements as m', "$this->table.id", "m.stock_id")
+            ->leftJoin('cc_mouvements as m', "$this->table.id", "m.stock_id")
             ->select(DB::raw("article_id AS id, article_id, SUM(m.perte) AS total_perte"))
             ->with(['article'])
             ->when(key_exists('article_id', $cond), function ($q) use ($cond) {

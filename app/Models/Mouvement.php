@@ -13,6 +13,12 @@ class Mouvement extends Model
     use HasFactory;
 
     /**
+     * Table name
+     * @var string
+     */
+    protected $table = "cc_mouvements";
+
+    /**
      * Scope grid
      * 
      * @param Builder $query
@@ -24,10 +30,10 @@ class Mouvement extends Model
         $cond = array_filter($cond);
         return $query
             ->with(['sens', 'zone'])
-            ->select(DB::raw("mouvements.*, (CASE WHEN sen_id = 1  THEN '#a5eca5' WHEN sen_id = 2 THEN '#ffefd9'  ELSE '#cfdce8' END) AS line_color"))
+            ->select(DB::raw("$this->table.*, (CASE WHEN sen_id = 1  THEN '#a5eca5' WHEN sen_id = 2 THEN '#ffefd9'  ELSE '#cfdce8' END) AS line_color"))
             ->when(key_exists('article_id', $cond), function ($q) use ($cond) {
                 $q->whereHas('stock', function ($qhs) use ($cond) {
-                    $qhs->where('stocks.article_id', $cond['article_id']);
+                    $qhs->where('cc_stocks.article_id', $cond['article_id']);
                 });
             })
             ->when(key_exists('zone_id', $cond), function ($q) use ($cond) {
