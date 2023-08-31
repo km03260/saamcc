@@ -1,6 +1,6 @@
 <div class="ui pointing menu stackable hriz-menu" style="font-size:13px; border-radius: 0;">
     <a href="/" class="header logo" style="margin-right:250px">
-        <img alt="Saamcc" src="{{ asset('assets/images/app_logo.png') }}"
+        <img alt="Saamcc" src="{{ asset('assets/images/app_logo_sq.png') }}"
             style="height: 41px;position: absolute;padding:5px; border: 1px solid red">
     </a>
 

@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -166,6 +167,15 @@ class User extends Authenticatable
             ],
             [
                 "name" => "",
+                "data" => "reset-password",
+                'column' => "/handle/render?com=reset-password&model=user&D=D&width=50",
+                "render" => 'url',
+                "className" => 'center aligned open p-0',
+                "visible" => Gate::allows('create', [self::class]),
+                'width' => "175px"
+            ],
+            [
+                "name" => "",
                 "data" => "default",
                 'column' => "/handle/render?com=default&model=user&D=D&width=50",
                 "render" => 'url',
@@ -195,7 +205,6 @@ class User extends Authenticatable
         return $this->belongsTo(Profile::class, 'Profil', 'code');
     }
 
-
     /**
      * Get the user's related client.
      */
@@ -203,6 +212,16 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get: fn () => $this->clients()->first()?->id,
+        );
+    }
+
+    /**
+     * Get the user's set password
+     */
+    public function Mdp(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => Hash::make($value),
         );
     }
 

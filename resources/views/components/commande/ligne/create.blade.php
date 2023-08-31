@@ -4,12 +4,12 @@
         <div class="msgError commande_id_M"></div>
         <table class="ui celled striped table">
             <thead>
-                <tr>
+                <tr style="display: none">
                     <th colspan="3" style="padding: 4px 11px;">
                         Articles de commande <div
                             class="ui mini blue icon button right floated ax_get {{ $vdata }}-nrbtn"
                             data-inputs=".{{ $vdata }}_lcmd_rows input[type='hidden']:not(.prompt,.refer)"
-                            data-url="{{ Route('commande.ligne.row') }}?target=.{{ $vdata }}_lcmd_rows&client={{ $commande->client_id }}&notIn={{ implode(',', $commande->articles->pluck('article_id')->toArray()) }}&ressourc">
+                            data-url="{{ Route('commande.ligne.row') }}?wdelete=true&target=.{{ $vdata }}_lcmd_rows&client={{ $commande->client_id }}&notIn={{ implode(',', $commande->articles->pluck('article_id')->toArray()) }}&ressourc">
                             <i class="add icon"></i>&nbsp;Ajouter
                             article
                         </div>
@@ -20,7 +20,7 @@
                     @if ($commande->client->variations()->count() == 0)
                         <th style="padding: 4px 11px;">Quantité</th>
                     @endif
-                    <th style="padding: 4px 11px;"></th>
+                    {{-- <th style="padding: 4px 11px;"></th> --}}
                 </tr>
             </thead>
             <tbody class="{{ $vdata }}_lcmd_rows">

@@ -9,9 +9,21 @@
             <i class="sidebar icon"></i>
         </a>
         <a href="/" class="header" style="margin-right: 250px">
-            <img alt="Saamcom"
-                src="{{ Gate::allows('is_client', [App\Models\User::class])? Auth::user()->clients()->first()->logo ?? asset('assets/images/app_logo.png'): asset('assets/images/app_logo.png') }}"
-                style="height: 32px;position: absolute;margin-top: 4px;">
+            @can('is_client', [App\Models\User::class])
+                <div style="position: absolute;display: flex;align-items: center;">
+                    <img alt="Saamcom" src="{{ asset('assets/images/app_logo_sq.png') }}"
+                        style="height: 40px; width:170px;">
+                    @if (Auth::user()->clients()->first()->logo)
+                        <img alt="Saamcom" src="{{ Auth::user()->clients()->first()->logo }}"
+                            style="height: 32px;margin:auto">
+                    @endif
+                </div>
+            @endcan
+
+            @cannot('is_client', [App\Models\User::class])
+                <img alt="Saamcom" src="{{ asset('assets/images/app_logo_sq.png') }}"
+                    style="height: 40px;position: absolute;">
+            @endcannot
         </a>
 
         <div class="hriz-menu">

@@ -61,9 +61,14 @@ class LcommandeController extends Controller
         $ids = $request->has('ids') ? $request->get('ids') : '';
         $notIn = $request->has('notIn') ? $request->get('notIn') : '';
 
+        $_with = [];
+        if ($request->has('wdelete')) {
+            $_with['wdelete'] =  true;
+        }
+
         return response()->json([
             '_target' => $request->target,
-            "_append_row" => view('components.commande.ligne.row', compact('vdata', 'client', 'ids', 'notIn'))->render()
+            "_append_row" => view('components.commande.ligne.row', compact('vdata', 'client', 'ids', 'notIn'))->with($_with)->render()
         ], 200);
     }
 

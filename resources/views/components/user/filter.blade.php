@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="four wide field">
-                    <x-includes.search-drop name="Profil" classes="list_users{{ $vdata }}_filter" value=""
+                    <x-includes.dropdown name="Profil" classes="list_users{{ $vdata }}_filter" value="8"
                         placeholder="Profil" :vdata="$vdata" :push="false"
                         url="{{ Route('handle.select', 'profile') }}" />
                 </div>

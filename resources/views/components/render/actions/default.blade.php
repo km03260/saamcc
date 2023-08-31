@@ -2,7 +2,7 @@
 
     @if (isset($E))
         <i class="ui c-pointer large blue edit icon load-model" data-url='{{ Route("$model.edit", $key) }}'
-            data-title="<img src='{{ asset('assets/images/app_logo.png') }}' height='25px' /> <span style='vertical-align: super;'>
+            data-title="<img src='{{ asset('assets/images/app_logo_sq.png') }}' height='20px' /> <span style='vertical-align: super;'>
                     &nbsp;Modifier {{ Str::singular($model) != 'suivi' ? Str::singular($model) : 'la note' }}</span>"
             data-color="rgb(112, 142, 164) none repeat scroll 0% 0%"
             data-width="@if (isset($width))

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\permission\Action;
 use App\Models\Profile;
@@ -56,6 +57,38 @@ class UserController extends Controller
 
         return response()->json([
             "template" => view('components.user.create', compact('vdata', 'client_id'))->render(),
+        ], 200);
+    }
+
+    /**
+     * Show the form for update password .
+     */
+    public function reset(Request $request, User $user)
+    {
+        $this->authorize('delete', [$this->model::class, $user]);
+
+        $vdata = $this->vdata();
+
+        return response()->json([
+            "template" => view('components.user.reset', compact('vdata', 'user'))->render(),
+        ], 200);
+    }
+
+    /**
+     * Update  password .
+     * 
+     * @param ResetPasswordRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resetPassword(ResetPasswordRequest $request, User $user)
+    {
+        $this->authorize('delete', [$this->model::class, $user]);
+
+        $user->update(["Mdp" => $request->password]);
+
+        return response()->json([
+            "ok" => "Mot de passe réinitialisé avec succès.",
         ], 200);
     }
 

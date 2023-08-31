@@ -106,7 +106,7 @@
                 <td>
                     <div class="ui  fluid right icon big input focus">
                         <textarea class="up_field" data-name="commentaire" placeholder="Commentaire ..." style="padding: 3px;border-radius: 0;"
-                            rows="7">{!! $commande->commentaire !!}</textarea>
+                            rows="3">{!! $commande->commentaire !!}</textarea>
                         <i class="icon" style="margin: -2px;"></i>
                     </div>
                     <div class="msgError sw_commentaire_M"></div>

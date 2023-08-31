@@ -69,7 +69,9 @@
              <div class="msgError articles_{{ $vdata }}_qty_M"></div>
          </td>
      @endif
-     <td width="50px">
-         <i class="trash alternate large icon red drop_row c-pointer"></i>
-     </td>
+     @if (!isset($wdelete))
+         <td width="50px">
+             <i class="trash alternate large icon red drop_row c-pointer"></i>
+         </td>
+     @endif
  </tr>

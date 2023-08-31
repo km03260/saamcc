@@ -2,20 +2,14 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Commande;
+use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Gate;
 
-class StoreLcommandeRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
-    protected $methode;
-
-    public function __construct()
-    {
-        $this->methode = request()->get('methode');
-    }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +18,7 @@ class StoreLcommandeRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('create', Commande::class);
+        return Gate::allows('delete', [User::class, $this->user]);
     }
 
     /**
@@ -34,23 +28,10 @@ class StoreLcommandeRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            "commande_id" => ['required', "exists:cc_commandes,id"],
-            "articles.*.qty"  => ['nullable', 'numeric'],
-            "articles.*.id"  => ['required', 'exists:cc_articles,id'],
+
+        return [
+            "password" => ['required', 'confirmed', 'min:5'],
         ];
-        if ($this->has('lcommande')) {
-            $rules = [
-                "commande_id" => ['required', "exists:cc_commandes,id"],
-                "qty"  => ['required', 'numeric', 'min:1'],
-                "pu" => ['required', 'numeric', 'regex:/^((?!0)\d{1,10}|0|\.\d{1,2})($|\.$|\.\d{1,2}$)/'],
-                "article_id"  => ['required', 'exists:cc_articles,id'],
-            ];
-        }
-        if ($this->methode == "savewhat") {
-            return array_intersect_key($rules, request()->all());
-        }
-        return $rules;
     }
 
     /**
@@ -61,11 +42,7 @@ class StoreLcommandeRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            "commande_id" => "Commande",
-            "articles.*.qty" => "Quantité",
-            "qty" => "Quantité",
-            "pu" => "Prix unitaire",
-            "articles.*.id" => "Article",
+            "password" => "Mot de passe"
         ];
     }
 
