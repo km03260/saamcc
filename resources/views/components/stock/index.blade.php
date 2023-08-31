@@ -15,6 +15,6 @@
         <br>
         <x-stock.filter :vdata="$vdata" length="50" />
         <x-data-table list="stocks" :vdata="$vdata" appends="wclient=true" length="50" :customLength="true"
-            childRow="/stock/show" />
+            childRow="/stock/show" :dServerSide="true" />
     </div>
 @endsection

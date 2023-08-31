@@ -31,10 +31,12 @@ class Stock extends Model
         $cond = array_filter($cond);
         return $query
             ->leftJoin('cc_mouvements as m', "$this->table.id", "m.stock_id")
-            ->select(DB::raw("article_id AS id, article_id, SUM(m.perte) AS total_perte"))
+            ->leftJoin('cc_articles as a', "$this->table.article_id", "a.id")
+            ->leftJoin('cc_clients as c', "a.prospect_id", "c.id")
+            ->select(DB::raw("$this->table.article_id AS id, $this->table.article_id, c.raison_sociale, SUM(m.perte) AS total_perte"))
             ->with(['article'])
             ->when(key_exists('article_id', $cond), function ($q) use ($cond) {
-                $q->where('article_id', $cond['article_id']);
+                $q->where("$this->table.article_id", $cond['article_id']);
             })
             ->when(key_exists('zone_id', $cond), function ($q) use ($cond) {
                 $q->where("$this->table.zone_id", $cond['zone_id']);
@@ -52,7 +54,7 @@ class Stock extends Model
                     $qha->where('cc_articles.prospect_id', Auth::user()->clients()->first()->id);
                 });
             })
-            ->groupBy('article_id');
+            ->groupBy("$this->table.article_id");
     }
 
     /**
@@ -80,9 +82,9 @@ class Stock extends Model
             ],
             [
                 "name" => "Client",
-                "data" => "article.client_name",
-                'column' => 'article_id',
-                "render" => 'relation',
+                "data" => "raison_sociale",
+                'column' => 'raison_sociale',
+                "render" => false,
                 'visible' => key_exists('wclient', $cond) && !Gate::allows('is_client', User::class),
                 "className" => 'left aligned open_child',
             ],
@@ -95,6 +97,7 @@ class Stock extends Model
                 'column' => "/handle/render?com=stock-zone&model=article&zone_id=$zone->id",
                 "render" => 'url',
                 "width" => "120px",
+                "orderable" => false,
                 "className" => 'center aligned',
             ]);
         }
@@ -109,10 +112,11 @@ class Stock extends Model
         ]);
         array_push($_columns, [
             "name" => "Total",
-            "data" => "total_zone_qty_$zone->id",
+            "data" => "total",
             'column' => "/handle/render?com=total-stock-zone&model=article",
             "render" => 'url',
             "width" => "75px",
+            "orderable" => false,
             "className" => 'right aligned open_child',
         ]);
 
