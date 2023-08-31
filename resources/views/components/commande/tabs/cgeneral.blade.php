@@ -116,8 +116,6 @@
     </table>
 </div>
 
-<div class="ui divider"></div>
-
 @include('components.commande.tabs.lignes')
 
 <script>
