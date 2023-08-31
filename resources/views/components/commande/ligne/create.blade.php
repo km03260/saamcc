@@ -9,7 +9,7 @@
                         Articles de commande <div
                             class="ui mini blue icon button right floated ax_get {{ $vdata }}-nrbtn"
                             data-inputs=".{{ $vdata }}_lcmd_rows input[type='hidden']:not(.prompt,.refer)"
-                            data-url="{{ Route('commande.ligne.row') }}?wdelete=true&target=.{{ $vdata }}_lcmd_rows&client={{ $commande->client_id }}&notIn={{ implode(',', $commande->articles->pluck('article_id')->toArray()) }}&ressourc">
+                            data-url="{{ Route('commande.ligne.row') }}?wdelete=true&target=.{{ $vdata }}_lcmd_rows&client={{ $commande->client_id }}&ressourc">
                             <i class="add icon"></i>&nbsp;Ajouter
                             article
                         </div>

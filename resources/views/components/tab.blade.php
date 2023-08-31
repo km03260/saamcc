@@ -8,7 +8,7 @@
         @foreach ($tabs as $tab)
             @if ($tab['can'] ?? true)
                 <a class="@if ($loop->first) default @endif {{ $tab['name'] }}  {{ $name }} item"
-                    style="justify-content: center;min-width:100px;border-radius:5px;padding:5px 11px;background: {{ isset($tab['color']) ? $tab['color'] : '' }}"
+                    style="justify-content: center;min-width:100px;border-radius:5px;padding:5px 11px;{{ $tab['title'] == '' ? 'box-shadow: none !important;' : '' }}background: {{ isset($tab['color']) ? $tab['color'] : '' }}"
                     data-tab="{{ $tab['name'] }}">{{ $tab['title'] }}</a>
             @endif
         @endforeach

@@ -12,12 +12,6 @@
                 <td>{{ $commande->id }}</td>
             </tr>
             <tr>
-                <td width="175px">
-                    Client
-                </td>
-                <td>{{ $commande->client->raison_sociale }}</td>
-            </tr>
-            <tr>
                 <td>
                     Statut
                 </td>

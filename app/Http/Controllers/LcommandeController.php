@@ -88,14 +88,25 @@ class LcommandeController extends Controller
                 foreach ($ligne['variation'] as $t_var => $c_var) {
                     foreach ($c_var as $bvar => $qty) {
                         if ($qty > 0) {
-                            Lcommande::updateOrCreate([
+                            $_lign_cmd = Lcommande::where([
                                 'commande_id' => $commande->id,
                                 'article_id' => $ligne['id'],
                                 'variation' => $t_var != 0 ? ("$t_var" . ($bvar != 0 ? "/" . $bvar : '')) : null,
-                            ], [
-                                'qty' => $qty,
-                                'pu' =>  $_article->puht,
-                            ]);
+                            ])->first();
+                            if ($_lign_cmd) {
+                                $_lign_cmd->update([
+                                    'qty' => $qty + $_lign_cmd->qty,
+                                    'pu' =>  $_article->puht,
+                                ]);
+                            } else {
+                                Lcommande::create([
+                                    'commande_id' => $commande->id,
+                                    'article_id' => $ligne['id'],
+                                    'variation' => $t_var != 0 ? ("$t_var" . ($bvar != 0 ? "/" . $bvar : '')) : null,
+                                    'qty' => $qty,
+                                    'pu' =>  $_article->puht,
+                                ]);
+                            }
                         }
                     }
                 }
