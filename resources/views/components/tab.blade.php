@@ -4,7 +4,8 @@
     border-radius: 0;
     padding: 0
         ">
-    <div class="ui pointing secondary tab_menu menu" style="margin-bottom: -2px;margin-top: -10px;">
+    <div class="ui pointing secondary tab_menu menu"
+        style="margin-bottom: -2px;margin-top: -10px;{{ isset($styles) ? $styles : '' }}">
         @foreach ($tabs as $tab)
             @if ($tab['can'] ?? true)
                 <a class="@if ($loop->first) default @endif {{ $tab['name'] }}  {{ $name }} item"

@@ -120,7 +120,7 @@ class CommandeController extends Controller
             return view("components.commande.tabs.$tab", compact('commande', 'vdata'))->render();
         }
         $tabs = [
-            ["name" => 'cgeneral', "title" => "", 'color' => "#fff"],
+            ["name" => 'cgeneral', "title" => "", 'color' => "transparent"],
             // ["name" => 'lignes', "title" => 'Articles', 'color' => "cornflowerblue"],
         ];
         return response()->json(['child' => view('components.commande.show', compact('commande', 'vdata', 'tabs'))->render()], 200);

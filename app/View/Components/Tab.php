@@ -25,7 +25,7 @@ class Tab extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public String $name, public String $url,  $tabs, string $onVisible = '')
+    public function __construct(public String $name, public String $url,  $tabs, string $onVisible = '', public string $styles = '')
     {
         $this->tabs = $tabs;
         $this->onVisible = htmlspecialchars(json_encode($onVisible), ENT_QUOTES, 'utf-8');

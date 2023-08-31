@@ -115,7 +115,7 @@
         </tbody>
     </table>
 </div>
-
+<br>
 @include('components.commande.tabs.lignes')
 
 <script>
