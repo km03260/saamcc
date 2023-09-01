@@ -43,7 +43,7 @@
     @endcan
 
     <div class="ui mini compact inverted blue menu" style="margin-right: 7px">
-        <a class="item im"
+        <a class="item im" target="_blank" href="{{ Route('commande.generate', [$commande->id, 'print']) }}"
             style="padding: 5px 13px;min-width: 110px ;justify-content: center; font-size:13px; font-weight: bold">
             <i class=" print alternate icon"></i> Imprimer
         </a>

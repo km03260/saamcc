@@ -116,12 +116,12 @@ class CommandeController extends Controller
         $this->authorize('access', $this->model::class);
         $vdata = $this->vdata();
         if ($request->has('tab')) {
+            $this->authorize('view', [$this->model::class, $commande]);
             $tab = $request->tab;
             return view("components.commande.tabs.$tab", compact('commande', 'vdata'))->render();
         }
         $tabs = [
             ["name" => 'cgeneral', "title" => "", 'color' => "transparent"],
-            // ["name" => 'lignes', "title" => 'Articles', 'color' => "cornflowerblue"],
         ];
         return response()->json(['child' => view('components.commande.show', compact('commande', 'vdata', 'tabs'))->render()], 200);
     }
@@ -134,7 +134,7 @@ class CommandeController extends Controller
         $this->authorize('create', $this->model::class);
 
         $vdata = $this->vdata();
-        // $client_id = Gate::allows('is_client', [App\Models\User::class]) ? Auth::user()->client  :  $client->id;
+
         return view('components.commande.fields', compact('vdata', 'client'))->render();
     }
 
@@ -214,5 +214,28 @@ class CommandeController extends Controller
         ];
 
         return response()->json($e_resp, 200);
+    }
+
+    /**
+     * Action generate
+     * 
+     * @param Commande $commande
+     * @param string $type
+     * @return mixed|string
+     */
+    public function generate(Commande $commande, string $type)
+    {
+        $this->authorize('view', [$this->model::class, $commande]);
+
+        $vdata = $this->vdata();
+
+        switch ($type) {
+            case 'print':
+                return view("components.commande.generate.print", compact('commande', 'vdata'))->with(['print' => true])->render();
+                break;
+
+            default:
+                break;
+        }
     }
 }

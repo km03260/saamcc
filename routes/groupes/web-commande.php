@@ -15,6 +15,7 @@ Route::prefix('commande')->group(
                         Route::post('/savewhat/{commande}', 'savewhat')->name('commande.savewhat');
                         Route::get('/destroy/{commande}', 'destroy')->name('commande.destroy');
                         Route::get('/fields/{client}', 'fields')->name('commande.fields');
+                        Route::get('/generate/{commande}/{type}', 'generate')->name('commande.generate');
                     }
                 );
                 Route::prefix('ligne')->group(

@@ -54,7 +54,11 @@ class CommandePolicy
      */
     public function view(User $user, Commande $commande): bool
     {
-        //
+        return match ($user->Profil) {
+            100, 9 => true,
+            8 => $user->clients()->first()?->id == $commande->client_id,
+            default => false
+        };
     }
 
     /**
