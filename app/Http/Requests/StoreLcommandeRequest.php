@@ -36,7 +36,7 @@ class StoreLcommandeRequest extends FormRequest
     {
         $rules = [
             "commande_id" => ['required', "exists:cc_commandes,id"],
-            "articles.*.qty"  => ['nullable', 'numeric'],
+            "articles.*.qty"  => ['required', 'numeric'],
             "articles.*.id"  => ['required', 'exists:cc_articles,id'],
         ];
         if ($this->has('lcommande')) {

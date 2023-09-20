@@ -47,7 +47,6 @@
             </table>
         </div>
         <br>
-
         @if ($commande->articles->count() > 0)
             <strong>Articles:</strong>
             <table class="ui celled striped table">

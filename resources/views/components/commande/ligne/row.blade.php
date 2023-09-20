@@ -1,10 +1,6 @@
  <tr>
-     <td>
-         <x-includes.dropdown name="articles[{{ $vdata }}][id]" classes="" value=""
-             placeholder="Sélectionner l'article" :vdata="$vdata" :push="false"
-             url="{{ Route('handle.select', 'article') }}?prospect_id={{ $client->id }}&ids={{ $ids ?? '' }}&notin={{ $notIn ?? '' }}&add=true&sources" />
-         <div class="msgError articles_{{ $vdata }}_id_M"></div>
-         @php
+
+     {{-- @php
              $_vbody = $client->variations()->first();
              $_vhead =
                  $client->variations()->count() == 2
@@ -73,5 +69,63 @@
          <td width="50px">
              <i class="trash alternate large icon red drop_row c-pointer"></i>
          </td>
-     @endif
+     @endif --}}
  </tr>
+ <tr>
+     <td class="p-0">
+         <table class="ui celled table b-0">
+             <tr>
+                 <td style="padding: 0 7px;background-color: rgb(247, 247, 255);width: 150px;">Article</td>
+                 <td class="p-0">
+                     <x-includes.dropdown name="articles[{{ $vdata }}][id]"
+                         classes="{{ $vdata }}_articles_selected" styles="border:0" value=""
+                         placeholder="Sélectionner l'article" :vdata="$vdata" :push="false"
+                         url="{{ Route('handle.select', 'article') }}?prospect_id={{ $client->id }}&ids={{ $ids ?? '' }}&notin={{ $notIn ?? '' }}&add=true&sources" />
+                     <div class="msgError articles_{{ $vdata }}_id_M"></div>
+
+                     <div class="fields_{{ $vdata }}_lcmd"></div>
+                 </td>
+             </tr>
+             @foreach ($client->variations()->get() as $var)
+                 <tr class="_field_{{ $vdata }}_row" style="display:none">
+                     <td style="padding: 0 7px;background-color: rgb(247, 247, 255);">{{ $var->label }}</td>
+                     <td class="p-0">
+                         <x-includes.dropdown name="articles[{{ $vdata }}][variation][{{ $var->label }}]"
+                             classes="{{ $vdata }}_selected_{{ $var->label }}" value=""
+                             styles="border:0" placeholder="Sélectionner {{ $var->label }}" :vdata="$vdata"
+                             :push="false"
+                             url="{{ Route('handle.select', $var->label) }}?options={{ $var->value }}&{{ $var->label }}" />
+                     </td>
+                 </tr>
+             @endforeach
+             <tr class="_field_{{ $vdata }}_row" style="display:none">
+                 <td style="padding: 0 7px;background-color: rgb(247, 247, 255);">Quantité</td>
+                 <td class="p-0" style="background-color:#fff">
+                     <div class="ui transparent input">
+                         <input type="number" placeholder="Quantité"
+                             style="text-align: right; font-weight: bold;font-size: 15px;width:100px;"
+                             name="articles[{{ $vdata }}][qty]" value="">
+                     </div>
+                     <div class="msgError articles_{{ $vdata }}_qty_M"></div>
+
+                 </td>
+             </tr>
+         </table>
+     </td>
+ </tr>
+
+ <script>
+     setTimeout(() => {
+         $(document).on('change',
+             ".{{ $vdata }}_articles_selected",
+             function(e) {
+                 e.preventDefault();
+                 if (e.target.value) {
+                     $('._field_{{ $vdata }}_row').show(250);
+                 } else {
+                     $('._field_{{ $vdata }}_row').hide(250);
+
+                 }
+             });
+     }, 750);
+ </script>

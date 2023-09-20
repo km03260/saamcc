@@ -95,6 +95,7 @@ class CommandeController extends Controller
 
             return response()->json([
                 "ok" => "Commande $_prm->id est bien enregistré",
+                "_putIn" => ['name' => "#cmd_num", 'value' => $_prm->id],
                 "_new" => ".commandes.datatable",
             ], 200);
         } catch (\Throwable $th) {

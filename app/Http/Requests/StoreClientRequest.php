@@ -55,7 +55,7 @@ class StoreClientRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            "raison_sociale" => "Raison sociale",
+            "raison_sociale" => "Reason sociale",
             "code_magisoft" => "Code magisoft",
             "img" => "Logo",
         ];

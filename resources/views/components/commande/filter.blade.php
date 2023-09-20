@@ -22,6 +22,12 @@
                     </div>
 
                 </div>
+                <div class="three wide field">
+                    <div class="ui input">
+                        <input type="text" name="id" placeholder="N° commande" id="cmd_num"
+                            class="list_commandes{{ $vdata }}_filter_ku">
+                    </div>
+                </div>
                 @if (!Gate::allows('is_client', [App\Models\User::class]))
                     <div class="four wide field">
                         <x-includes.search-drop name="client_id" classes="list_commandes{{ $vdata }}_filter"

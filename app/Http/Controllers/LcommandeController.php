@@ -78,44 +78,68 @@ class LcommandeController extends Controller
     public function store(StoreLcommandeRequest $request)
     {
         $commande = Commande::find($request->commande_id);
-
         $this->authorize('create', [$this->model::class, $commande]);
-
         foreach ($request->articles ?? [] as $key => $ligne) {
 
             $_article = Article::Grid(['id' => $ligne['id']])->first();
+            $qty = $ligne['qty'];
+
             if ($ligne['id'] && $_article) {
-                foreach ($ligne['variation'] as $t_var => $c_var) {
-                    foreach ($c_var as $bvar => $qty) {
-                        if ($qty > 0) {
-                            $_lign_cmd = Lcommande::where([
-                                'commande_id' => $commande->id,
-                                'article_id' => $ligne['id'],
-                                'variation' => $t_var != 0 ? ("$t_var" . ($bvar != 0 ? "/" . $bvar : '')) : null,
-                            ])->first();
-                            if ($_lign_cmd) {
-                                $_lign_cmd->update([
-                                    'qty' => $qty + $_lign_cmd->qty,
-                                    'pu' =>  $_article->puht,
-                                ]);
-                            } else {
-                                Lcommande::create([
-                                    'commande_id' => $commande->id,
-                                    'article_id' => $ligne['id'],
-                                    'variation' => $t_var != 0 ? ("$t_var" . ($bvar != 0 ? "/" . $bvar : '')) : null,
-                                    'qty' => $qty,
-                                    'pu' =>  $_article->puht,
-                                ]);
-                            }
-                        }
+                $_variation = key_exists('variation', $ligne) ? trim(implode('/', array_values($ligne['variation'])), '/') : '';
+                if ($qty > 0) {
+                    $_lign_cmd = Lcommande::where([
+                        'commande_id' => $commande->id,
+                        'article_id' => $ligne['id'],
+                        'variation' => $_variation,
+                    ])->first();
+                    if ($_lign_cmd) {
+                        $_lign_cmd->update([
+                            'qty' => $qty + $_lign_cmd->qty,
+                            'pu' =>  $_article->puht,
+                        ]);
+                    } else {
+                        Lcommande::create([
+                            'commande_id' => $commande->id,
+                            'article_id' => $ligne['id'],
+                            'variation' => $_variation,
+                            'qty' => $qty,
+                            'pu' =>  $_article->puht,
+                        ]);
                     }
                 }
+                //  foreach ($ligne['variation'] as $t_var => $c_var) {
+                // foreach ($c_var as $bvar => $qty) {
+                //     if ($qty > 0) {
+                //         $_lign_cmd = Lcommande::where([
+                //             'commande_id' => $commande->id,
+                //             'article_id' => $ligne['id'],
+                //             'variation' => $t_var != 0 ? ("$t_var" . ($bvar != 0 ? "/" . $bvar : '')) : null,
+                //         ])->first();
+                //         if ($_lign_cmd) {
+                //             $_lign_cmd->update([
+                //                 'qty' => $qty + $_lign_cmd->qty,
+                //                 'pu' =>  $_article->puht,
+                //             ]);
+                //         } else {
+                //             Lcommande::create([
+                //                 'commande_id' => $commande->id,
+                //                 'article_id' => $ligne['id'],
+                //                 'variation' => $t_var != 0 ? ("$t_var" . ($bvar != 0 ? "/" . $bvar : '')) : null,
+                //                 'qty' => $qty,
+                //                 'pu' =>  $_article->puht,
+                //             ]);
+                //         }
+                //     }
+                // }
+                //    }
             }
         }
 
         return response()->json([
             "ok" => "Commande  est mis à jour",
             "_new" => ".lcommandes.datatable",
+            '_row' => Commande::Grid(['id' => $request->commande_id])->first(),
+            'list' => 'commandes'
         ], 200);
     }
 

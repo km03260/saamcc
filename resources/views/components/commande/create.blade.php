@@ -5,8 +5,6 @@
             <input type="hidden" name="client_id" value="{{ $client_id }}">
             <div class="msgError client_id_M"></div>
             <input type="hidden" class="{{ $vdata }}_client_value" value="{{ $client_id }}">
-
-            @include('components.commande.fields')
         @else
             <div class="field fieldControl client_id_F">
                 <div class="two fields">
@@ -21,9 +19,23 @@
                     </div>
                 </div>
             </div>
-
-            <div class="ui vertical segment" id="fields_{{ $vdata }}" style="border: 0;"></div>
         @endif
+
+        <div class="two fields">
+            <div class="four wide field" style="margin-top: auto;margin-bottom: auto;">
+                <label> Date de Livraison Souhaitée </label>
+            </div>
+            <div class="five wide fieldControl field date_livraison_souhaitee_F">
+                <div class="ui calendar calendar_field">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" class="date_field" name="date_livraison_souhaitee"
+                            style="font-size: 17px;padding:4px" placeholder=" Date de Livraison Souhaitée " readonly>
+                    </div>
+                </div>
+                <div class="msgError date_livraison_souhaitee_M"></div>
+            </div>
+        </div>
 
 
     </form>
@@ -42,11 +54,18 @@
         data-izimodal-transitionout="bounceOutDown"> Annuler</button>
 </div>
 
-@if (!$client_id)
-    <script>
+<script>
+    calendarHandle({
+        element: '.calendar_field',
+        field: ``,
+        initialDate: null
+    });
+
+    @if (!$client_id)
         setTimeout(() => {
 
-            $(document).on('change', ".{{ $vdata }}_client_selected input.{{ $vdata }}_input_val",
+            $(document).on('change',
+                ".{{ $vdata }}_client_selected input.{{ $vdata }}_input_val",
                 function(e) {
                     e.preventDefault();
                     $('#fields_{{ $vdata }}').html('');
@@ -61,5 +80,5 @@
                     })
                 });
         }, 750);
-    </script>
-@endif
+    @endif
+</script>

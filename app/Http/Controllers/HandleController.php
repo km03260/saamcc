@@ -54,7 +54,7 @@ class HandleController extends Controller
                 if (str_contains(Str::lower($item['name']), $search) || $search == "tous") {
                     return $item;
                 }
-            }, $this->items($target, $request->selected));
+            }, $this->items($target, $request->selected, $request->has('options') ? explode(',', $request->options) : []));
 
             $result = ["success" => true, "results" => array_filter($items)];
         }
@@ -67,7 +67,7 @@ class HandleController extends Controller
      * @param  string  $target
      * @return \array
      */
-    private function items(string $target, $selected = ''): array
+    private function items(string $target, $selected = '', $options = []): array
     {
         $result = [];
         switch ($target) {
@@ -130,6 +130,11 @@ class HandleController extends Controller
                 break;
 
             default:
+                $selected = explode(',', $selected);
+                foreach ($options as $bloc) {
+                    $result[] = ["name" => Str::ucfirst($bloc), "text" => Str::ucfirst($bloc), "value" => $bloc, 'selected' => in_array($bloc, $selected)];
+                }
+
                 break;
         }
         return $result;

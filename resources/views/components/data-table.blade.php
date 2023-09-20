@@ -204,10 +204,25 @@
                         },
 
                         'columnDefs': [],
-                        drawCallback: function() {
+                        drawCallback: function(params) {
                             @if ($ctfoot)
                                 $(`#tfoot_{{ $params['list'] }}_input`).change();
                             @endif
+                            @if ($childRow)
+                                if (params.aoData.length == 1) {
+                                    var row = params.aoData[0]._aData.id;
+                                    openChildDataTable(
+                                        `{{ $childRow }}/${row}?vdata={{ $vdata }}`,
+                                        $('#{{ $params['list'] }}').DataTable(),
+                                        '{{ $params['list'] }}', 'id', $(
+                                            `#tr_{{ $list }}_${row}`),
+                                        ['folder yellow'], ['folder open yellow'], $(this),
+                                        'open_child_{{ $vdata }}',
+                                        "list={{ $params['list'] }}"
+                                    )
+                                }
+                            @endif
+
                         },
 
                         'createdRow': function(row, data, dataIndex) {
@@ -225,7 +240,6 @@
                         columns: window["columns_{{ $vdata }}"],
 
                         initComplete: function(settings, json) {
-
                             @if ($customLength)
                                 $("#{{ $params['list'] }}_length").css('display', 'none');
                             @endif

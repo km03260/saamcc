@@ -104,6 +104,9 @@ body {
 .p-0 {
     padding: 0em !important;
 }
+.b-0 {
+    border: 0em !important;
+}
 
 table.datatable:not(.child) tbody tr.parent:hover {
     cursor: pointer;

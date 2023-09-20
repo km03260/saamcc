@@ -4,11 +4,11 @@
         <div class="field fieldControl raison_sociale_F">
             <div class="two fields">
                 <div class="two wide field" style="margin-top: auto;margin-bottom: auto;">
-                    <label>Raison sociale</label>
+                    <label>Reason sociale</label>
                 </div>
                 <div class="twelve wide field">
                     <input type="text" style="text-transform:uppercase" name="raison_sociale"
-                        placeholder="Raison sociale">
+                        placeholder="Reason sociale">
                     <div class="msgError raison_sociale_M"></div>
                 </div>
             </div>

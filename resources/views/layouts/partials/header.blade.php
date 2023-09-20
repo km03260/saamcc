@@ -28,7 +28,7 @@
     <script src="{{ asset('assets/jquery-confirm/jquery-confirm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/Semantic-UI-CSS-master/semantic.min.js') }}"></script>
     @if (!isset($print))
-        <link href="{{ asset('assets/css/sty1.0.0.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/css/sty1.0.1.css') }}" rel="stylesheet">
     @endif
     {{-- <script type="module" src="{{ asset('/build/assets/app-eec918f2.js') }}"></script> --}}
 

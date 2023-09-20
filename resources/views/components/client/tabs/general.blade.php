@@ -12,13 +12,13 @@
 
                 <tr>
                     <td class="" style="background-color:#f9fafb;border-bottom: 1px solid #fff;">
-                        <h5 class="ui header">Raison sociale</h5>
+                        <h5 class="ui header">Reason sociale</h5>
                     </td>
                     <td>
                         <div class="ui transparent right icon big input focus">
                             <input class="up_field" type="text" data-name="raison_sociale"
                                 style="text-transform:uppercase;" value="{{ $client->raison_sociale }}"
-                                placeholder="Raison sociale ..." style="padding: 3px;border-radius: 0;"
+                                placeholder="Reason sociale ..." style="padding: 3px;border-radius: 0;"
                                 @if (!Gate::allows('update', [App\Models\Client::class, $client])) readonly @endif>
                             <i class="icon" style="margin: -2px;"></i>
                         </div>

@@ -17,10 +17,12 @@
                 </tr>
                 <tr>
                     <th style="padding: 4px 11px;">Article</th>
+                    {{-- 
                     @if ($commande->client->variations()->count() == 0)
                         <th style="padding: 4px 11px;">Quantité</th>
                     @endif
-                    {{-- <th style="padding: 4px 11px;"></th> --}}
+                    <th style="padding: 4px 11px;"></th>
+                    --}}
                 </tr>
             </thead>
             <tbody class="{{ $vdata }}_lcmd_rows">

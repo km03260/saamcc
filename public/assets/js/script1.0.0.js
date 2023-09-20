@@ -219,7 +219,7 @@ $(document).on('click', '.submit_form', function (e) {
                     document.getElementById(_ele_.data('form').replaceAll('#', '')).reset();
                     $('.drop_field_reset').dropdown('clear');
                     $('.img_field_reset').attr('src', '/assets/images/no-photo.jpg');
-                    flash(res.ok, 'success', 'bottomRight', 2000, false, '#server_msg');
+                    flash(res.ok, 'success', 'bottomRight', 2000, false, $('#server_msg').length > 0 ? '#server_msg' : null);
 
                 }
                 $('.actions_btns').hide(200);
