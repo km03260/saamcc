@@ -10,7 +10,7 @@
 <script src="{{ asset('assets/modal/js/iModal.min.js') }}"></script>
 <script src="{{ asset('assets/js/moment.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.3/jquery.scrollTo.min.js"></script>
-<script src="{{ asset('assets/js/script1.0.0.js') }}"></script>
+<script src="{{ asset('assets/js/script1.0.1.js') }}"></script>
 @yield('scripts')
 @stack('script')
 </body>
