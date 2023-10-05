@@ -69,8 +69,8 @@ class StoreCommandeRequest extends FormRequest
         return [
             "client_id" => "Client",
             "statut_id" => "Statut",
-            "date_livraison_souhaitee" => "Date livraison souhaitée",
-            "date_livraison_confirmee" => "Date livraison confirmée",
+            "date_livraison_souhaitee" => "Semaine livraison souhaitée",
+            "date_livraison_confirmee" => "Semaine livraison confirmée",
             "articles.*.qty" => "Quantité",
             "articles.*.id" => "Article",
             "ccnum" => "N°Commande MagiSoft",

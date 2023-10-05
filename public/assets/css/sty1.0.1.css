@@ -104,6 +104,7 @@ body {
 .p-0 {
     padding: 0em !important;
 }
+
 .b-0 {
     border: 0em !important;
 }
@@ -312,6 +313,10 @@ tr td.detail_ {
     background: none 0% 0% repeat scroll rgb(112, 142, 164) !important;
     background-color: #88a0b9;
     color: #fff;
+}
+
+.ui.popup.calendar table thead th.disabled {
+    min-width: 55px !important
 }
 
 .ui.popup {

@@ -23,16 +23,17 @@
 
         <div class="two fields">
             <div class="four wide field" style="margin-top: auto;margin-bottom: auto;">
-                <label> Date de Livraison Souhaitée </label>
+                <label>Semaine Livraison Souhaitée </label>
             </div>
             <div class="five wide fieldControl field date_livraison_souhaitee_F">
                 <div class="ui calendar calendar_field">
                     <div class="ui input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" class="date_field" name="date_livraison_souhaitee"
-                            style="font-size: 17px;padding:4px" placeholder=" Date de Livraison Souhaitée " readonly>
+                        <input type="text" name="" style="font-size: 17px;padding:4px"
+                            placeholder="Semaine Livraison Souhaitée " readonly>
                     </div>
                 </div>
+                <input type="hidden" id="date_livraison_souhaitee-{{ $vdata }}" name="date_livraison_souhaitee">
                 <div class="msgError date_livraison_souhaitee_M"></div>
             </div>
         </div>
@@ -57,8 +58,9 @@
 <script>
     calendarHandle({
         element: '.calendar_field',
-        field: ``,
-        initialDate: null
+        field: `#date_livraison_souhaitee-{{ $vdata }}`,
+        initialDate: null,
+        format: "W/YYYY"
     });
 
     @if (!$client_id)

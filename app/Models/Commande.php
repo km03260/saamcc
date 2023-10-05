@@ -38,7 +38,9 @@ class Commande extends Model
             ->select(DB::raw("
              $this->table.*,
              CASE WHEN $this->table.statut_id NOT IN (1,2) THEN $this->table.date_livraison_confirmee ELSE $this->table.date_livraison_souhaitee END AS date_liv,
+             CASE WHEN $this->table.statut_id NOT IN (1,2) THEN  DATE_FORMAT($this->table.date_livraison_confirmee, '%V/%Y') ELSE DATE_FORMAT($this->table.date_livraison_souhaitee, '%V/%Y') END AS sem_liv,
              UNIX_TIMESTAMP($this->table.date_livraison_confirmee) AS dateSteUF,
+             DATE_FORMAT($this->table.date_livraison_souhaitee, '%V/%Y') AS weekSouh,
              DATE_FORMAT($this->table.date_livraison_confirmee, '%V/%Y') AS weekSte,
              sc.background AS line_color
              "))
@@ -52,6 +54,9 @@ class Commande extends Model
                 $_date = new DateTime('midnight');
                 $_date->setISODate(Str::after($cond['week'], '/'), Str::before($cond['week'], '/'));
                 $q->whereBetween('date_livraison_confirmee', [$_date->modify('-1 days')->format('Y-m-d'), $_date->modify('+6 days')->format('Y-m-d')]);
+            })
+            ->when(key_exists('week_liv', $cond), function ($q) use ($cond) {
+                $q->where(DB::raw("CASE WHEN $this->table.statut_id NOT IN (1,2) THEN  DATE_FORMAT($this->table.date_livraison_confirmee, '%V/%Y') ELSE DATE_FORMAT($this->table.date_livraison_souhaitee, '%V/%Y') END "), $cond['week_liv']);
             })
             ->when(key_exists('article_id', $cond), function ($q) use ($cond) {
                 $q->whereHas('articles', function ($qha) use ($cond) {
@@ -112,9 +117,9 @@ class Commande extends Model
                 "className" => 'left aligned open_child',
             ],
             [
-                "name" => "Date de livraison",
-                "data" => "date_liv",
-                'column' => 'date_liv',
+                "name" => "Semaine livraison",
+                "data" => "sem_liv",
+                'column' => 'sem_liv',
                 "render" => false,
                 "width" => "150px",
                 "className" => 'center aligned open_child',
@@ -137,9 +142,9 @@ class Commande extends Model
             ],
 
             [
-                "name" => "Date de livraison confirmée",
-                "data" => "date_livraison_confirmee",
-                'column' => 'date_livraison_confirmee',
+                "name" => "Semaine livraison confirmée",
+                "data" => "weekSte",
+                'column' => 'weekSte',
                 "render" => false,
                 "visible" => false,
                 "className" => 'left aligned open_child',

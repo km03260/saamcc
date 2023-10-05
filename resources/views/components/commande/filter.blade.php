@@ -28,6 +28,16 @@
                             class="list_commandes{{ $vdata }}_filter_ku">
                     </div>
                 </div>
+                <div class="three wide field">
+                    <div class="ui calendar calendar_field_filter">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" name="week_liv" style="font-size: 17px;padding:4px"
+                                class="list_commandes{{ $vdata }}_filter" placeholder="Semaine Livraison"
+                                readonly>
+                        </div>
+                    </div>
+                </div>
                 @if (!Gate::allows('is_client', [App\Models\User::class]))
                     <div class="four wide field">
                         <x-includes.search-drop name="client_id" classes="list_commandes{{ $vdata }}_filter"
@@ -56,10 +66,19 @@
     </div>
 </form>
 
-<script>
-    $('.accordion').accordion({
-        selector: {
-            trigger: '.title .sliders.icon'
-        }
-    });
-</script>
+@push('script')
+    <script>
+        $('.accordion').accordion({
+            selector: {
+                trigger: '.title .sliders.icon'
+            }
+        });
+
+        calendarHandle({
+            element: '.calendar_field_filter',
+            field: ``,
+            initialDate: null,
+            format: "W/YYYY"
+        });
+    </script>
+@endpush

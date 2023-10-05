@@ -18,14 +18,14 @@
                     </tr>
                     @if (in_array($commande->statut_id, [1, 2]))
                         <tr>
-                            <td style="padding: 3px 11px"> Date de livraison </td>
-                            <td> {{ $commande->date_livraison_souhaitee ? Carbon\Carbon::parse($commande->date_livraison_souhaitee)->format('d/m/Y') : '' }}
+                            <td style="padding: 3px 11px"> Semain de livraison </td>
+                            <td> {{ $commande->date_livraison_souhaitee ? Carbon\Carbon::parse($commande->date_livraison_souhaitee)->format('W/Y') : '' }}
                             </td>
                         </tr>
                     @else
                         <tr>
-                            <td style="padding: 3px 11px"> Date de livraison </td>
-                            <td> {{ $commande->date_livraison_confirmee ? Carbon\Carbon::parse($commande->date_livraison_confirmee)->format('d/m/Y') : '' }}
+                            <td style="padding: 3px 11px"> Semaine de livraison </td>
+                            <td> {{ $commande->date_livraison_confirmee ? Carbon\Carbon::parse($commande->date_livraison_confirmee)->format('W/Y') : '' }}
                             </td>
                         </tr>
                     @endif

@@ -14,7 +14,7 @@ var calendarText = {
     now: 'Maintenant',
     am: 'AM',
     pm: 'PM',
-    weekNo: 'Semaine'
+    weekNo: 'Sem'
 };
 
 /**
@@ -1065,11 +1065,19 @@ function calendarHandle(params, success_action = null) {
         formatter: {
             date: function (date, settings) {
                 if (!date) return '';
+
                 var day = date.getDate();
                 var month = date.getMonth() + 1;
                 var year = date.getFullYear();
                 var date_format = `${day}/${month}/${year}`;
-                $(params.field).val(date_format)
+
+                $(params.field).val(date_format);
+                
+                if (params.format) {
+                    var d = new Date(date);
+                    return formatDate(d, params.format);
+                }
+
                 return date_format;
             }
         },
@@ -1084,7 +1092,9 @@ function calendarHandle(params, success_action = null) {
                 var month = date.getMonth() + 1;
                 var year = date.getFullYear();
                 var date_format = `${day}/${month}/${year}`;
+
                 $(params.field).val(date_format)
+
                 if (success_action) {
                     success_action(date_format);
                 }
