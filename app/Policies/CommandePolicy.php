@@ -85,6 +85,17 @@ class CommandePolicy
     }
 
     /**
+     * Determine whether the user can update ncmdcli the model.
+     */
+    public function ncmdcli(User $user, Commande $commande): bool
+    {
+        return match ($user->Profil) {
+            8 => $user->clients()->first()?->id == $commande->client_id && $commande->statut_id == 1,
+            default => false
+        };
+    }
+
+    /**
      * Determine whether the user can delete the model.
      */
     public function liv_confirme(User $user, Commande $commande): bool

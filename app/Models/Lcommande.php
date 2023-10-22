@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Loader;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,7 +35,7 @@ class Lcommande extends Model
             ->select(DB::raw("$this->table.*,
              CONCAT((CASE WHEN a.designation IS NOT NULL THEN a.designation ELSE ''END) ,' ', (CASE WHEN  $this->table.variation IS NOT NULL THEN REPLACE( $this->table.variation, '/', ' ') ELSE ''END)) AS designation, 
              $this->table.pu * $this->table.qty AS total"))
-            ->with(['article'])
+            ->with(['article', 'statut'])
             ->leftJoin('cc_articles as a', "$this->table.article_id", "a.id")
             ->when(key_exists('article_id', $cond), function ($q) use ($cond) {
                 $q->where('article_id', $cond['article_id']);
@@ -44,6 +45,12 @@ class Lcommande extends Model
             })
             ->when(key_exists('id', $cond), function ($q) use ($cond) {
                 $q->where("$this->table.id", $cond['id']);
+            })
+            ->when(Gate::allows('is_client', [User::class]), function ($q) {
+                $q->where(function ($wq) {
+                    $wq->where("$this->table.statut_id", "!=", 5)
+                        ->orWhereNull("$this->table.statut_id");
+                });
             });
     }
 
@@ -56,6 +63,7 @@ class Lcommande extends Model
      */
     public static function gridColumns($cond = []): array
     {
+        $statut_options = Loader::CMD_STATUT_EDITFIELD();
 
         return [
             [
@@ -97,6 +105,14 @@ class Lcommande extends Model
                 "className" => 'right aligned  ' . (key_exists('commande_id', $cond) ? (Gate::allows('delete', [Commande::class, Commande::find($cond['commande_id'])]) ? ' editFieldLine' : '') : ' editFieldLine'),
             ],
             [
+                "name" => "Statut",
+                "data" => "statut.designation",
+                'column' => 'statut_id',
+                "render" => "relation",
+                "edit" => 'data-field="statut_id" data-model="/commande/ligne/update" data-type="drop" data-options="' . $statut_options . '" data-appends="lcommande=true"',
+                "className" => 'right aligned  ' . (key_exists('commande_id', $cond) ? (Gate::allows('delete', [Commande::class, Commande::find($cond['commande_id'])]) ? ' editFieldLine' : '') : ' editFieldLine'),
+            ],
+            [
                 "name" => "Total",
                 "data" => "total",
                 'column' => 'total',
@@ -124,6 +140,16 @@ class Lcommande extends Model
         return $this->belongsTo(Article::class);
     }
 
+
+    /**
+     * get commande statut
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function statut()
+    {
+        return $this->belongsTo(Scommande::class, 'statut_id');
+    }
+
     /**
      * Get commande
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -144,6 +170,7 @@ class Lcommande extends Model
         'variation',
         'qty',
         'pu',
+        'statut_id',
     ];
 
 
@@ -159,6 +186,19 @@ class Lcommande extends Model
         });
         static::updating(function ($_mdl) {
             $_mdl->updated_by = Auth::id();
+        });
+        static::updated(function ($_mdl) {
+            if ($_mdl->isDirty('statut_id')) {
+                $hasNotExpidetLignes = $_mdl->commande->articles()
+                    ->where(function ($wq) {
+                        $wq->where("statut_id", "!=", 5)
+                            ->orWhereNull("statut_id");
+                    })->count() == 0;
+
+                if ($hasNotExpidetLignes) {
+                    $_mdl->commande->update(['statut_id' => 5]);
+                }
+            }
         });
     }
 }

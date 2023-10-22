@@ -78,8 +78,9 @@ class Commande extends Model
             ->when(Gate::allows('is_operateur', [User::class]), function ($q) {
                 $q->whereIn('statut_id', [4, 5]);
             })
-            ->when(Auth::user()->Profil == 8, function ($q) {
-                $q->where('client_id', Auth::user()->clients()->first()->id);
+            ->when(Gate::allows('is_client', [User::class]), function ($q) {
+                $q->where('client_id', Auth::user()->clients()->first()->id)
+                    ->where('statut_id', "!=", 5);
             });
     }
 
@@ -102,10 +103,28 @@ class Commande extends Model
                 "width" => "75px",
             ],
             [
+                "name" => "NCmdCli",
+                "data" => "ncmd_cli",
+                'column' => "ncmd_cli",
+                "render" => false,
+                "className" => 'left aligned open_child',
+                'visible' => Gate::allows('is_client', User::class),
+                "width" => "150px",
+            ],
+            [
+                "name" => "Intitué",
+                "data" => "intitule",
+                'column' => "intitule",
+                "render" => false,
+                'visible' => Gate::allows('is_client', User::class),
+                "className" => 'left aligned open_child',
+            ],
+            [
                 "name" => "N°Commande",
                 "data" => "ccnum",
                 'column' => "ccnum",
                 "render" => false,
+                'visible' => !Gate::allows('is_client', User::class),
                 "className" => 'left aligned open_child',
             ],
             [
@@ -130,6 +149,7 @@ class Commande extends Model
                 'column' => 'total_quantite',
                 "render" => false,
                 "orderable" => false,
+                'visible' => !Gate::allows('is_client', User::class),
                 "className" => 'right aligned open_child open',
             ],
             [
@@ -138,7 +158,8 @@ class Commande extends Model
                 'column' => 'statut_id',
                 "render" => "relation",
                 "visible" => true,
-                "className" => 'left aligned open_child',
+                "width" => "150px",
+                "className" => 'center aligned open_child',
             ],
 
             [
@@ -150,20 +171,21 @@ class Commande extends Model
                 "className" => 'left aligned open_child',
             ],
 
-            [
-                "name" => "Créé Par",
-                "data" => "user.Prenom",
-                'column' => 'created_by',
-                "render" => 'relation',
-                "className" => 'left aligned open_child',
-                'width' => "120px",
-            ],
+            // [
+            //     "name" => "Créé Par",
+            //     "data" => "user.Prenom",
+            //     'column' => 'created_by',
+            //     "render" => 'relation',
+            //     "className" => 'left aligned open_child',
+            //     'width' => "120px",
+            // ],
             [
                 "name" => "Créé Le",
                 "data" => "created_at",
                 'column' => 'created_at',
                 "render" => false,
                 'width' => "120px",
+                'visible' => !Gate::allows('is_client', User::class),
                 "className" => 'center aligned open_child',
             ],
             [
@@ -199,6 +221,8 @@ class Commande extends Model
         'date_livraison_confirmee',
         'commentaire',
         'ccnum',
+        'ncmd_cli',
+        'intitule'
     ];
 
 

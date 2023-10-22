@@ -168,13 +168,19 @@ class LcommandeController extends Controller
 
         $lcommande->update($request->only($this->model->fillable));
 
-        return response()->json([
+        $_response = [
             "ok" => "L'article ($lcommande->article->ref) est mis à jour",
             "_row" => $this->model::Grid(["id" => $lcommande->id])->first(),
             "_row_p" => Commande::Grid(["id" => $lcommande->commande_id])->first(),
             "list" => "lcommandes",
             "list_p" => "commandes",
-        ], 200);
+        ];
+
+        if ($lcommande->commande->statut_id == 5 && $request->has('statut_id')) {
+            $_response['_clicked'] = ".tab_menu .item.active";
+        }
+
+        return response()->json($_response, 200);
     }
 
     /**

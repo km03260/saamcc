@@ -82,6 +82,7 @@ $(document).on('click', '.ax_get', function (e) {
     var rtl = _ele_.data('rtl') != undefined ? true : false;
     var target = _ele_.data('target') != undefined ? _ele_.data('target') : null;
     var inputs = _ele_.data('inputs');
+
     var ids = ``;
     if (inputs != undefined) {
         if ($(`${inputs}`).length > 0) {
@@ -734,7 +735,11 @@ function setError(errors, ref = null) {
                 title: false,
                 content: error[0]
             });
-            $(`#${name.replace('.', '_')}_popup`).popup('show');
+            $(`#${name.replace('.', '_')}_popup`).popup('show', {
+                onShow: function () {
+                    resizePopup();
+                }
+            });
         }
     })
 }
@@ -758,9 +763,12 @@ function closeAllChild(list) {
  * @param {*} ref 
  * @param {*} tr 
  */
-function openChildDataTable(url, datatable, list, ref, tr, removedClass, addedClass, handle, classHandle, appends = null) {
+function openChildDataTable(url, datatable, list, ref, tr, removedClass, addedClass, handle, classHandle, appends = null, closeOther = true) {
     $('#of-action-tab').remove();
-    closeAllChild(list);
+
+    if (closeOther) {
+        closeAllChild(list);
+    }
     var row = datatable.row(tr);
     var ndata = row.data()
     var pivot = eval(`ndata.${ref}`)
@@ -778,7 +786,9 @@ function openChildDataTable(url, datatable, list, ref, tr, removedClass, addedCl
         })
     }
     else {
-        PofermOthersChilds(list, removedClass, addedClass, classHandle);
+        if (closeOther) {
+            PofermOthersChilds(list, removedClass, addedClass, classHandle);
+        }
 
         $.map(removedClass, function (c) {
             handle.removeClass(c)
@@ -788,7 +798,9 @@ function openChildDataTable(url, datatable, list, ref, tr, removedClass, addedCl
         })
         row.child(`<div class="ui mini loading segment" id="laod-${list}${pivot}" style="padding:0;margin:0px !important; border-radius:0"> <div id="detail${list}${pivot}" style="display: none;"></div></div>`, 'child').show();
         appendDetails(url, pivot, list, appends);
-        tr.addClass('shown details-row select-row');
+        if (closeOther) {
+            tr.addClass('shown details-row select-row');
+        }
         tr.next().find('td').addClass('coverChild');
         tr.next().find('td').addClass('p-0');
         $('html, body').animate({
@@ -1072,7 +1084,7 @@ function calendarHandle(params, success_action = null) {
                 var date_format = `${day}/${month}/${year}`;
 
                 $(params.field).val(date_format);
-                
+
                 if (params.format) {
                     var d = new Date(date);
                     return formatDate(d, params.format);

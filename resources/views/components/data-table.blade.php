@@ -92,13 +92,15 @@
                             break;
                         case "relation":
                             column["render"] = function(data, type, full) {
+                                var _render_val = ``;
                                 var _data_relation = column_data.substring(0, column_data
                                     .indexOf('.'));
                                 if (full[_data_relation]) {
-                                    return eval(`full.${_data_relation}.${column_data
-                            .substring(column_data.lastIndexOf('.') + 1)}`);
+                                    _render_val = eval(
+                                        ` full.${_data_relation}.${column_data.substring(column_data.lastIndexOf('.') + 1)}`
+                                    );
                                 }
-                                return '';
+                                return `<span class="inline" ${edit_params} >${_render_val}</span>`;
                             };
                             break;
                         case "relation_mtm":
@@ -220,6 +222,30 @@
                                         'open_child_{{ $vdata }}',
                                         "list={{ $params['list'] }}"
                                     )
+                                } else if ("{{ $list }}" == 'commandes') {
+                                    $.map(params.aoData, function(_row) {
+
+                                        if (_row._aData.statut_id == 2) {
+
+                                            var _ligne = _row._aData.id;
+
+                                            openChildDataTable(
+                                                `{{ $childRow }}/${_ligne}?vdata={{ $vdata }}`,
+                                                $('#{{ $params['list'] }}')
+                                                .DataTable(),
+                                                '{{ $params['list'] }}', 'id', $(
+                                                    `#tr_{{ $list }}_${_ligne}`
+                                                ),
+                                                ['folder yellow'], [
+                                                    'folder open yellow'
+                                                ],
+                                                $(this),
+                                                'open_child_{{ $vdata }}',
+                                                "list={{ $params['list'] }}",
+                                                false
+                                            )
+                                        }
+                                    })
                                 }
                             @endif
 
@@ -246,7 +272,8 @@
 
                             @if ($open)
                                 let row = '{{ $open }}';
-
+                                let _table = $(this).closest('table.datatable');
+                                let closeOther = !_table.hasClass('close-other');
                                 openChildDataTable(
                                     `{{ $childRow }}/${row}?vdata={{ $vdata }}`,
                                     $('#{{ $params['list'] }}').DataTable(),
@@ -254,7 +281,8 @@
                                         `#tr_{{ $list }}_${row}`),
                                     ['folder yellow'], ['folder open yellow'], $(this),
                                     'open_child_{{ $vdata }}',
-                                    "list={{ $params['list'] }}"
+                                    "list={{ $params['list'] }}",
+                                    closeOther
                                 )
                             @endif
 
@@ -359,13 +387,15 @@
                             let childUrl = _table.data('open-child');
                             let _list = _table.data('list');
                             let _vdata = _table.data('vdata');
+                            let closeOther = !_table.hasClass('close-other');
                             openChildDataTable(
                                 `${childUrl}/${row}?vdata=${_vdata}`,
                                 $(`#${_list}`).DataTable(),
                                 `${_list}`, 'id', $(this).closest('tr'),
                                 ['folder yellow'], ['folder open yellow'], $(this),
                                 'open_child',
-                                `list=${_list}`
+                                `list=${_list}`,
+                                closeOther
                             )
                         })
 
@@ -377,13 +407,16 @@
                         function(e) {
                             e.preventDefault()
                             let row = $(this).attr('data-id');
+                            let _table = $(this).closest('table.datatable');
+                            let closeOther = !_table.hasClass('close-other');
                             openChildDataTable(
                                 `{{ $childRow }}/${row}?vdata={{ $vdata }}`,
                                 $('#{{ $params['list'] }}').DataTable(),
                                 '{{ $params['list'] }}', 'id', $(this).closest('tr'),
                                 ['folder yellow'], ['folder open yellow'], $(this),
                                 'open_child_{{ $vdata }}',
-                                "list={{ $params['list'] }}"
+                                "list={{ $params['list'] }}",
+                                closeOther
                             )
                         })
                 @endif

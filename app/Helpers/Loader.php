@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Scommande;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -130,5 +131,16 @@ class Loader
         }
 
         return $weeks;
+    }
+
+    /**
+     * Get commande status options 
+     * @return string
+     */
+    public static function CMD_STATUT_EDITFIELD()
+    {
+        return implode('#', Scommande::Search()->get()->map(function ($s) {
+            return "$s->value;$s->name";
+        })->toArray());
     }
 }

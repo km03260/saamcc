@@ -1,7 +1,7 @@
 <div class="ui mini" style="margin-top: 7px">
     @switch($commande->statut_id)
         @case(2)
-            <span id="up_statut_id_popup"></span>
+            {{-- <span id="up_statut_id_popup"></span> --}}
             <a class="item im load-model ui button" data-ref="up_" data-color="" data-title="" data-class="toast-body"
                 data-top="25%" data-url="/handle/render?com=confirm-statut-action&model=commande&key={{ $commande->id }}&commande"
                 style="padding: 5px 13px;min-width: 110px ;justify-content: center; font-size:13px; font-weight: bold; background: #d8ea5c; color: #000">

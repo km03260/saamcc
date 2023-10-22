@@ -52,6 +52,8 @@ class StoreCommandeRequest extends FormRequest
             "articles.*.id"  => ['nullable', 'exists:cc_articles,id'],
             "commentaire" => ['nullable'],
             "ccnum" => ['nullable', 'max:50', 'unique:cc_commandes,ccnum' . $_excep],
+            "ncmd_cli" => ['nullable', 'max:50'],
+            "intitule" => ['nullable', 'max:50'],
         ];
         if ($this->methode == "savewhat") {
             return array_intersect_key($rules, request()->all());
@@ -74,6 +76,8 @@ class StoreCommandeRequest extends FormRequest
             "articles.*.qty" => "Quantité",
             "articles.*.id" => "Article",
             "ccnum" => "N°Commande MagiSoft",
+            "ncmd_cli" => "N°Commande Client",
+            "intitule" => "Intitule",
         ];
     }
 

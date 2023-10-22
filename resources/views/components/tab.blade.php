@@ -18,7 +18,7 @@
     @foreach ($tabs as $tab)
         @if ($tab['can'] ?? true)
             <div class="ui tab segment" data-tab="{{ $tab['name'] }}"
-                style="border-radius: 0;margin-top: 0px;text-align: initial; border-top: 4px solid {{ isset($tab['color']) ? $tab['color'] : '' }}">
+                style="border-radius: 0;padding:0;margin-top: 0px;text-align: initial; border-top: 0px solid {{ isset($tab['color']) ? $tab['color'] : '' }}">
             </div>
         @endif
     @endforeach
