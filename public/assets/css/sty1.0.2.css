@@ -109,6 +109,13 @@ body {
     border: 0em !important;
 }
 
+table.datatable:not(.child) tbody tr.parent {
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 table.datatable:not(.child) tbody tr.parent:hover {
     cursor: pointer;
     overflow: hidden;

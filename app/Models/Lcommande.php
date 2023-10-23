@@ -66,14 +66,14 @@ class Lcommande extends Model
         $statut_options = Loader::CMD_STATUT_EDITFIELD();
 
         return [
-            [
-                "name" => "Id",
-                "data" => "id",
-                'column' => "id",
-                "render" => false,
-                "className" => 'left aligned',
-                "width" => "75px",
-            ],
+            // [
+            //     "name" => "Id",
+            //     "data" => "id",
+            //     'column' => "id",
+            //     "render" => false,
+            //     "className" => 'left aligned',
+            //     "width" => "75px",
+            // ],
             [
                 "name" => "Référence",
                 "data" => "article.ref",
@@ -88,14 +88,14 @@ class Lcommande extends Model
                 "render" => false,
                 "className" => 'left aligned',
             ],
-            [
-                "name" => "Prix unitaire",
-                "data" => "pu",
-                'column' => 'pu',
-                "render" => false,
-                "edit" => 'data-field="pu" data-model="/commande/ligne/update" data-type="decimal" data-appends="lcommande=true"',
-                "className" => 'right aligned',
-            ],
+            // [
+            //     "name" => "Prix unitaire",
+            //     "data" => "pu",
+            //     'column' => 'pu',
+            //     "render" => false,
+            //     "edit" => 'data-field="pu" data-model="/commande/ligne/update" data-type="decimal" data-appends="lcommande=true"',
+            //     "className" => 'right aligned',
+            // ],
             [
                 "name" => "Quantité",
                 "data" => "qty",
@@ -112,13 +112,13 @@ class Lcommande extends Model
                 "edit" => 'data-field="statut_id" data-model="/commande/ligne/update" data-type="drop" data-options="' . $statut_options . '" data-appends="lcommande=true"',
                 "className" => 'right aligned  ' . (key_exists('commande_id', $cond) ? (Gate::allows('delete', [Commande::class, Commande::find($cond['commande_id'])]) ? ' editFieldLine' : '') : ' editFieldLine'),
             ],
-            [
-                "name" => "Total",
-                "data" => "total",
-                'column' => 'total',
-                "render" => false,
-                "className" => 'right aligned',
-            ],
+            // [
+            //     "name" => "Total",
+            //     "data" => "total",
+            //     'column' => 'total',
+            //     "render" => false,
+            //     "className" => 'right aligned',
+            // ],
             [
                 "name" => "",
                 "data" => "default",

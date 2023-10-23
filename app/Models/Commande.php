@@ -197,15 +197,14 @@ class Commande extends Model
                 "visible" => Gate::allows('create', [self::class]) && key_exists('suivi', $cond),
                 'width' => "55px"
             ],
-            // [
-            //     "name" => "",
-            //     "data" => "default",
-            //     'column' => "/handle/render?com=default&model=commande&D=D&width=50",
-            //     "render" => 'url',
-            //     "className" => 'center aligned open p-0',
-            //     "visible" => Gate::allows('create', [self::class]),
-            //     'width' => "55px"
-            // ],
+            [
+                "name" => "",
+                "data" => "default",
+                'column' => "/handle/render?com=command_buttons&model=commande&",
+                "render" => 'url',
+                "className" => 'right aligned open p-0',
+                "visible" => Gate::allows('create', [self::class]),
+            ],
         ];
     }
 

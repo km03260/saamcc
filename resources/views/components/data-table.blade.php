@@ -223,6 +223,7 @@
                                         "list={{ $params['list'] }}"
                                     )
                                 } else if ("{{ $list }}" == 'commandes') {
+
                                     $.map(params.aoData, function(_row) {
 
                                         if (_row._aData.statut_id == 2) {

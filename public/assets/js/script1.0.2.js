@@ -733,7 +733,10 @@ function setError(errors, ref = null) {
                 on: 'hover focus',
                 position: 'bottom left',
                 title: false,
-                content: error[0]
+                content: error[0],
+                onUnplaceable: function () {
+                    flash(error[0], 'error', 'center');
+                }
             });
             $(`#${name.replace('.', '_')}_popup`).popup('show', {
                 onShow: function () {

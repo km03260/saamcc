@@ -122,7 +122,7 @@ class CommandeController extends Controller
             return view("components.commande.tabs.$tab", compact('commande', 'vdata'))->render();
         }
         $tabs = [
-            ["name" => 'cgeneral', "title" => "", 'color' => "transparent"],
+            ["name" => 'cgeneral', "title" => "", 'color' => "transparent", "class" => "$commande->id-tab-ligne"],
         ];
         return response()->json(['child' => view('components.commande.show', compact('commande', 'vdata', 'tabs'))->render()], 200);
     }
@@ -172,7 +172,7 @@ class CommandeController extends Controller
             "list" => "commandes",
         ];
         if (!$request->has('noClicked')) {
-            $_resp['_clicked'] = ".commandes.datatable .cgeneral.item.active";
+            $_resp['_clicked'] = ".commandes.datatable .cgeneral.$commande->id-tab-ligne.item.active";
         }
         if ($request->has('planif')) {
             $_prm =  $this->model::Grid(['id' => $commande->id])->first();

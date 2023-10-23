@@ -8,7 +8,7 @@
         style="margin-bottom: -2px;margin-top: -10px;{{ isset($styles) ? $styles : '' }}">
         @foreach ($tabs as $tab)
             @if ($tab['can'] ?? true)
-                <a class="@if ($loop->first) default @endif {{ $tab['name'] }}  {{ $name }} item"
+                <a class="@if ($loop->first) default @endif {{ $tab['name'] }}  {{ $name }} {{ $tab['class'] ?? '' }} item"
                     style="justify-content: center;min-width:100px;border-radius:5px;padding:5px 11px;{{ $tab['title'] == '' ? 'box-shadow: none !important;' : '' }}background: {{ isset($tab['color']) ? $tab['color'] : '' }}"
                     data-tab="{{ $tab['name'] }}">{{ $tab['title'] }}</a>
             @endif
@@ -54,6 +54,6 @@
         },
     });
 
-    $('.default.{{ $name }}.item').click();
+    $('#{{ $name }} .default.{{ $name }}.item').click();
 </script>
 {{-- @endpush --}}

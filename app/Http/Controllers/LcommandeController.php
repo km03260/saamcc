@@ -177,7 +177,7 @@ class LcommandeController extends Controller
         ];
 
         if ($lcommande->commande->statut_id == 5 && $request->has('statut_id')) {
-            $_response['_clicked'] = ".tab_menu .item.active";
+            $_response['_clicked'] = ".tab_menu .$lcommande->commande_id-tab-ligne.item.active";
         }
 
         return response()->json($_response, 200);

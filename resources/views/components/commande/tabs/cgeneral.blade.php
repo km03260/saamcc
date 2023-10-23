@@ -1,76 +1,84 @@
 <div style="padding:7px">
-    <x-commande.buttons :commande="$commande" /> <br>
+    {{-- <x-commande.buttons :commande="$commande" /> <br> --}}
     <div class="ui form form_field" data-id="{{ $commande->id }}"
         data-url="{{ Route('commande.update', $commande->id) }}?methode=savewhat&noClicked=true&commande">
         <table class="ui celled table aliceblue_table">
             <thead>
             </thead>
             <tbody>
-                <tr>
+                {{-- <tr>
                     <td width="175px">
                         Commande N°
                     </td>
                     <td>{{ $commande->id }}</td>
-                </tr>
-                <tr>
+                </tr> --}}
+                {{-- <tr>
                     <td>
                         Statut
                     </td>
                     <td>
                         {{ $commande->statut->designation }}
                     </td>
-                </tr>
-                @if (in_array($commande->statut_id, [1, 2]))
-                    <tr>
-                        <td>
-                            Semaine de livraison
-                        </td>
-                        <td>
-                            @can('update', [App\Models\Commande::class, $commande])
-                                <div class="ui calendar sem_liv_calendar-{{ $vdata }}"
-                                    id="date_livraison_souhaitee-{{ $vdata }}">
-                                    <div class="ui transparent input left icon" style="width: 160px">
-                                        <i class="calendar icon"></i>
-                                        <input style="border-radius: 0;padding:6px;" type="text"
-                                            placeholder="Date souhaitée" readonly>
-                                    </div>
-                                </div>
-                                <input style="border-radius: 0;padding:6px;" type="hidden" name="date_livraison_souhaitee"
-                                    class="date_livraison_value-{{ $vdata }}" placeholder="Date confirmée" readonly>
-                                <div class="msgError up_date_livraison_souhaitee_M"></div>
-                            @endcan
+                </tr> --}}
 
-                            @cannot('update', [App\Models\Commande::class, $commande])
-                                {{ $commande->date_livraison_souhaitee ? Carbon\Carbon::parse($commande->date_livraison_souhaitee)->format('W/Y') : '' }}
-                            @endcannot
-                        </td>
-                    </tr>
-                @else
-                    <tr>
-                        <td>
-                            Semaine de livraison
-                        </td>
-                        <td>
-                            @can('liv_confirme', [App\Models\Commande::class, $commande])
-                                <div class="ui calendar sem_liv_calendar-{{ $vdata }}"
-                                    id="date_livraison_confirmee-{{ $vdata }}">
-                                    <div class="ui transparent input left icon" style="width: 160px">
-                                        <i class="calendar icon"></i>
-                                        <input style="border-radius: 0;padding:6px;" type="text"
-                                            placeholder="Date confirmée" readonly>
+                @if (Gate::allows('update', [App\Models\Commande::class, $commande]) ||
+                        Gate::allows('liv_confirme', [App\Models\Commande::class, $commande]))
+                    @if (in_array($commande->statut_id, [1, 2]))
+                        <tr>
+                            <td>
+                                Semaine de livraison
+                            </td>
+                            <td>
+                                @can('update', [App\Models\Commande::class, $commande])
+                                    <div class="ui calendar sem_liv_calendar-{{ $vdata }}"
+                                        id="date_livraison_souhaitee-{{ $vdata }}">
+                                        <div class="ui transparent input left icon" style="width: 160px">
+                                            <i class="calendar icon"></i>
+                                            <input style="border-radius: 0;padding:6px;" type="text"
+                                                placeholder="Date souhaitée" readonly>
+                                        </div>
                                     </div>
-                                </div>
-                                <input style="border-radius: 0;padding:6px;" type="hidden" name="date_livraison_confirmee"
-                                    class="date_livraison_value-{{ $vdata }}" placeholder="Date confirmée" readonly>
-                                <div class="msgError up_date_livraison_confirmee_M"></div>
-                            @endcan
+                                    <input style="border-radius: 0;padding:6px;" type="hidden"
+                                        name="date_livraison_souhaitee" class="date_livraison_value-{{ $vdata }}"
+                                        placeholder="Date confirmée" readonly>
+                                    <div class="msgError up_date_livraison_souhaitee_M"></div>
+                                @endcan
 
-                            @cannot('liv_confirme', [App\Models\Commande::class, $commande])
-                                {{ $commande->date_livraison_confirmee ? Carbon\Carbon::parse($commande->date_livraison_confirmee)->format('W/Y') : '' }}
-                            @endcannot
-                        </td>
-                    </tr>
+                                @cannot('update', [App\Models\Commande::class, $commande])
+                                    {{ $commande->date_livraison_souhaitee ? Carbon\Carbon::parse($commande->date_livraison_souhaitee)->format('W/Y') : '' }}
+                                @endcannot
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td>
+                                Semaine de livraison
+                            </td>
+                            <td>
+                                @can('liv_confirme', [App\Models\Commande::class, $commande])
+                                    <div class="ui calendar sem_liv_calendar-{{ $vdata }}"
+                                        id="date_livraison_confirmee-{{ $vdata }}">
+                                        <div class="ui transparent input left icon" style="width: 160px">
+                                            <i class="calendar icon"></i>
+                                            <input style="border-radius: 0;padding:6px;" type="text"
+                                                placeholder="Date confirmée" readonly>
+                                        </div>
+                                    </div>
+                                    <input style="border-radius: 0;padding:6px;" type="hidden"
+                                        name="date_livraison_confirmee" class="date_livraison_value-{{ $vdata }}"
+                                        placeholder="Date confirmée" readonly>
+                                    <div class="msgError up_date_livraison_confirmee_M"></div>
+                                @endcan
+
+                                @cannot('liv_confirme', [App\Models\Commande::class, $commande])
+                                    {{ $commande->date_livraison_confirmee ? Carbon\Carbon::parse($commande->date_livraison_confirmee)->format('W/Y') : '' }}
+                                @endcannot
+                            </td>
+                        </tr>
+                    @endif
                 @endif
+
+
                 @can('liv_confirme', [App\Models\Commande::class, $commande])
                     <tr>
                         <td class="" style="">
@@ -92,12 +100,13 @@
                     @if (!in_array($commande->statut_id, [1, 2]))
                         <tr>
                             <td class="" style="">
-                                N°Commande Client
+                                N°Commande MagiSoft
                             </td>
-                            <td>{{ $commande->ncmd_cli }}</td>
+                            <td>{{ $commande->ccnum }}</td>
                         </tr>
                     @endif
                 @endcannot
+
                 @can('ncmdcli', [App\Models\Commande::class, $commande])
                     <tr>
                         <td class="" style="">
@@ -116,16 +125,7 @@
                         </td>
                     </tr>
                 @endcan
-                @cannot('ncmdcli', [App\Models\Commande::class, $commande])
-                    @if (!in_array($commande->statut_id, [1, 2]))
-                        <tr>
-                            <td class="" style="">
-                                N°Commande Client
-                            </td>
-                            <td>{{ $commande->ncmd_cli }}</td>
-                        </tr>
-                    @endif
-                @endcannot
+
                 @can('ncmdcli', [App\Models\Commande::class, $commande])
                     <tr>
                         <td class="" style="">
@@ -144,16 +144,9 @@
                         </td>
                     </tr>
                 @endcan
-                @cannot('ncmdcli', [App\Models\Commande::class, $commande])
-                    <tr>
-                        <td class="" style="">
-                            Intitulé
-                        </td>
-                        <td>{{ $commande->intitule }}</td>
-                    </tr>
-                @endcannot
+
                 <tr>
-                    <td>
+                    <td width="160px">
                         Commentaire
                     </td>
                     <td>

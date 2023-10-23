@@ -34,6 +34,14 @@
                         <td>{{ $commande->ccnum }} </td>
                     </tr>
                     <tr>
+                        <td style="padding: 3px 11px"> N°Commande Client </td>
+                        <td>{{ $commande->ncmd_cli }} </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 3px 11px"> Intitulé </td>
+                        <td>{{ $commande->intitule }} </td>
+                    </tr>
+                    <tr>
                         <td> Commentaire </td>
                         <td>{!! $commande->commentaire !!} </td>
                     </tr>
@@ -55,9 +63,9 @@
                         <th>ID</th>
                         <th>Référence</th>
                         <th>Désignation</th>
-                        <th style="text-align:center">Prix unitaire</th>
+                        {{-- <th style="text-align:center">Prix unitaire</th> --}}
                         <th style="text-align:center">Quantité</th>
-                        <th style="text-align:center">Total</th>
+                        {{-- <th style="text-align:center">Total</th> --}}
                     </tr>
                 </thead>
 
@@ -67,9 +75,9 @@
                             <td>{{ $art->id }}</td>
                             <td>{{ $art->article->ref }}</td>
                             <td>{{ $art->article->designation }}</td>
-                            <td style="text-align: right">{{ $art->pu }}</td>
+                            {{-- <td style="text-align: right">{{ $art->pu }}</td> --}}
                             <td style="text-align: right">{{ $art->qty }}</td>
-                            <td style="text-align: right">{{ $art->qty * $art->pu }}</td>
+                            {{-- <td style="text-align: right">{{ $art->qty * $art->pu }}</td> --}}
                         </tr>
                     @endforeach
                 </tbody>
