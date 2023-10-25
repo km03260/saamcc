@@ -164,7 +164,7 @@ class LcommandeController extends Controller
      */
     public function update(StoreLcommandeRequest $request, Lcommande $lcommande)
     {
-        $this->authorize('update', [$this->model::class, $lcommande]);
+        $this->authorize('update', [$this->model::class, $lcommande, $request->has('statut_id') ? 'statut_id' : '']);
 
         $lcommande->update($request->only($this->model->fillable));
 

@@ -99,7 +99,7 @@ class Commande extends Model
                 "data" => "id",
                 'column' => "id",
                 "render" => false,
-                "className" => 'left aligned open_child',
+                "className" => 'topbtm left aligned open_child',
                 "width" => "75px",
             ],
             [
@@ -107,7 +107,7 @@ class Commande extends Model
                 "data" => "ncmd_cli",
                 'column' => "ncmd_cli",
                 "render" => false,
-                "className" => 'left aligned open_child',
+                "className" => 'topbtm left aligned open_child',
                 'visible' => Gate::allows('is_client', User::class),
                 "width" => "150px",
             ],
@@ -117,7 +117,7 @@ class Commande extends Model
                 'column' => "intitule",
                 "render" => false,
                 'visible' => Gate::allows('is_client', User::class),
-                "className" => 'left aligned open_child',
+                "className" => 'topbtm left aligned open_child',
             ],
             [
                 "name" => "N°Commande",
@@ -125,7 +125,7 @@ class Commande extends Model
                 'column' => "ccnum",
                 "render" => false,
                 'visible' => !Gate::allows('is_client', User::class),
-                "className" => 'left aligned open_child',
+                "className" => 'topbtm left aligned open_child',
             ],
             [
                 "name" => "Client",
@@ -133,7 +133,7 @@ class Commande extends Model
                 'column' => 'client_id',
                 "render" => 'relation',
                 'visible' => key_exists('wclient', $cond) && !Gate::allows('is_client', User::class),
-                "className" => 'left aligned open_child',
+                "className" => 'topbtm left aligned open_child',
             ],
             [
                 "name" => "Semaine livraison",
@@ -141,7 +141,7 @@ class Commande extends Model
                 'column' => 'sem_liv',
                 "render" => false,
                 "width" => "150px",
-                "className" => 'center aligned open_child',
+                "className" => 'topbtm center aligned open_child',
             ],
             [
                 "name" => "Quantité",
@@ -150,7 +150,7 @@ class Commande extends Model
                 "render" => false,
                 "orderable" => false,
                 'visible' => !Gate::allows('is_client', User::class),
-                "className" => 'right aligned open_child open',
+                "className" => 'topbtm right aligned open_child open',
             ],
             [
                 "name" => "Statut",
@@ -159,7 +159,7 @@ class Commande extends Model
                 "render" => "relation",
                 "visible" => true,
                 "width" => "150px",
-                "className" => 'center aligned open_child',
+                "className" => 'topbtm center aligned open_child',
             ],
 
             [
@@ -168,7 +168,7 @@ class Commande extends Model
                 'column' => 'weekSte',
                 "render" => false,
                 "visible" => false,
-                "className" => 'left aligned open_child',
+                "className" => 'topbtm left aligned open_child',
             ],
 
             // [
@@ -176,7 +176,7 @@ class Commande extends Model
             //     "data" => "user.Prenom",
             //     'column' => 'created_by',
             //     "render" => 'relation',
-            //     "className" => 'left aligned open_child',
+            //     "className" => 'topbtm left aligned open_child',
             //     'width' => "120px",
             // ],
             [
@@ -186,24 +186,25 @@ class Commande extends Model
                 "render" => false,
                 'width' => "120px",
                 'visible' => !Gate::allows('is_client', User::class),
-                "className" => 'center aligned open_child',
+                "className" => 'topbtm center aligned open_child',
             ],
             [
                 "name" => "",
                 "data" => "statut_suivi",
                 'column' => "/handle/render?com=update-statut-column&model=commande&D=D&width=50",
                 "render" => 'url',
-                "className" => 'center aligned open p-0',
+                "className" => 'topbtm center aligned open p-0',
                 "visible" => Gate::allows('create', [self::class]) && key_exists('suivi', $cond),
                 'width' => "55px"
             ],
             [
                 "name" => "",
-                "data" => "default",
+                "data" => "command_buttons",
                 'column' => "/handle/render?com=command_buttons&model=commande&",
                 "render" => 'url',
-                "className" => 'right aligned open p-0',
+                "className" => 'topbtm right aligned open p-0',
                 "visible" => Gate::allows('create', [self::class]),
+                "width" => "250px"
             ],
         ];
     }
@@ -253,6 +254,10 @@ class Commande extends Model
             }
             if ($_mdl->isDirty('date_livraison_souhaitee') && in_array($_mdl->statut_id, [2, 3]) && $_mdl->date_livraison_souhaitee) {
                 $_mdl->date_livraison_confirmee = Carbon::parse($_mdl->date_livraison_souhaitee)->format('d/m/Y');
+            }
+
+            if ($_mdl->isDirty('statut_id')) {
+                DB::update('update cc_commande_articles set statut_id = ? where commande_id = ?', [$_mdl->statut_id, $_mdl->id]);
             }
         });
         static::deleting(function ($_mdl) {

@@ -138,6 +138,7 @@
                             break;
                         case "url":
                             column["render"] = function(data, type, full) {
+
                                 $.ajax({
                                     url: `${column_render}&vdata={{ $params['vdata'] }}&key=${full.id}`,
                                 }).done(function(response) {
@@ -249,7 +250,6 @@
                                     })
                                 }
                             @endif
-
                         },
 
                         'createdRow': function(row, data, dataIndex) {

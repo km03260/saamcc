@@ -198,6 +198,17 @@ table.datatable {
 
 }
 
+table.datatable.separateChild tr.child {
+    border-bottom: solid beige 15px;
+}
+
+table.datatable.separateChild tr.parent td.topbtm{
+}
+
+table.datatable.separateChild {
+    border-collapse: collapse;
+}
+
 table.dataTable tbody tr.odd {
     background-color: #918c8c2b;
 }
@@ -217,8 +228,8 @@ table.dataTable tbody tr.odd {
 
 .datatable.child thead tr th {
     box-shadow: inset 0 -10px 15px -12px rgba(0, 0, 0, .3), 0 0 0 #555;
-    background: rgba(202, 228, 246, 0.874) !important;
-    color: #000 !important;
+    background: gray !important;
+    color: #fff !important;
     border-bottom: 1px solid rgba(128, 135, 140, 0.74) !important;
 
 }
@@ -550,7 +561,9 @@ td.max-h {
 }
 
 .aliceblue_table tr td:nth-child(1) {
-    background-color: aliceblue;
+    background-color: gray;
+    color: #fff;
+    font-size: 13px;
     height: 30px;
 }
 

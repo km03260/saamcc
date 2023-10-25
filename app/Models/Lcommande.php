@@ -34,8 +34,9 @@ class Lcommande extends Model
         return $query
             ->select(DB::raw("$this->table.*,
              CONCAT((CASE WHEN a.designation IS NOT NULL THEN a.designation ELSE ''END) ,' ', (CASE WHEN  $this->table.variation IS NOT NULL THEN REPLACE( $this->table.variation, '/', ' ') ELSE ''END)) AS designation, 
-             $this->table.pu * $this->table.qty AS total"))
+              $this->table.pu * $this->table.qty AS total, sc.background AS line_color"))
             ->with(['article', 'statut'])
+            ->leftJoin('cc_commande_statuts as sc', "$this->table.statut_id", "sc.id")
             ->leftJoin('cc_articles as a', "$this->table.article_id", "a.id")
             ->when(key_exists('article_id', $cond), function ($q) use ($cond) {
                 $q->where('article_id', $cond['article_id']);
@@ -64,6 +65,17 @@ class Lcommande extends Model
     public static function gridColumns($cond = []): array
     {
         $statut_options = Loader::CMD_STATUT_EDITFIELD();
+        $commande_id = request()->commande_id;
+        $commande = Commande::find($commande_id);
+        $route_crtmd = Route('commande.ligne.create', [$commande]) . "?&";
+
+        $create_btn =   (Gate::allows('create', [self::class, $commande])) ?
+            "<span id='up_{$commande_id}_lcstatut_id_popup'></span><a class='im load-model ui mini green button right floated'
+                    data-ref='up_{$commande_id}_lc'
+                    style='padding: 5px 13px;min-width: 110px ;justify-content: center; font-size:13px; font-weight: bold'
+                    data-color='#21ba45' data-url='{$route_crtmd}'
+                    data-title='<img src=`/assets/images/app_logo_sq.png` height=`20px` /> <span style=`vertical-align: super;color:#000`>&nbsp;Ajouter Nouvel article</span>'><i
+                    class='add icon'></i>&nbsp;Ajouter nouvel article</a>&nbsp;" : "";
 
         return [
             // [
@@ -110,7 +122,7 @@ class Lcommande extends Model
                 'column' => 'statut_id',
                 "render" => "relation",
                 "edit" => 'data-field="statut_id" data-model="/commande/ligne/update" data-type="drop" data-options="' . $statut_options . '" data-appends="lcommande=true"',
-                "className" => 'right aligned  ' . (key_exists('commande_id', $cond) ? (Gate::allows('delete', [Commande::class, Commande::find($cond['commande_id'])]) ? ' editFieldLine' : '') : ' editFieldLine'),
+                "className" => 'right aligned  ' . (key_exists('commande_id', $cond) ? (Gate::allows('update', [Commande::class, Commande::find($cond['commande_id'])]) ? ' editFieldLine' : '') : ' editFieldLine'),
             ],
             // [
             //     "name" => "Total",
@@ -120,13 +132,14 @@ class Lcommande extends Model
             //     "className" => 'right aligned',
             // ],
             [
-                "name" => "",
+                "name" => $create_btn,
                 "data" => "default",
                 'column' => "/handle/render?com=default&model=lcommande&D=D&width=50",
                 "render" => 'url',
+                "orderable" => false,
                 "className" => 'center aligned open p-0',
                 "visible" => Gate::allows('create', [Commande::class]),
-                // 'width' => "55px"
+                'width' => "195px"
             ],
         ];
     }

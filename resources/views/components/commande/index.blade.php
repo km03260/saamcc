@@ -16,6 +16,6 @@
         <br>
         <x-commande.filter :vdata="$vdata" length="50" />
         <x-data-table list="commandes" :vdata="$vdata" appends="wclient=true" length="50" :customLength="true"
-            classes="close-other" childRow="/commande/show" />
+            parent="true" classes="close-other separateChild" childRow="/commande/show" />
     </div>
 @endsection

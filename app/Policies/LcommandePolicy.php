@@ -40,10 +40,10 @@ class LcommandePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Lcommande $lcommande): bool
+    public function update(User $user, Lcommande $lcommande, String $attribute = ''): bool
     {
         return match ($user->Profil) {
-            100, 9 => $lcommande->commande->statut_id == 1,
+            100, 9 => in_array($attribute, ['statut_id']) || $lcommande->commande->statut_id == 1,
             8 => $user->clients()->first()?->id == $lcommande->commande->client_id && $lcommande->commande->statut_id == 1,
             default => false
         };

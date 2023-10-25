@@ -36,6 +36,22 @@
             </a>
         @endcan
 
+        @php
+            $sc = App\Models\Scommande::whereId($_model->statut_id + 1)->first();
+        @endphp
+
+        @if ($sc)
+            @can('update', [App\Models\Commande::class, $_model])
+                <a class="im ax_get ui mini button" data-ref="up_{{ $_model->id }}_vl" data-color="{{ $sc->color }}"
+                    data-message="<div style='color:#{{ $sc->color }}'><i class='ui large check circle icon'></i> Êtes-vous sûr de mettre la commande N° ({{ $_model->id }}) {{ $sc->designation }}?</div>"
+                    data-url="{{ Route('commande.update', [$_model->id]) }}?statut_id={{ $sc->id }}&methode=savewhat&commande"
+                    style="padding: 5px 13px;min-width: 110px ;justify-content: center; font-size:13px; font-weight: bold; background-color: {{ $sc->background }}">
+                    <i class=" check circle icon"></i> {{ $sc->designation }}
+                </a>
+                <span id="up_{{ $_model->id }}_vlstatut_id_popup"></span>
+            @endcan
+        @endif
+
         <a class="im ui mini blue button" target="_blank"
             href="{{ Route('commande.generate', [$_model->id, 'print']) }}"
             style="padding: 5px 13px;min-width: 110px ;justify-content: center; font-size:13px; font-weight: bold">

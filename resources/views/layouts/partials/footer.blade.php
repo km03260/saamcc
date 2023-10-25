@@ -1,6 +1,6 @@
 <script type="text/javascript" src="{{ asset('assets/DataTables/DataTables-1.11.4/js/jquery.dataTables.min.js') }}">
 </script>
-<script src="{{ asset('assets/js/213devops-edit-dataTable-1.min.js') }}"></script>
+<script src="{{ asset('assets/js/213devops-edit-dataTable-2.min.js') }}"></script>
 <script src="{{ asset('assets/DataTables/FixedHeader-3.2.1/js/dataTables.fixedHeader.min.js') }}"></script>
 <script src="{{ asset('assets/Toast/dist/js/toast.min.js') }}"></script>
 {{-- <script src="{{ asset('assets/Semantic-UI-CSS-master/calendar/calendar.min.js') }}"></script> --}}
@@ -10,7 +10,7 @@
 <script src="{{ asset('assets/modal/js/iModal.min.js') }}"></script>
 <script src="{{ asset('assets/js/moment.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.3/jquery.scrollTo.min.js"></script>
-<script src="{{ asset('assets/js/script1.0.2.js') }}"></script>
+<script src="{{ asset('assets/js/script1.0.3.js') }}"></script>
 @yield('scripts')
 @stack('script')
 </body>

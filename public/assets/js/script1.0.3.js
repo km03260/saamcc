@@ -250,6 +250,7 @@ function load_row(idRow, row, listName = "") {
     var isOpen = _row.next().hasClass('child');
     var _app = listName != "" ? '.' + listName : '';
     $(`.datatable${_app}`).DataTable().row(_row).data(row);
+
     if (row.line_color != undefined) {
         _row.css('background-color', row.line_color);
     }

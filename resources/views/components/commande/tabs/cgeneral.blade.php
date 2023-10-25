@@ -2,25 +2,10 @@
     {{-- <x-commande.buttons :commande="$commande" /> <br> --}}
     <div class="ui form form_field" data-id="{{ $commande->id }}"
         data-url="{{ Route('commande.update', $commande->id) }}?methode=savewhat&noClicked=true&commande">
-        <table class="ui celled table aliceblue_table">
+        <table class="ui celled table aliceblue_table" style="border:0">
             <thead>
             </thead>
             <tbody>
-                {{-- <tr>
-                    <td width="175px">
-                        Commande N°
-                    </td>
-                    <td>{{ $commande->id }}</td>
-                </tr> --}}
-                {{-- <tr>
-                    <td>
-                        Statut
-                    </td>
-                    <td>
-                        {{ $commande->statut->designation }}
-                    </td>
-                </tr> --}}
-
                 @if (Gate::allows('update', [App\Models\Commande::class, $commande]) ||
                         Gate::allows('liv_confirme', [App\Models\Commande::class, $commande]))
                     @if (in_array($commande->statut_id, [1, 2]))
@@ -28,7 +13,7 @@
                             <td>
                                 Semaine de livraison
                             </td>
-                            <td>
+                            <td style="border:0">
                                 @can('update', [App\Models\Commande::class, $commande])
                                     <div class="ui calendar sem_liv_calendar-{{ $vdata }}"
                                         id="date_livraison_souhaitee-{{ $vdata }}">
@@ -54,7 +39,7 @@
                             <td>
                                 Semaine de livraison
                             </td>
-                            <td>
+                            <td style="border:0">
                                 @can('liv_confirme', [App\Models\Commande::class, $commande])
                                     <div class="ui calendar sem_liv_calendar-{{ $vdata }}"
                                         id="date_livraison_confirmee-{{ $vdata }}">
@@ -81,10 +66,10 @@
 
                 @can('liv_confirme', [App\Models\Commande::class, $commande])
                     <tr>
-                        <td class="" style="">
+                        <td>
                             N°Commande MagiSoft
                         </td>
-                        <td>
+                        <td style="border:0">
                             <div class="ui transparent right icon big input focus" style="width: 300px">
                                 <input class="up_field" type="text" data-name="ccnum" value="{{ $commande->ccnum }}"
                                     placeholder="N°Commande MagiSoft ..." @if (!Gate::allows('liv_confirme', [App\Models\Commande::class, $commande])) readonly @endif
@@ -99,20 +84,20 @@
                 @cannot('liv_confirme', [App\Models\Commande::class, $commande])
                     @if (!in_array($commande->statut_id, [1, 2]))
                         <tr>
-                            <td class="" style="">
+                            <td>
                                 N°Commande MagiSoft
                             </td>
-                            <td>{{ $commande->ccnum }}</td>
+                            <td style="border:0">{{ $commande->ccnum }}</td>
                         </tr>
                     @endif
                 @endcannot
 
                 @can('ncmdcli', [App\Models\Commande::class, $commande])
                     <tr>
-                        <td class="" style="">
+                        <td>
                             N°Commande Client
                         </td>
-                        <td>
+                        <td style="border:0">
                             <div class="ui transparent right icon big input focus" style="width: 300px">
                                 <input class="up_field" type="text" data-name="ncmd_cli"
                                     value="{{ $commande->ncmd_cli }}" placeholder="N°Commande Client ..."
@@ -128,10 +113,10 @@
 
                 @can('ncmdcli', [App\Models\Commande::class, $commande])
                     <tr>
-                        <td class="" style="">
+                        <td>
                             Intitulé
                         </td>
-                        <td>
+                        <td style="border:0">
                             <div class="ui transparent right icon big input focus" style="width: 300px">
                                 <input class="up_field" type="text" data-name="intitule"
                                     value="{{ $commande->intitule }}" placeholder="Intitulé ..."
@@ -149,28 +134,24 @@
                     <td width="160px">
                         Commentaire
                     </td>
-                    <td>
+                    <td style="border:0">
                         <div class="ui  fluid right icon big input focus">
                             <textarea class="up_field" data-name="commentaire" placeholder="Commentaire ..."
-                                style="padding: 3px;border-radius: 0;border:0" rows="3">{!! $commande->commentaire !!}</textarea>
+                                style="padding: 3px;border-radius: 0;border:0" rows="2">{!! $commande->commentaire !!}</textarea>
                             <i class="icon" style="margin: -2px;"></i>
                         </div>
                         <div class="msgError sw_commentaire_M"></div>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2" style="">
-                        Créé Le {{ Carbon\Carbon::parse($commande->cree_le)->format('d/m/Y') }} @if (!Gate::allows('is_client', [App\Models\User::class]))
-                            Par {{ $commande->user?->Prenom }}
-                        @endif
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
-    <br>
     @include('components.commande.tabs.lignes')
-
+    <small style="font-size:10px; color: rgb(182, 176, 176)">
+        Créé Le {{ Carbon\Carbon::parse($commande->cree_le)->format('d/m/Y') }} @if (!Gate::allows('is_client', [App\Models\User::class]))
+            Par {{ $commande->user?->Prenom }}
+        @endif
+    </small>
 </div>
 
 <script>
