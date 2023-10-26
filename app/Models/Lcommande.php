@@ -49,7 +49,7 @@ class Lcommande extends Model
             })
             ->when(Gate::allows('is_client', [User::class]), function ($q) {
                 $q->where(function ($wq) {
-                    $wq->where("$this->table.statut_id", "!=", 5)
+                    $wq->whereIn("$this->table.statut_id", [1, 2, 3, 4, 5])
                         ->orWhereNull("$this->table.statut_id");
                 });
             });
@@ -122,7 +122,7 @@ class Lcommande extends Model
                 'column' => 'statut_id',
                 "render" => "relation",
                 "edit" => 'data-field="statut_id" data-model="/commande/ligne/update" data-type="drop" data-options="' . $statut_options . '" data-appends="lcommande=true"',
-                "className" => 'right aligned  ' . (key_exists('commande_id', $cond) ? (Gate::allows('update', [Commande::class, Commande::find($cond['commande_id'])]) ? ' editFieldLine' : '') : ' editFieldLine'),
+                "className" => 'right aligned  ' . (key_exists('commande_id', $cond) ? (Gate::allows('update', [Commande::class, Commande::find($cond['commande_id'])]) && !Gate::allows('is_client', [User::class]) ? ' editFieldLine' : '') : ' editFieldLine'),
             ],
             // [
             //     "name" => "Total",

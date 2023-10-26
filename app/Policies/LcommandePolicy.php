@@ -44,7 +44,7 @@ class LcommandePolicy
     {
         return match ($user->Profil) {
             100, 9 => in_array($attribute, ['statut_id']) || $lcommande->commande->statut_id == 1,
-            8 => $user->clients()->first()?->id == $lcommande->commande->client_id && $lcommande->commande->statut_id == 1,
+            8 => !in_array($attribute, ['statut_id']) && $user->clients()->first()?->id == $lcommande->commande->client_id && $lcommande->commande->statut_id == 1,
             default => false
         };
     }
