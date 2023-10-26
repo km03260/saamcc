@@ -227,7 +227,7 @@
 
                                     $.map(params.aoData, function(_row) {
 
-                                        if (_row._aData.statut_id == 2) {
+                                        if ([2, 4].includes(_row._aData.statut_id)) {
 
                                             var _ligne = _row._aData.id;
 
