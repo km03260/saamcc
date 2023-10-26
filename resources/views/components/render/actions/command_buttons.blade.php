@@ -46,7 +46,7 @@
                     data-message="<div style='color:#{{ $sc->color }}'><i class='ui large check circle icon'></i> Êtes-vous sûr de mettre la commande N° ({{ $_model->id }}) {{ $sc->designation }}?</div>"
                     data-url="{{ Route('commande.update', [$_model->id]) }}?statut_id={{ $sc->id }}&methode=savewhat&commande"
                     style="padding: 5px 13px;min-width: 110px ;justify-content: center; font-size:13px; font-weight: bold; background-color: {{ $sc->background }}">
-                    <i class=" check circle icon"></i> {{ $sc->designation }}
+                    <i class=" check circle icon"></i> {{ $sc->label }}
                 </a>
                 <span id="up_{{ $_model->id }}_vlstatut_id_popup"></span>
             @endcan
