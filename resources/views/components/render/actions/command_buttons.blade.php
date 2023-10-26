@@ -1,7 +1,7 @@
     <div class="appendInputField" style="margin: 4px 0px">
         @switch($_model->statut_id)
             @case(1)
-                @can('update', [App\Models\Commande::class, $_model])
+                {{-- @can('update', [App\Models\Commande::class, $_model])
                     <a class="im ax_get ui mini green button" data-ref="up_{{ $_model->id }}_vl" data-color="#21ba45"
                         data-message="<div style='color:#fff'><i class='ui large check circle icon'></i> Êtes-vous sûr de valider  la commande N° ({{ $_model->id }})?</div>"
                         data-url="{{ Route('commande.update', [$_model->id]) }}?statut_id=2&methode=savewhat&commande"
@@ -9,7 +9,7 @@
                         <i class=" check circle icon"></i> Valider la commande
                     </a>
                     <span id="up_{{ $_model->id }}_vlstatut_id_popup"></span>
-                @endcan
+                @endcan --}}
             @break
 
             @case(2)

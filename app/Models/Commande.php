@@ -112,7 +112,7 @@ class Commande extends Model
                 "width" => "150px",
             ],
             [
-                "name" => "Intitué",
+                "name" => "Intitulé",
                 "data" => "intitule",
                 'column' => "intitule",
                 "render" => false,
