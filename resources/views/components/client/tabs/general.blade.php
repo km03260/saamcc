@@ -11,7 +11,7 @@
             <tbody>
 
                 <tr>
-                    <td class="" style="background-color:#f9fafb;border-bottom: 1px solid #fff;">
+                    <td width="200px" class="" style="background-color:#f9fafb;border-bottom: 1px solid #fff;">
                         <h5 class="ui header">Reason sociale</h5>
                     </td>
                     <td>
@@ -65,7 +65,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <img id="img-{{ $vdata }}" style="height: 250px;width: auto;"
+                                    <img id="img-{{ $vdata }}" style="height: auto;width: 250px;"
                                         src='{{ asset($client->logo ? $client->logo : 'assets/images/no-photo.jpg') }}''>
                                 </div>
                             </div>
